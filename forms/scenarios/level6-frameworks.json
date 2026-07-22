@@ -1,0 +1,23 @@
+{
+  "id": "level6-frameworks",
+  "level": 6,
+  "name": "Level 6 — Framework Shadow DOM & Web Components",
+  "description": "Tests Shadow DOM encapsulated inputs, custom web components, and framework-specific rendering idioms.",
+  "stressFlags": { "shadowDom": true, "webComponents": true },
+  "fields": [
+    { "id": "full_name", "label": "Full Name", "type": "text", "required": true, "shadow": true },
+    { "id": "email", "label": "Email Address", "type": "email", "required": true, "shadow": true },
+    { "id": "mobile_number", "label": "Mobile Number", "type": "tel", "required": true, "component": "phone-input" },
+    { "id": "dob", "label": "Date of Birth", "type": "date", "required": true, "component": "date-picker" },
+    { "id": "pan_number", "label": "PAN Number", "type": "text", "required": true, "component": "masked-input" },
+    { "id": "terms_consent", "label": "I agree to Terms & Conditions", "type": "checkbox", "required": true }
+  ],
+  "groundTruth": {
+    "full_name": "Rajesh Kumar Sharma",
+    "email": "rajesh.sharma@example.com",
+    "mobile_number": "9876543210",
+    "dob": "1992-08-15",
+    "pan_number": "ABCDE1234F",
+    "terms_consent": true
+  }
+}

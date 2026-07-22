@@ -1,0 +1,120 @@
+{
+  "version": "1.0.0",
+  "name": "Full Canonical KYC Field Definitions",
+  "description": "Complete suite of 50+ canonical KYC fields covering Identity, Contact, Documents, Banking, Employment, Financials, Nominee, Family, Uploads, Verification, and Metadata.",
+  "categories": [
+    {
+      "name": "Personal Identity",
+      "fields": [
+        { "id": "full_name", "label": "Full Name", "type": "text", "required": true, "placeholder": "e.g. Rajesh Kumar Sharma" },
+        { "id": "first_name", "label": "First Name", "type": "text", "required": true, "placeholder": "Rajesh" },
+        { "id": "middle_name", "label": "Middle Name", "type": "text", "required": false, "placeholder": "Kumar" },
+        { "id": "last_name", "label": "Last Name", "type": "text", "required": true, "placeholder": "Sharma" },
+        { "id": "preferred_name", "label": "Preferred Name", "type": "text", "required": false, "placeholder": "Raj" },
+        { "id": "gender", "label": "Gender", "type": "radio", "required": true, "options": ["Male", "Female", "Other", "Prefer not to say"] },
+        { "id": "dob", "label": "Date of Birth", "type": "date", "required": true },
+        { "id": "age", "label": "Age", "type": "number", "required": false, "readOnly": true },
+        { "id": "nationality", "label": "Nationality", "type": "select", "required": true, "options": ["Indian", "American", "British", "Canadian", "Other"] },
+        { "id": "marital_status", "label": "Marital Status", "type": "select", "required": true, "options": ["Single", "Married", "Divorced", "Widowed"] }
+      ]
+    },
+    {
+      "name": "Contact & Address",
+      "fields": [
+        { "id": "mobile_number", "label": "Mobile Number", "type": "tel", "required": true, "placeholder": "9876543210" },
+        { "id": "alternate_mobile", "label": "Alternate Mobile", "type": "tel", "required": false, "placeholder": "9876543211" },
+        { "id": "landline", "label": "Landline Number", "type": "tel", "required": false, "placeholder": "02228901234" },
+        { "id": "email", "label": "Email Address", "type": "email", "required": true, "placeholder": "rajesh.sharma@example.com" },
+        { "id": "curr_address_line1", "label": "Current Address Line 1", "type": "text", "required": true, "placeholder": "Flat 402, Sunshine Apartments" },
+        { "id": "curr_address_line2", "label": "Current Address Line 2", "type": "text", "required": false, "placeholder": "MG Road, Kandivali West" },
+        { "id": "curr_landmark", "label": "Landmark", "type": "text", "required": false, "placeholder": "Near Metro Station" },
+        { "id": "curr_city", "label": "City", "type": "text", "required": true, "placeholder": "Mumbai" },
+        { "id": "curr_district", "label": "District", "type": "text", "required": true, "placeholder": "Mumbai Suburban" },
+        { "id": "curr_state", "label": "State", "type": "select", "required": true, "options": ["Maharashtra", "Delhi", "Karnataka", "Tamil Nadu", "Telangana", "Gujarat"] },
+        { "id": "curr_pincode", "label": "PIN Code", "type": "text", "required": true, "placeholder": "400067" },
+        { "id": "curr_country", "label": "Country", "type": "select", "required": true, "options": ["India", "United States", "United Kingdom"] },
+        { "id": "same_as_current", "label": "Permanent address same as current address", "type": "checkbox", "required": false },
+        { "id": "perm_address_line1", "label": "Permanent Address Line 1", "type": "text", "required": false },
+        { "id": "perm_city", "label": "Permanent City", "type": "text", "required": false },
+        { "id": "perm_state", "label": "Permanent State", "type": "select", "required": false, "options": ["Maharashtra", "Delhi", "Karnataka", "Tamil Nadu", "Telangana", "Gujarat"] },
+        { "id": "perm_pincode", "label": "Permanent PIN Code", "type": "text", "required": false }
+      ]
+    },
+    {
+      "name": "Identity Documents",
+      "fields": [
+        { "id": "aadhaar_number", "label": "Aadhaar Number", "type": "masked_input", "required": true, "placeholder": "1234 5678 9012" },
+        { "id": "pan_number", "label": "PAN Number", "type": "masked_input", "required": true, "placeholder": "ABCDE1234F" },
+        { "id": "passport_number", "label": "Passport Number", "type": "text", "required": false, "placeholder": "Z1234567" },
+        { "id": "driving_licence", "label": "Driving Licence Number", "type": "text", "required": false, "placeholder": "MH0220190012345" },
+        { "id": "voter_id", "label": "Voter ID", "type": "text", "required": false, "placeholder": "XYZ9876543" }
+      ]
+    },
+    {
+      "name": "Banking Details",
+      "fields": [
+        { "id": "bank_name", "label": "Bank Name", "type": "select", "required": true, "options": ["State Bank of India", "HDFC Bank", "ICICI Bank", "Axis Bank", "Kotak Mahindra Bank"] },
+        { "id": "branch_name", "label": "Branch Name", "type": "text", "required": true, "placeholder": "Fort Branch, Mumbai" },
+        { "id": "account_number", "label": "Account Number", "type": "text", "required": true, "placeholder": "100234567890" },
+        { "id": "ifsc_code", "label": "IFSC Code", "type": "text", "required": true, "placeholder": "SBIN0000300" },
+        { "id": "account_type", "label": "Account Type", "type": "radio", "required": true, "options": ["Savings", "Current", "Salary"] }
+      ]
+    },
+    {
+      "name": "Employment & Financial Profile",
+      "fields": [
+        { "id": "occupation", "label": "Occupation", "type": "text", "required": true, "placeholder": "Software Engineer" },
+        { "id": "employment_type", "label": "Employment Type", "type": "select", "required": true, "options": ["Salaried", "Self-Employed", "Business Owner", "Student", "Retired"] },
+        { "id": "employer_name", "label": "Employer Name", "type": "text", "required": false, "placeholder": "Tech Solutions Pvt Ltd" },
+        { "id": "designation", "label": "Designation", "type": "text", "required": false, "placeholder": "Senior Developer" },
+        { "id": "industry", "label": "Industry", "type": "text", "required": false, "placeholder": "Information Technology" },
+        { "id": "annual_income", "label": "Annual Income (INR)", "type": "number", "required": true, "placeholder": "1200000" },
+        { "id": "income_range", "label": "Income Range", "type": "select", "required": true, "options": ["Below 1 Lakh", "1-5 Lakhs", "5-10 Lakhs", "10-25 Lakhs", "Above 25 Lakhs"] },
+        { "id": "net_worth", "label": "Net Worth (INR)", "type": "number", "required": false, "placeholder": "5000000" },
+        { "id": "is_pep", "label": "Politically Exposed Person (PEP)", "type": "radio", "required": true, "options": ["No", "Yes"] }
+      ]
+    },
+    {
+      "name": "Nominee & Family Details",
+      "fields": [
+        { "id": "nominee_name", "label": "Nominee Name", "type": "text", "required": true, "placeholder": "Priya Sharma" },
+        { "id": "nominee_relationship", "label": "Nominee Relationship", "type": "select", "required": true, "options": ["Spouse", "Father", "Mother", "Son", "Daughter", "Brother", "Sister"] },
+        { "id": "nominee_dob", "label": "Nominee Date of Birth", "type": "date", "required": true },
+        { "id": "nominee_share", "label": "Nominee Share (%)", "type": "number", "required": true, "placeholder": "100" },
+        { "id": "father_name", "label": "Father's Name", "type": "text", "required": true, "placeholder": "Ramesh Sharma" },
+        { "id": "mother_name", "label": "Mother's Name", "type": "text", "required": true, "placeholder": "Sunita Sharma" },
+        { "id": "spouse_name", "label": "Spouse Name", "type": "text", "required": false, "placeholder": "Priya Sharma" },
+        { "id": "emergency_contact_name", "label": "Emergency Contact Name", "type": "text", "required": true, "placeholder": "Ramesh Sharma" },
+        { "id": "emergency_contact_phone", "label": "Emergency Contact Phone", "type": "tel", "required": true, "placeholder": "9876500000" }
+      ]
+    },
+    {
+      "name": "Document Uploads",
+      "fields": [
+        { "id": "upload_pan", "label": "PAN Card Document", "type": "file", "required": true, "accept": ".jpg,.png,.pdf" },
+        { "id": "upload_aadhaar_front", "label": "Aadhaar Front", "type": "file", "required": true, "accept": ".jpg,.png,.pdf" },
+        { "id": "upload_aadhaar_back", "label": "Aadhaar Back", "type": "file", "required": true, "accept": ".jpg,.png,.pdf" },
+        { "id": "upload_photo", "label": "Applicant Photo / Selfie", "type": "file", "required": true, "accept": ".jpg,.png" },
+        { "id": "upload_signature", "label": "Applicant Specimen Signature", "type": "file", "required": true, "accept": ".jpg,.png" }
+      ]
+    },
+    {
+      "name": "Verification & Consents",
+      "fields": [
+        { "id": "mobile_otp", "label": "Mobile OTP Code", "type": "text", "required": true, "placeholder": "123456" },
+        { "id": "email_otp", "label": "Email OTP Code", "type": "text", "required": true, "placeholder": "654321" },
+        { "id": "esign_consent", "label": "I consent to digital Aadhaar eSign verification", "type": "checkbox", "required": true },
+        { "id": "terms_consent", "label": "I agree to Terms & Conditions and Privacy Policy", "type": "checkbox", "required": true }
+      ]
+    },
+    {
+      "name": "Application Metadata",
+      "fields": [
+        { "id": "customer_id", "label": "Customer ID", "type": "text", "required": false, "readOnly": true, "value": "CUST-883921" },
+        { "id": "branch_code", "label": "Branch Code", "type": "text", "required": false, "readOnly": true, "value": "BR-MUM-001" },
+        { "id": "agent_id", "label": "Agent ID", "type": "text", "required": false, "placeholder": "AGT-4402" },
+        { "id": "referral_code", "label": "Referral Code", "type": "text", "required": false, "placeholder": "REF-KYC2026" }
+      ]
+    }
+  ]
+}

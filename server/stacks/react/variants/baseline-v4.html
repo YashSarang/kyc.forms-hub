@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Full Canonical KYC Baseline — React / Next.js</title>
+  <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <style>
+    body { font-family: system-ui, sans-serif; background-color: #0b0f19; color: #f8fafc; padding: 20px; }
+    .container { max-width: 950px; margin: 0 auto; background: #3e424c; padding: 35px; border-radius: 14px; border: 1px solid #0284c7; }
+    h1 { color: #38bdf8; border-bottom: 2px solid #0284c7; padding-bottom: 12px; margin-top: 0; }
+    .badge { display: inline-block; background: #0284c7; color: white; padding: 5px 14px; border-radius: 20px; font-size: 0.85rem; font-weight: bold; margin-bottom: 20px; }
+    .desc { color: #94a3b8; margin-bottom: 20px; }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+    .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; }
+    .form-group { margin-bottom: 16px; }
+    label { display: block; margin-bottom: 6px; font-weight: 600; color: #cbd5e1; font-size: 0.9rem; }
+    input, select, textarea { width: 100%; padding: 11px; border-radius: 6px; border: 1px solid #0284c7; background: #0b0f19; color: white; font-size: 0.95rem; box-sizing: border-box; }
+    input:focus, select:focus { outline: none; border-color: #38bdf8; box-shadow: 0 0 0 3px #38bdf833; }
+    .radio-group, .checkbox-group { display: flex; gap: 15px; flex-wrap: wrap; margin-top: 5px; }
+    .radio-group label, .checkbox-group label { font-weight: normal; display: flex; align-items: center; gap: 6px; }
+    .btn-submit { background: linear-gradient(135deg, #0284c7, #38bdf8); color: white; border: none; padding: 14px 28px; font-size: 1.1rem; border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%; margin-top: 20px; }
+    .result-box { margin-top: 25px; padding: 20px; background: #00000055; border-radius: 8px; border: 1px solid #0284c7; display: none; }
+  </style>
+  
+</head>
+<body>
+  <div id="root"></div>
+  <script type="text/babel">
+    const { useState, useEffect } = React;
+    const initialState = {"full_name":"Rajesh Kumar Sharma","first_name":"Rajesh","middle_name":"Kumar","last_name":"Sharma","preferred_name":"Raj","gender":"Male","dob":"1992-08-15","age":33,"nationality":"Indian","marital_status":"Married","mobile_number":"9876543210","alternate_mobile":"9876543211","landline":"02228901234","email":"rajesh.sharma@example.com","curr_address_line1":"Flat 402, Sunshine Apartments","curr_address_line2":"MG Road, Kandivali West","curr_landmark":"Near Metro Station","curr_city":"Mumbai","curr_district":"Mumbai Suburban","curr_state":"Maharashtra","curr_pincode":"400067","curr_country":"India","same_as_current":true,"perm_address_line1":"Flat 402, Sunshine Apartments","perm_city":"Mumbai","perm_state":"Maharashtra","perm_pincode":"400067","aadhaar_number":"123456789012","pan_number":"ABCDE1234F","passport_number":"Z1234567","driving_licence":"MH0220190012345","voter_id":"XYZ9876543","bank_name":"State Bank of India","branch_name":"Fort Branch, Mumbai","account_number":"100234567890","ifsc_code":"SBIN0000300","account_type":"Savings","occupation":"Software Engineer","employment_type":"Salaried","employer_name":"Tech Solutions Pvt Ltd","designation":"Senior Developer","industry":"Information Technology","annual_income":"1200000","income_range":"10-25 Lakhs","net_worth":"5000000","is_pep":"No","nominee_name":"Priya Sharma","nominee_relationship":"Spouse","nominee_dob":"1994-05-20","nominee_share":"100","father_name":"Ramesh Sharma","mother_name":"Sunita Sharma","spouse_name":"Priya Sharma","emergency_contact_name":"Ramesh Sharma","emergency_contact_phone":"9876500000","upload_pan":null,"upload_aadhaar_front":null,"upload_aadhaar_back":null,"upload_photo":null,"upload_signature":null,"mobile_otp":"123456","email_otp":"654321","esign_consent":true,"terms_consent":true,"customer_id":"CUST-883921","branch_code":"BR-MUM-001","agent_id":"AGT-4402","referral_code":"REF-KYC2026"};
+
+    function honeypotField(name) {
+      return <input type="text" name={name} style={{ position: 'absolute', left: '-9999px' }} tabIndex={-1} autoComplete="off" />;
+    }
+
+    function KycForm() {
+      const [formData, setFormData] = useState(initialState);
+      const [report, setReport] = useState(null);
+      const [disabled, setDisabled] = useState(!!window.__KYC_DELAY_MS__);
+
+      useEffect(() => {
+        if (window.__KYC_DELAY_MS__) {
+          const t = setTimeout(() => setDisabled(false), window.__KYC_DELAY_MS__);
+          return () => clearTimeout(t);
+        }
+      }, []);
+
+      const handleChange = (e) => {
+        const { name, value, type, checked } = e.target;
+        setFormData(prev => ({ ...prev, [name]: type === 'checkbox' ? checked : value }));
+      };
+
+      const handleSubmit = async (e) => {
+        e.preventDefault();
+        const res = await fetch('/api/verify-submission', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ scenarioId: 'baseline', variantId: 'baseline-v4', data: formData })
+        });
+        const result = await res.json();
+        setReport(result.report);
+      };
+
+      return (
+        <div className="container">
+          <span className="badge">React / Next.js (30% share)</span>
+          <h1>Full Canonical KYC Baseline</h1>
+          <p className="desc">Complete 50+ field KYC form across all categories. Used as the repeatable baseline for cross-stack comparison.</p>
+          <form onSubmit={handleSubmit}>
+            <div className="grid-2">
+      <div className="form-group" data-field-id="full_name">
+        <label>Full Name *</label>
+        <input type="text" name="full_name" value={formData.full_name} onChange={handleChange} placeholder="e.g. Rajesh Kumar Sharma" required />
+      </div>
+      <div className="form-group" data-field-id="first_name">
+        <label>First Name *</label>
+        <input type="text" name="first_name" value={formData.first_name} onChange={handleChange} placeholder="Rajesh" required />
+      </div>
+      <div className="form-group" data-field-id="middle_name">
+        <label>Middle Name</label>
+        <input type="text" name="middle_name" value={formData.middle_name} onChange={handleChange} placeholder="Kumar"  />
+      </div>
+      <div className="form-group" data-field-id="last_name">
+        <label>Last Name *</label>
+        <input type="text" name="last_name" value={formData.last_name} onChange={handleChange} placeholder="Sharma" required />
+      </div>
+      <div className="form-group" data-field-id="preferred_name">
+        <label>Preferred Name</label>
+        <input type="text" name="preferred_name" value={formData.preferred_name} onChange={handleChange} placeholder="Raj"  />
+      </div>
+      <div className="form-group" data-field-id="gender">
+        <label>Gender *</label>
+        <div className="radio-group"><label key="Male"><input type="radio" name="gender" value="Male" checked={formData.gender === 'Male'} onChange={handleChange} required /> Male</label><label key="Female"><input type="radio" name="gender" value="Female" checked={formData.gender === 'Female'} onChange={handleChange} required /> Female</label><label key="Other"><input type="radio" name="gender" value="Other" checked={formData.gender === 'Other'} onChange={handleChange} required /> Other</label><label key="Prefer not to say"><input type="radio" name="gender" value="Prefer not to say" checked={formData.gender === 'Prefer not to say'} onChange={handleChange} required /> Prefer not to say</label></div>
+      </div>
+      <div className="form-group" data-field-id="dob">
+        <label>Date of Birth *</label>
+        <input type="date" name="dob" value={formData.dob} onChange={handleChange}  required />
+      </div>
+      <div className="form-group" data-field-id="age">
+        <label>Age</label>
+        <input type="number" name="age" value={formData.age} onChange={handleChange}   />
+      </div>
+      <div className="form-group" data-field-id="nationality">
+        <label>Nationality *</label>
+        <select name="nationality" value={formData.nationality} onChange={handleChange} required><option value="Indian">Indian</option><option value="American">American</option><option value="British">British</option><option value="Canadian">Canadian</option><option value="Other">Other</option></select>
+      </div>
+      <div className="form-group" data-field-id="marital_status">
+        <label>Marital Status *</label>
+        <select name="marital_status" value={formData.marital_status} onChange={handleChange} required><option value="Single">Single</option><option value="Married">Married</option><option value="Divorced">Divorced</option><option value="Widowed">Widowed</option></select>
+      </div>
+      <div className="form-group" data-field-id="mobile_number">
+        <label>Mobile Number *</label>
+        <input type="tel" name="mobile_number" value={formData.mobile_number} onChange={handleChange} placeholder="9876543210" required />
+      </div>
+      <div className="form-group" data-field-id="alternate_mobile">
+        <label>Alternate Mobile</label>
+        <input type="tel" name="alternate_mobile" value={formData.alternate_mobile} onChange={handleChange} placeholder="9876543211"  />
+      </div>
+      <div className="form-group" data-field-id="landline">
+        <label>Landline Number</label>
+        <input type="tel" name="landline" value={formData.landline} onChange={handleChange} placeholder="02228901234"  />
+      </div>
+      <div className="form-group" data-field-id="email">
+        <label>Email Address *</label>
+        <input type="email" name="email" value={formData.email} onChange={handleChange} placeholder="rajesh.sharma@example.com" required />
+      </div>
+      <div className="form-group" data-field-id="curr_address_line1">
+        <label>Current Address Line 1 *</label>
+        <input type="text" name="curr_address_line1" value={formData.curr_address_line1} onChange={handleChange} placeholder="Flat 402, Sunshine Apartments" required />
+      </div>
+      <div className="form-group" data-field-id="curr_address_line2">
+        <label>Current Address Line 2</label>
+        <input type="text" name="curr_address_line2" value={formData.curr_address_line2} onChange={handleChange} placeholder="MG Road, Kandivali West"  />
+      </div>
+      <div className="form-group" data-field-id="curr_landmark">
+        <label>Landmark</label>
+        <input type="text" name="curr_landmark" value={formData.curr_landmark} onChange={handleChange} placeholder="Near Metro Station"  />
+      </div>
+      <div className="form-group" data-field-id="curr_city">
+        <label>City *</label>
+        <input type="text" name="curr_city" value={formData.curr_city} onChange={handleChange} placeholder="Mumbai" required />
+      </div>
+      <div className="form-group" data-field-id="curr_district">
+        <label>District *</label>
+        <input type="text" name="curr_district" value={formData.curr_district} onChange={handleChange} placeholder="Mumbai Suburban" required />
+      </div>
+      <div className="form-group" data-field-id="curr_state">
+        <label>State *</label>
+        <select name="curr_state" value={formData.curr_state} onChange={handleChange} required><option value="Maharashtra">Maharashtra</option><option value="Delhi">Delhi</option><option value="Karnataka">Karnataka</option><option value="Tamil Nadu">Tamil Nadu</option><option value="Telangana">Telangana</option><option value="Gujarat">Gujarat</option></select>
+      </div>
+      <div className="form-group" data-field-id="curr_pincode">
+        <label>PIN Code *</label>
+        <input type="text" name="curr_pincode" value={formData.curr_pincode} onChange={handleChange} placeholder="400067" required />
+      </div>
+      <div className="form-group" data-field-id="curr_country">
+        <label>Country *</label>
+        <select name="curr_country" value={formData.curr_country} onChange={handleChange} required><option value="India">India</option><option value="United States">United States</option><option value="United Kingdom">United Kingdom</option></select>
+      </div>
+      <div className="form-group" data-field-id="same_as_current">
+        <label>Permanent address same as current address</label>
+        <label><input type="checkbox" name="same_as_current" checked={formData.same_as_current} onChange={handleChange}  /> Permanent address same as current address</label>
+      </div>
+      <div className="form-group" data-field-id="perm_address_line1">
+        <label>Permanent Address Line 1</label>
+        <input type="text" name="perm_address_line1" value={formData.perm_address_line1} onChange={handleChange}   />
+      </div>
+      <div className="form-group" data-field-id="perm_city">
+        <label>Permanent City</label>
+        <input type="text" name="perm_city" value={formData.perm_city} onChange={handleChange}   />
+      </div>
+      <div className="form-group" data-field-id="perm_state">
+        <label>Permanent State</label>
+        <select name="perm_state" value={formData.perm_state} onChange={handleChange} ><option value="Maharashtra">Maharashtra</option><option value="Delhi">Delhi</option><option value="Karnataka">Karnataka</option><option value="Tamil Nadu">Tamil Nadu</option><option value="Telangana">Telangana</option><option value="Gujarat">Gujarat</option></select>
+      </div>
+      <div className="form-group" data-field-id="perm_pincode">
+        <label>Permanent PIN Code</label>
+        <input type="text" name="perm_pincode" value={formData.perm_pincode} onChange={handleChange}   />
+      </div>
+      <div className="form-group" data-field-id="aadhaar_number">
+        <label>Aadhaar Number *</label>
+        <input type="text" name="aadhaar_number" value={formData.aadhaar_number} onChange={handleChange} placeholder="1234 5678 9012" required />
+      </div>
+      <div className="form-group" data-field-id="pan_number">
+        <label>PAN Number *</label>
+        <input type="text" name="pan_number" value={formData.pan_number} onChange={handleChange} placeholder="ABCDE1234F" required />
+      </div>
+      <div className="form-group" data-field-id="passport_number">
+        <label>Passport Number</label>
+        <input type="text" name="passport_number" value={formData.passport_number} onChange={handleChange} placeholder="Z1234567"  />
+      </div>
+      <div className="form-group" data-field-id="driving_licence">
+        <label>Driving Licence Number</label>
+        <input type="text" name="driving_licence" value={formData.driving_licence} onChange={handleChange} placeholder="MH0220190012345"  />
+      </div>
+      <div className="form-group" data-field-id="voter_id">
+        <label>Voter ID</label>
+        <input type="text" name="voter_id" value={formData.voter_id} onChange={handleChange} placeholder="XYZ9876543"  />
+      </div>
+      <div className="form-group" data-field-id="bank_name">
+        <label>Bank Name *</label>
+        <select name="bank_name" value={formData.bank_name} onChange={handleChange} required><option value="State Bank of India">State Bank of India</option><option value="HDFC Bank">HDFC Bank</option><option value="ICICI Bank">ICICI Bank</option><option value="Axis Bank">Axis Bank</option><option value="Kotak Mahindra Bank">Kotak Mahindra Bank</option></select>
+      </div>
+      <div className="form-group" data-field-id="branch_name">
+        <label>Branch Name *</label>
+        <input type="text" name="branch_name" value={formData.branch_name} onChange={handleChange} placeholder="Fort Branch, Mumbai" required />
+      </div>
+      <div className="form-group" data-field-id="account_number">
+        <label>Account Number *</label>
+        <input type="text" name="account_number" value={formData.account_number} onChange={handleChange} placeholder="100234567890" required />
+      </div>
+      <div className="form-group" data-field-id="ifsc_code">
+        <label>IFSC Code *</label>
+        <input type="text" name="ifsc_code" value={formData.ifsc_code} onChange={handleChange} placeholder="SBIN0000300" required />
+      </div>
+      <div className="form-group" data-field-id="account_type">
+        <label>Account Type *</label>
+        <div className="radio-group"><label key="Savings"><input type="radio" name="account_type" value="Savings" checked={formData.account_type === 'Savings'} onChange={handleChange} required /> Savings</label><label key="Current"><input type="radio" name="account_type" value="Current" checked={formData.account_type === 'Current'} onChange={handleChange} required /> Current</label><label key="Salary"><input type="radio" name="account_type" value="Salary" checked={formData.account_type === 'Salary'} onChange={handleChange} required /> Salary</label></div>
+      </div>
+      <div className="form-group" data-field-id="occupation">
+        <label>Occupation *</label>
+        <input type="text" name="occupation" value={formData.occupation} onChange={handleChange} placeholder="Software Engineer" required />
+      </div>
+      <div className="form-group" data-field-id="employment_type">
+        <label>Employment Type *</label>
+        <select name="employment_type" value={formData.employment_type} onChange={handleChange} required><option value="Salaried">Salaried</option><option value="Self-Employed">Self-Employed</option><option value="Business Owner">Business Owner</option><option value="Student">Student</option><option value="Retired">Retired</option></select>
+      </div>
+      <div className="form-group" data-field-id="employer_name">
+        <label>Employer Name</label>
+        <input type="text" name="employer_name" value={formData.employer_name} onChange={handleChange} placeholder="Tech Solutions Pvt Ltd"  />
+      </div>
+      <div className="form-group" data-field-id="designation">
+        <label>Designation</label>
+        <input type="text" name="designation" value={formData.designation} onChange={handleChange} placeholder="Senior Developer"  />
+      </div>
+      <div className="form-group" data-field-id="industry">
+        <label>Industry</label>
+        <input type="text" name="industry" value={formData.industry} onChange={handleChange} placeholder="Information Technology"  />
+      </div>
+      <div className="form-group" data-field-id="annual_income">
+        <label>Annual Income (INR) *</label>
+        <input type="number" name="annual_income" value={formData.annual_income} onChange={handleChange} placeholder="1200000" required />
+      </div>
+      <div className="form-group" data-field-id="income_range">
+        <label>Income Range *</label>
+        <select name="income_range" value={formData.income_range} onChange={handleChange} required><option value="Below 1 Lakh">Below 1 Lakh</option><option value="1-5 Lakhs">1-5 Lakhs</option><option value="5-10 Lakhs">5-10 Lakhs</option><option value="10-25 Lakhs">10-25 Lakhs</option><option value="Above 25 Lakhs">Above 25 Lakhs</option></select>
+      </div>
+      <div className="form-group" data-field-id="net_worth">
+        <label>Net Worth (INR)</label>
+        <input type="number" name="net_worth" value={formData.net_worth} onChange={handleChange} placeholder="5000000"  />
+      </div>
+      <div className="form-group" data-field-id="is_pep">
+        <label>Politically Exposed Person (PEP) *</label>
+        <div className="radio-group"><label key="No"><input type="radio" name="is_pep" value="No" checked={formData.is_pep === 'No'} onChange={handleChange} required /> No</label><label key="Yes"><input type="radio" name="is_pep" value="Yes" checked={formData.is_pep === 'Yes'} onChange={handleChange} required /> Yes</label></div>
+      </div>
+      <div className="form-group" data-field-id="nominee_name">
+        <label>Nominee Name *</label>
+        <input type="text" name="nominee_name" value={formData.nominee_name} onChange={handleChange} placeholder="Priya Sharma" required />
+      </div>
+      <div className="form-group" data-field-id="nominee_relationship">
+        <label>Nominee Relationship *</label>
+        <select name="nominee_relationship" value={formData.nominee_relationship} onChange={handleChange} required><option value="Spouse">Spouse</option><option value="Father">Father</option><option value="Mother">Mother</option><option value="Son">Son</option><option value="Daughter">Daughter</option><option value="Brother">Brother</option><option value="Sister">Sister</option></select>
+      </div>
+      <div className="form-group" data-field-id="nominee_dob">
+        <label>Nominee Date of Birth *</label>
+        <input type="date" name="nominee_dob" value={formData.nominee_dob} onChange={handleChange}  required />
+      </div>
+      <div className="form-group" data-field-id="nominee_share">
+        <label>Nominee Share (%) *</label>
+        <input type="number" name="nominee_share" value={formData.nominee_share} onChange={handleChange} placeholder="100" required />
+      </div>
+      <div className="form-group" data-field-id="father_name">
+        <label>Father's Name *</label>
+        <input type="text" name="father_name" value={formData.father_name} onChange={handleChange} placeholder="Ramesh Sharma" required />
+      </div>
+      <div className="form-group" data-field-id="mother_name">
+        <label>Mother's Name *</label>
+        <input type="text" name="mother_name" value={formData.mother_name} onChange={handleChange} placeholder="Sunita Sharma" required />
+      </div>
+      <div className="form-group" data-field-id="spouse_name">
+        <label>Spouse Name</label>
+        <input type="text" name="spouse_name" value={formData.spouse_name} onChange={handleChange} placeholder="Priya Sharma"  />
+      </div>
+      <div className="form-group" data-field-id="emergency_contact_name">
+        <label>Emergency Contact Name *</label>
+        <input type="text" name="emergency_contact_name" value={formData.emergency_contact_name} onChange={handleChange} placeholder="Ramesh Sharma" required />
+      </div>
+      <div className="form-group" data-field-id="emergency_contact_phone">
+        <label>Emergency Contact Phone *</label>
+        <input type="tel" name="emergency_contact_phone" value={formData.emergency_contact_phone} onChange={handleChange} placeholder="9876500000" required />
+      </div>
+      <div className="form-group" data-field-id="upload_pan">
+        <label>PAN Card Document *</label>
+        <input type="text" name="upload_pan" value={formData.upload_pan} onChange={handleChange}  required />
+      </div>
+      <div className="form-group" data-field-id="upload_aadhaar_front">
+        <label>Aadhaar Front *</label>
+        <input type="text" name="upload_aadhaar_front" value={formData.upload_aadhaar_front} onChange={handleChange}  required />
+      </div>
+      <div className="form-group" data-field-id="upload_aadhaar_back">
+        <label>Aadhaar Back *</label>
+        <input type="text" name="upload_aadhaar_back" value={formData.upload_aadhaar_back} onChange={handleChange}  required />
+      </div>
+      <div className="form-group" data-field-id="upload_photo">
+        <label>Applicant Photo / Selfie *</label>
+        <input type="text" name="upload_photo" value={formData.upload_photo} onChange={handleChange}  required />
+      </div>
+      <div className="form-group" data-field-id="upload_signature">
+        <label>Applicant Specimen Signature *</label>
+        <input type="text" name="upload_signature" value={formData.upload_signature} onChange={handleChange}  required />
+      </div>
+      <div className="form-group" data-field-id="mobile_otp">
+        <label>Mobile OTP Code *</label>
+        <input type="text" name="mobile_otp" value={formData.mobile_otp} onChange={handleChange} placeholder="123456" required />
+      </div>
+      <div className="form-group" data-field-id="email_otp">
+        <label>Email OTP Code *</label>
+        <input type="text" name="email_otp" value={formData.email_otp} onChange={handleChange} placeholder="654321" required />
+      </div>
+      <div className="form-group" data-field-id="esign_consent">
+        <label>I consent to digital Aadhaar eSign verification *</label>
+        <label><input type="checkbox" name="esign_consent" checked={formData.esign_consent} onChange={handleChange} required /> I consent to digital Aadhaar eSign verification</label>
+      </div>
+      <div className="form-group" data-field-id="terms_consent">
+        <label>I agree to Terms & Conditions and Privacy Policy *</label>
+        <label><input type="checkbox" name="terms_consent" checked={formData.terms_consent} onChange={handleChange} required /> I agree to Terms & Conditions and Privacy Policy</label>
+      </div>
+      <div className="form-group" data-field-id="customer_id">
+        <label>Customer ID</label>
+        <input type="text" name="customer_id" value={formData.customer_id} onChange={handleChange}   />
+      </div>
+      <div className="form-group" data-field-id="branch_code">
+        <label>Branch Code</label>
+        <input type="text" name="branch_code" value={formData.branch_code} onChange={handleChange}   />
+      </div>
+      <div className="form-group" data-field-id="agent_id">
+        <label>Agent ID</label>
+        <input type="text" name="agent_id" value={formData.agent_id} onChange={handleChange} placeholder="AGT-4402"  />
+      </div>
+      <div className="form-group" data-field-id="referral_code">
+        <label>Referral Code</label>
+        <input type="text" name="referral_code" value={formData.referral_code} onChange={handleChange} placeholder="REF-KYC2026"  />
+      </div>
+            </div>
+            
+            <button type="submit" className="btn-submit" id="realSubmit" disabled={disabled}>Submit Form</button>
+          </form>
+          {report && (
+            <div className="result-box">
+              <h3 style={{ color: '#38bdf8', marginTop: 0 }}>Score: {report.score}/100</h3>
+              <pre style={{ color: '#a7f3d0', whiteSpace: 'pre-wrap' }}>{JSON.stringify(report, null, 2)}</pre>
+            </div>
+          )}
+        </div>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<KycForm />);
+  </script>
+</body>
+</html>

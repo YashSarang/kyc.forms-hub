@@ -1,0 +1,21 @@
+{
+  "id": "issue-duplicate-labels",
+  "level": 7,
+  "name": "Issue Variant — Duplicate Labels",
+  "description": "Non-unique labels force agents to use context, IDs, or surrounding text to disambiguate fields.",
+  "stressFlags": { "duplicateLabels": true },
+  "fields": [
+    { "id": "full_name", "label": "Name", "type": "text", "required": true },
+    { "id": "spouse_name", "label": "Name", "type": "text", "required": true },
+    { "id": "father_name", "label": "Name", "type": "text", "required": true },
+    { "id": "email", "label": "Email", "type": "email", "required": true },
+    { "id": "mobile_number", "label": "Mobile", "type": "tel", "required": true }
+  ],
+  "groundTruth": {
+    "full_name": "Rajesh Kumar Sharma",
+    "spouse_name": "Priya Sharma",
+    "father_name": "Ramesh Sharma",
+    "email": "rajesh.sharma@example.com",
+    "mobile_number": "9876543210"
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "id": "level2-selection",
+  "level": 2,
+  "name": "Level 2 — Selection Controls",
+  "description": "Tests native dropdowns, radio buttons, checkboxes, and toggle-style controls.",
+  "stressFlags": {},
+  "fields": [
+    { "id": "full_name", "label": "Full Name", "type": "text", "required": true },
+    { "id": "gender", "label": "Gender", "type": "radio", "required": true, "options": ["Male", "Female", "Other", "Prefer not to say"] },
+    { "id": "nationality", "label": "Nationality", "type": "select", "required": true, "options": ["Indian", "American", "British", "Canadian", "Other"] },
+    { "id": "marital_status", "label": "Marital Status", "type": "select", "required": true, "options": ["Single", "Married", "Divorced", "Widowed"] },
+    { "id": "account_type", "label": "Account Type", "type": "radio", "required": true, "options": ["Savings", "Current", "Salary"] },
+    { "id": "esign_consent", "label": "I consent to digital Aadhaar eSign verification", "type": "checkbox", "required": true },
+    { "id": "terms_consent", "label": "I agree to Terms & Conditions and Privacy Policy", "type": "checkbox", "required": true }
+  ],
+  "groundTruth": {
+    "full_name": "Rajesh Kumar Sharma",
+    "gender": "Male",
+    "nationality": "Indian",
+    "marital_status": "Married",
+    "account_type": "Savings",
+    "esign_consent": true,
+    "terms_consent": true
+  }
+}

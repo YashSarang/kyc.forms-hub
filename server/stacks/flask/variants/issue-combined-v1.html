@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Issue Variant — Combined Adversarial Stack — Flask / Python WTForms</title>
+  <style>
+    body { font-family: system-ui, sans-serif; background-color: #052e16; color: #f8fafc; padding: 20px; }
+    .container { max-width: 950px; margin: 0 auto; background: #386149; padding: 35px; border-radius: 14px; border: 1px solid #10b981; }
+    h1 { color: #34d399; border-bottom: 2px solid #10b981; padding-bottom: 12px; margin-top: 0; }
+    .badge { display: inline-block; background: #10b981; color: white; padding: 5px 14px; border-radius: 20px; font-size: 0.85rem; font-weight: bold; margin-bottom: 20px; }
+    .desc { color: #94a3b8; margin-bottom: 20px; }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+    .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; }
+    .form-group { margin-bottom: 16px; }
+    label { display: block; margin-bottom: 6px; font-weight: 600; color: #cbd5e1; font-size: 0.9rem; }
+    input, select, textarea { width: 100%; padding: 11px; border-radius: 6px; border: 1px solid #10b981; background: #052e16; color: white; font-size: 0.95rem; box-sizing: border-box; }
+    input:focus, select:focus { outline: none; border-color: #34d399; box-shadow: 0 0 0 3px #34d39933; }
+    .radio-group, .checkbox-group { display: flex; gap: 15px; flex-wrap: wrap; margin-top: 5px; }
+    .radio-group label, .checkbox-group label { font-weight: normal; display: flex; align-items: center; gap: 6px; }
+    .btn-submit { background: linear-gradient(135deg, #10b981, #34d399); color: white; border: none; padding: 14px 28px; font-size: 1.1rem; border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%; margin-top: 20px; }
+    .result-box { margin-top: 25px; padding: 20px; background: #00000055; border-radius: 8px; border: 1px solid #10b981; display: none; }
+  
+    .card-block { background: #c14fd; border: 1px solid #10b981; border-radius: 10px; padding: 20px; margin-bottom: 20px; }
+    .card-heading { color: #34d399; font-size: 1.1rem; border-bottom: 1px solid #10b981; padding-bottom: 8px; margin-top: 0; margin-bottom: 18px; }
+  </style>
+  <script>window.__KYC_DELAY_MS__ = 1800;</script>
+</head>
+<body>
+  <div class="container">
+    <span class="badge">Flask / Python WTForms (10% share)</span>
+    <h1>Issue Variant — Combined Adversarial Stack</h1>
+    <p class="desc">Duplicate labels, fake buttons, hidden honeypots, dynamic IDs, and network delay applied together.</p>
+    <form id="flaskForm" data-scenario="issue-combined">
+      <input type="hidden" name="csrf_token" value="csrf-token-flask-issue-combined">
+      <div class="card-block">
+        <h3 class="card-heading">WTFields Render Block</h3>
+        <div class="grid-2"><div class="form-group " data-field-id="full_name">
+      <label for="full_name">Name *</label>
+      <input type="text" id="full_name" name="full_name" value="Rajesh Kumar Sharma" placeholder="e.g. Rajesh Kumar Sharma" required />
+    </div>
+        <input type="text" id="honeypot_code" name="honeypot_code" value="" style="position:absolute;left:-9999px;" tabindex="-1" autocomplete="off" />
+        <div class="form-group " data-field-id="terms_consent">
+      <label for="terms_consent">I agree to Terms & Conditions *</label>
+      <label><input type="checkbox" id="terms_consent" name="terms_consent" checked required> I agree to Terms & Conditions</label>
+    </div>
+        <div class="form-group " data-field-id="email">
+      <label for="email">Email *</label>
+      <input type="email" id="email" name="email" value="rajesh.sharma@example.com" required />
+    </div>
+        <div class="form-group " data-field-id="mobile_number">
+      <label for="mobile_number">Mobile *</label>
+      <input type="tel" id="mobile_number" name="mobile_number" value="9876543210" required />
+    </div></div>
+      </div>
+      <button type="button" class="btn-submit fake-submit" style="background:#7f1d1d;margin-bottom:10px;">Submit Application 1</button>
+      <button type="button" class="btn-submit fake-submit" style="background:#7f1d1d;margin-bottom:10px;">Submit Application 2</button>
+      <button type="submit" class="btn-submit" id="realSubmit">Submit Flask WTForms Application</button>
+    </form>
+    <div class="result-box" id="resultBox">
+      <h3 style="color:#34d399; margin-top:0;">Score: <span id="scoreVal"></span>/100</h3>
+      <pre id="resultJson" style="color:#a7f3d0; white-space:pre-wrap;"></pre>
+    </div>
+  </div>
+  <script>
+    document.getElementById('flaskForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const fd = new FormData(this);
+      const data = {};
+      fd.forEach((v, k) => data[k] = v);
+      if (document.getElementById('esign_consent')) data.esign_consent = document.getElementById('esign_consent').checked;
+      if (document.getElementById('terms_consent')) data.terms_consent = document.getElementById('terms_consent').checked;
+      if (window.__KYC_DELAY_MS__) await new Promise(r => setTimeout(r, window.__KYC_DELAY_MS__));
+      const res = await fetch('/api/verify-submission', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({ scenarioId: 'issue-combined', variantId: 'issue-combined-v1', data }) });
+      const result = await res.json();
+      document.getElementById('resultBox').style.display = 'block';
+      document.getElementById('scoreVal').textContent = result.report.score;
+      document.getElementById('resultJson').textContent = JSON.stringify(result.report, null, 2);
+    });
+  </script>
+</body>
+</html>

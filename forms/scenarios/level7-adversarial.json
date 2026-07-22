@@ -1,0 +1,26 @@
+{
+  "id": "level7-adversarial",
+  "level": 7,
+  "name": "Level 7 — Adversarial Stress Conditions",
+  "description": "Tests agent resilience against duplicate labels, decoy buttons, network delays, hidden honeypot fields, and dynamic IDs.",
+  "stressFlags": {
+    "duplicateLabels": true,
+    "fakeSubmitButtons": true,
+    "hiddenHoneypotFields": true,
+    "dynamicIds": true,
+    "networkDelayMs": 1500
+  },
+  "fields": [
+    { "id": "full_name_primary", "label": "Name", "type": "text", "required": true },
+    { "id": "full_name_decoy", "label": "Name", "type": "text", "required": false, "isHoneypot": true },
+    { "id": "email", "label": "Email", "type": "email", "required": true },
+    { "id": "mobile_number", "label": "Mobile", "type": "tel", "required": true },
+    { "id": "terms_consent", "label": "I agree to Terms & Conditions", "type": "checkbox", "required": true }
+  ],
+  "groundTruth": {
+    "full_name_primary": "Rajesh Kumar Sharma",
+    "email": "rajesh.sharma@example.com",
+    "mobile_number": "9876543210",
+    "terms_consent": true
+  }
+}

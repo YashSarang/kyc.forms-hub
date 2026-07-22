@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>React / Next.js KYC Benchmark Form (Full Suite)</title>
+  <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <style>
+    body { font-family: 'Inter', -apple-system, sans-serif; background-color: #0b0f19; color: #e2e8f0; margin: 0; padding: 20px; }
+    .container { max-width: 1000px; margin: 0 auto; background: #151c2c; padding: 35px; border-radius: 16px; border: 1px solid #1e293b; box-shadow: 0 20px 40px rgba(0,0,0,0.6); }
+    h1 { color: #38bdf8; margin-top: 0; font-size: 1.8rem; }
+    .badge { display: inline-block; background: #0284c7; color: white; padding: 5px 14px; border-radius: 20px; font-size: 0.85rem; font-weight: bold; margin-bottom: 25px; }
+    
+    /* React Tab Navigation */
+    .tabs-nav { display: flex; gap: 8px; border-bottom: 2px solid #1e293b; margin-bottom: 30px; overflow-x: auto; padding-bottom: 10px; }
+    .tab-btn { background: #0f172a; color: #94a3b8; border: 1px solid #1e293b; padding: 10px 18px; border-radius: 8px; cursor: pointer; font-size: 0.9rem; font-weight: 600; white-space: nowrap; transition: all 0.2s; }
+    .tab-btn.active { background: #0284c7; color: white; border-color: #38bdf8; }
+    .tab-btn:hover:not(.active) { background: #1e293b; color: #e2e8f0; }
+
+    .section-title { color: #38bdf8; font-size: 1.2rem; border-bottom: 1px solid #334155; padding-bottom: 8px; margin-top: 25px; margin-bottom: 20px; }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
+
+    .form-group { margin-bottom: 18px; }
+    label { display: block; margin-bottom: 6px; font-weight: 600; color: #cbd5e1; font-size: 0.9rem; }
+    input[type="text"], input[type="email"], input[type="tel"], input[type="date"], input[type="number"], input[type="file"], select {
+      width: 100%; padding: 11px 14px; border-radius: 8px; border: 1px solid #334155; background: #0b0f19; color: white; font-size: 0.95rem; box-sizing: border-box; transition: border 0.2s;
+    }
+    input:focus, select:focus { border-color: #38bdf8; outline: none; box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2); }
+    .radio-group, .checkbox-group { display: flex; gap: 15px; margin-top: 6px; }
+    .radio-group label, .checkbox-group label { font-weight: normal; cursor: pointer; display: flex; align-items: center; gap: 6px; color: #cbd5e1; }
+
+    .nav-actions { display: flex; justify-content: space-between; margin-top: 35px; border-top: 1px solid #1e293b; padding-top: 20px; }
+    .btn-secondary { background: #334155; color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; font-weight: 600; }
+    .btn-primary { background: linear-gradient(135deg, #0284c7, #2563eb); color: white; border: none; padding: 12px 28px; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 1rem; }
+    .btn-primary:hover { opacity: 0.9; }
+
+    .result-box { margin-top: 30px; padding: 25px; background: #040711; border-radius: 12px; border: 1px solid #1e293b; }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState } = React;
+
+    const SECTIONS = [
+      { id: 'identity', title: '1. Personal Identity' },
+      { id: 'contact', title: '2. Contact & Address' },
+      { id: 'documents', title: '3. Identity Documents' },
+      { id: 'banking', title: '4. Banking & Financials' },
+      { id: 'nominee', title: '5. Nominee & Family' },
+      { id: 'uploads', title: '6. Uploads & Verification' }
+    ];
+
+    function ReactFullKycForm() {
+      const [activeTab, setActiveTab] = useState('identity');
+      const [formData, setFormData] = useState({
+        full_name: 'Rajesh Kumar Sharma',
+        first_name: 'Rajesh',
+        middle_name: 'Kumar',
+        last_name: 'Sharma',
+        preferred_name: 'Raj',
+        gender: 'Male',
+        dob: '1992-08-15',
+        nationality: 'Indian',
+        marital_status: 'Married',
+        spouse_name: 'Priya Sharma',
+
+        mobile_number: '9876543210',
+        alternate_mobile: '9876543211',
+        landline: '02228901234',
+        email: 'rajesh.sharma@example.com',
+        curr_address_line1: 'Flat 402, Sunshine Apartments',
+        curr_address_line2: 'MG Road, Kandivali West',
+        curr_landmark: 'Near Metro Station',
+        curr_city: 'Mumbai',
+        curr_district: 'Mumbai Suburban',
+        curr_state: 'Maharashtra',
+        curr_pincode: '400067',
+        curr_country: 'India',
+        same_as_current: true,
+
+        pan_number: 'ABCDE1234F',
+        aadhaar_number: '123456789012',
+        passport_number: 'Z1234567',
+        driving_licence: 'MH0220190012345',
+        voter_id: 'XYZ9876543',
+
+        bank_name: 'State Bank of India',
+        branch_name: 'Fort Branch, Mumbai',
+        account_number: '100234567890',
+        ifsc_code: 'SBIN0000300',
+        account_type: 'Savings',
+        occupation: 'Software Engineer',
+        employment_type: 'Salaried',
+        employer_name: 'Tech Solutions Pvt Ltd',
+        designation: 'Senior Developer',
+        industry: 'Information Technology',
+        annual_income: '1200000',
+        income_range: '10-25 Lakhs',
+        net_worth: '5000000',
+        is_pep: 'No',
+
+        nominee_name: 'Priya Sharma',
+        nominee_relationship: 'Spouse',
+        nominee_dob: '1994-05-20',
+        nominee_share: '100',
+        father_name: 'Ramesh Sharma',
+        mother_name: 'Sunita Sharma',
+        emergency_contact_name: 'Ramesh Sharma',
+        emergency_contact_phone: '9876500000',
+
+        mobile_otp: '123456',
+        email_otp: '654321',
+        esign_consent: true,
+        terms_consent: true
+      });
+
+      const [report, setReport] = useState(null);
+
+      const handleChange = (e) => {
+        const { name, value, type, checked } = e.target;
+        setFormData(prev => ({
+          ...prev,
+          [name]: type === 'checkbox' ? checked : value
+        }));
+      };
+
+      const handleSubmit = async (e) => {
+        e.preventDefault();
+        const res = await fetch('/api/verify-submission', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ data: formData })
+        });
+        const result = await res.json();
+        setReport(result.report);
+      };
+
+      return (
+        <div className="container">
+          <span className="badge">Stack: React Controlled Components (30% Share)</span>
+          <h1>React KYC Benchmark Application</h1>
+
+          <div className="tabs-nav">
+            {SECTIONS.map(s => (
+              <button
+                key={s.id}
+                type="button"
+                className={`tab-btn ${activeTab === s.id ? 'active' : ''}`}
+                onClick={() => setActiveTab(s.id)}
+              >
+                {s.title}
+              </button>
+            ))}
+          </div>
+
+          <form onSubmit={handleSubmit}>
+            {/* Section 1: Personal Identity */}
+            {activeTab === 'identity' && (
+              <div>
+                <h3 className="section-title">Personal Identity Details</h3>
+                <div className="grid-2">
+                  <div className="form-group">
+                    <label htmlFor="full_name">Full Name *</label>
+                    <input type="text" id="full_name" name="full_name" value={formData.full_name} onChange={handleChange} required />
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="preferred_name">Preferred Name</label>
+                    <input type="text" id="preferred_name" name="preferred_name" value={formData.preferred_name} onChange={handleChange} />
+                  </div>
+                </div>
+                <div className="grid-3">
+                  <div className="form-group">
+                    <label htmlFor="first_name">First Name *</label>
+                    <input type="text" id="first_name" name="first_name" value={formData.first_name} onChange={handleChange} required />
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="middle_name">Middle Name</label>
+                    <input type="text" id="middle_name" name="middle_name" value={formData.middle_name} onChange={handleChange} />
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="last_name">Last Name *</label>
+                    <input type="text" id="last_name" name="last_name" value={formData.last_name} onChange={handleChange} required />
+                  </div>
+                </div>
+                <div className="grid-3">
+                  <div className="form-group">
+                    <label>Gender *</label>
+                    <div className="radio-group">
+                      {['Male', 'Female', 'Other'].map(g => (
+                        <label key={g}><input type="radio" name="gender" value={g} checked={formData.gender === g} onChange={handleChange} required /> {g}</label>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="dob">Date of Birth *</label>
+                    <input type="date" id="dob" name="dob" value={formData.dob} onChange={handleChange} required />
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="nationality">Nationality *</label>
+                    <select id="nationality" name="nationality" value={formData.nationality} onChange={handleChange} required>
+                      <option value="Indian">Indian</option>
+                      <option value="American">American</option>
+                      <option value="British">British</option>
+                    </select>
+                  </div>
+                </div>
+                <div className="grid-2">
+                  <div className="form-group">
+                    <label htmlFor="marital_status">Marital Status *</label>
+                    <select id="marital_status" name="marital_status" value={formData.marital_status} onChange={handleChange} required>
+                      <option value="Single">Single</option>
+                      <option value="Married">Married</option>
+                      <option value="Divorced">Divorced</option>
+                    </select>
+                  </div>
+                  {formData.marital_status === 'Married' && (
+                    <div className="form-group">
+                      <label htmlFor="spouse_name">Spouse Name *</label>
+                      <input type="text" id="spouse_name" name="spouse_name" value={formData.spouse_name} onChange={handleChange} required />
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+
+            {/* Section 2: Contact & Address */}
+            {activeTab === 'contact' && (
+              <div>
+                <h3 className="section-title">Contact & Communication Address</h3>
+                <div className="grid-3">
+                  <div className="form-group">
+                    <label htmlFor="email">Email Address *</label>
+                    <input type="email" id="email" name="email" value={formData.email} onChange={handleChange} required />
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="mobile_number">Mobile Number *</label>
+                    <input type="tel" id="mobile_number" name="mobile_number" value={formData.mobile_number} onChange={handleChange} required />
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="alternate_mobile">Alternate Mobile</label>
+                    <input type="tel" id="alternate_mobile" name="alternate_mobile" value={formData.alternate_mobile} onChange={handleChange} />
+                  </div>
+                </div>
+                <div className="grid-2">
+                  <div className="form-group">
+                    <label htmlFor="curr_address_line1">Current Address Line 1 *</label>
+                    <input type="text" id="curr_address_line1" name="curr_address_line1" value={formData.curr_address_line1} onChange={handleChange} required />
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="curr_address_line2">Current Address Line 2</label>
+                    <input type="text" id="curr_address_line2" name="curr_address_line2" value={formData.curr_address_line2} onChange={handleChange} />
+                  </div>
+                </div>
+                <div className="grid-3">
+                  <div className="form-group">
+                    <label htmlFor="curr_city">City *</label>
+                    <input type="text" id="curr_city" name="curr_city" value={formData.curr_city} onChange={handleChange} required />
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="curr_state">State *</label>
+                    <select id="curr_state" name="curr_state" value={formData.curr_state} onChange={handleChange} required>
+                      <option value="Maharashtra">Maharashtra</option>
+                      <option value="Delhi">Delhi</option>
+                      <option value="Karnataka">Karnataka</option>
+                    </select>
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="curr_pincode">PIN Code *</label>
+                    <input type="text" id="curr_pincode" name="curr_pincode" value={formData.curr_pincode} onChange={handleChange} required />
+                  </div>
+                </div>
+                <div className="form-group">
+                  <label className="checkbox-group">
+                    <input type="checkbox" id="same_as_current" name="same_as_current" checked={formData.same_as_current} onChange={handleChange} /> Permanent address is same as current address
+                  </label>
+                </div>
+              </div>
+            )}
+
+            {/* Section 3: Identity Documents */}
+            {activeTab === 'documents' && (
+              <div>
+                <h3 className="section-title">Government Identity Documents</h3>
+                <div className="grid-2">
+                  <div className="form-group">
+                    <label htmlFor="pan_number">PAN Number *</label>
+                    <input type="text" id="pan_number" name="pan_number" value={formData.pan_number} onChange={handleChange} required />
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="aadhaar_number">Aadhaar Number *</label>
+                    <input type="text" id="aadhaar_number" name="aadhaar_number" value={formData.aadhaar_number} onChange={handleChange} required />
+                  </div>
+                </div>
+                <div className="grid-3">
+                  <div className="form-group">
+                    <label htmlFor="passport_number">Passport Number</label>
+                    <input type="text" id="passport_number" name="passport_number" value={formData.passport_number} onChange={handleChange} />
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="driving_licence">Driving Licence Number</label>
+                    <input type="text" id="driving_licence" name="driving_licence" value={formData.driving_licence} onChange={handleChange} />
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="voter_id">Voter ID</label>
+                    <input type="text" id="voter_id" name="voter_id" value={formData.voter_id} onChange={handleChange} />
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Section 4: Banking & Financials */}
+            {activeTab === 'banking' && (
+              <div>
+                <h3 className="section-title">Banking & Financial Profile</h3>
+                <div className="grid-2">
+                  <div className="form-group">
+                    <label htmlFor="bank_name">Bank Name *</label>
+                    <select id="bank_name" name="bank_name" value={formData.bank_name} onChange={handleChange} required>
+                      <option value="State Bank of India">State Bank of India</option>
+                      <option value="HDFC Bank">HDFC Bank</option>
+                      <option value="ICICI Bank">ICICI Bank</option>
+                    </select>
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="branch_name">Branch Name *</label>
+                    <input type="text" id="branch_name" name="branch_name" value={formData.branch_name} onChange={handleChange} required />
+                  </div>
+                </div>
+                <div className="grid-3">
+                  <div className="form-group">
+                    <label htmlFor="account_number">Account Number *</label>
+                    <input type="text" id="account_number" name="account_number" value={formData.account_number} onChange={handleChange} required />
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="ifsc_code">IFSC Code *</label>
+                    <input type="text" id="ifsc_code" name="ifsc_code" value={formData.ifsc_code} onChange={handleChange} required />
+                  </div>
+                  <div className="form-group">
+                    <label>Account Type *</label>
+                    <div className="radio-group">
+                      <label><input type="radio" name="account_type" value="Savings" checked={formData.account_type === 'Savings'} onChange={handleChange} /> Savings</label>
+                      <label><input type="radio" name="account_type" value="Current" checked={formData.account_type === 'Current'} onChange={handleChange} /> Current</label>
+                    </div>
+                  </div>
+                </div>
+                <div className="grid-3">
+                  <div className="form-group">
+                    <label htmlFor="occupation">Occupation *</label>
+                    <input type="text" id="occupation" name="occupation" value={formData.occupation} onChange={handleChange} required />
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="annual_income">Annual Income (INR) *</label>
+                    <input type="number" id="annual_income" name="annual_income" value={formData.annual_income} onChange={handleChange} required />
+                  </div>
+                  <div className="form-group">
+                    <label>Politically Exposed Person (PEP) *</label>
+                    <div className="radio-group">
+                      <label><input type="radio" name="is_pep" value="No" checked={formData.is_pep === 'No'} onChange={handleChange} /> No</label>
+                      <label><input type="radio" name="is_pep" value="Yes" checked={formData.is_pep === 'Yes'} onChange={handleChange} /> Yes</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Section 5: Nominee & Family */}
+            {activeTab === 'nominee' && (
+              <div>
+                <h3 className="section-title">Nominee & Family Information</h3>
+                <div className="grid-2">
+                  <div className="form-group">
+                    <label htmlFor="nominee_name">Nominee Name *</label>
+                    <input type="text" id="nominee_name" name="nominee_name" value={formData.nominee_name} onChange={handleChange} required />
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="nominee_relationship">Relationship *</label>
+                    <select id="nominee_relationship" name="nominee_relationship" value={formData.nominee_relationship} onChange={handleChange} required>
+                      <option value="Spouse">Spouse</option>
+                      <option value="Father">Father</option>
+                      <option value="Mother">Mother</option>
+                    </select>
+                  </div>
+                </div>
+                <div className="grid-3">
+                  <div className="form-group">
+                    <label htmlFor="father_name">Father's Name *</label>
+                    <input type="text" id="father_name" name="father_name" value={formData.father_name} onChange={handleChange} required />
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="mother_name">Mother's Name *</label>
+                    <input type="text" id="mother_name" name="mother_name" value={formData.mother_name} onChange={handleChange} required />
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="emergency_contact_phone">Emergency Contact Phone *</label>
+                    <input type="tel" id="emergency_contact_phone" name="emergency_contact_phone" value={formData.emergency_contact_phone} onChange={handleChange} required />
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Section 6: Uploads & Verification */}
+            {activeTab === 'uploads' && (
+              <div>
+                <h3 className="section-title">Upload Documents & Verification OTP</h3>
+                <div className="grid-2">
+                  <div className="form-group">
+                    <label htmlFor="upload_pan">PAN Card Document *</label>
+                    <input type="file" id="upload_pan" name="upload_pan" />
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="upload_aadhaar_front">Aadhaar Front Copy *</label>
+                    <input type="file" id="upload_aadhaar_front" name="upload_aadhaar_front" />
+                  </div>
+                </div>
+                <div className="grid-2">
+                  <div className="form-group">
+                    <label htmlFor="mobile_otp">Mobile OTP Code *</label>
+                    <input type="text" id="mobile_otp" name="mobile_otp" value={formData.mobile_otp} onChange={handleChange} required />
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="email_otp">Email OTP Code *</label>
+                    <input type="text" id="email_otp" name="email_otp" value={formData.email_otp} onChange={handleChange} required />
+                  </div>
+                </div>
+                <div className="form-group">
+                  <label className="checkbox-group">
+                    <input type="checkbox" id="esign_consent" name="esign_consent" checked={formData.esign_consent} onChange={handleChange} required /> Consent to digital Aadhaar eSign verification
+                  </label>
+                </div>
+                <div className="form-group">
+                  <label className="checkbox-group">
+                    <input type="checkbox" id="terms_consent" name="terms_consent" checked={formData.terms_consent} onChange={handleChange} required /> Agree to Terms & Conditions and Privacy Policy
+                  </label>
+                </div>
+              </div>
+            )}
+
+            {/* Navigation & Submit Controls */}
+            <div className="nav-actions">
+              {activeTab !== 'identity' ? (
+                <button type="button" className="btn-secondary" onClick={() => {
+                  const idx = SECTIONS.findIndex(s => s.id === activeTab);
+                  if (idx > 0) setActiveTab(SECTIONS[idx - 1].id);
+                }}>Previous Step</button>
+              ) : <div />}
+
+              {activeTab !== 'uploads' ? (
+                <button type="button" className="btn-primary" onClick={() => {
+                  const idx = SECTIONS.findIndex(s => s.id === activeTab);
+                  if (idx < SECTIONS.length - 1) setActiveTab(SECTIONS[idx + 1].id);
+                }}>Next Step →</button>
+              ) : (
+                <button type="submit" className="btn-primary" id="submitBtn">Submit Complete React KYC</button>
+              )}
+            </div>
+          </form>
+
+          {report && (
+            <div className="result-box">
+              <h3 style={{ color: '#38bdf8', marginTop: 0 }}>React Benchmark Evaluation Score: {report.score}/100</h3>
+              <pre style={{ color: '#a7f3d0' }}>{JSON.stringify(report, null, 2)}</pre>
+            </div>
+          )}
+        </div>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<ReactFullKycForm />);
+  </script>
+</body>
+</html>

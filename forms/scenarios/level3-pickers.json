@@ -1,0 +1,29 @@
+{
+  "id": "level3-pickers",
+  "level": 3,
+  "name": "Level 3 — Pickers, Comboboxes & Uploads",
+  "description": "Tests date pickers, searchable/select combos, and file upload widgets.",
+  "stressFlags": {},
+  "fields": [
+    { "id": "full_name", "label": "Full Name", "type": "text", "required": true },
+    { "id": "dob", "label": "Date of Birth", "type": "date", "required": true },
+    { "id": "nominee_dob", "label": "Nominee Date of Birth", "type": "date", "required": true },
+    { "id": "bank_name", "label": "Bank Name", "type": "combobox", "required": true, "options": ["State Bank of India", "HDFC Bank", "ICICI Bank", "Axis Bank", "Kotak Mahindra Bank"], "placeholder": "Search bank..." },
+    { "id": "income_range", "label": "Income Range", "type": "select", "required": true, "options": ["Below 1 Lakh", "1-5 Lakhs", "5-10 Lakhs", "10-25 Lakhs", "Above 25 Lakhs"] },
+    { "id": "pan_number", "label": "PAN Number", "type": "masked_input", "required": true, "validation": { "pattern": "^[A-Z]{5}[0-9]{4}[A-Z]{1}$", "errorMessage": "Enter a valid PAN (e.g. ABCDE1234F)" } },
+    { "id": "aadhaar_number", "label": "Aadhaar Number", "type": "masked_input", "required": true, "validation": { "pattern": "^[0-9]{12}$", "errorMessage": "Enter a 12-digit Aadhaar number" } },
+    { "id": "upload_pan", "label": "PAN Card Document", "type": "file", "required": true, "accept": ".jpg,.png,.pdf" },
+    { "id": "upload_aadhaar_front", "label": "Aadhaar Front", "type": "file", "required": true, "accept": ".jpg,.png,.pdf" }
+  ],
+  "groundTruth": {
+    "full_name": "Rajesh Kumar Sharma",
+    "dob": "1992-08-15",
+    "nominee_dob": "1994-05-20",
+    "bank_name": "State Bank of India",
+    "income_range": "10-25 Lakhs",
+    "pan_number": "ABCDE1234F",
+    "aadhaar_number": "123456789012",
+    "upload_pan": null,
+    "upload_aadhaar_front": null
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "id": "issue-network-delay",
+  "level": 7,
+  "name": "Issue Variant — Network Latency",
+  "description": "Artificial API and rendering delay tests agent wait/retry behavior.",
+  "stressFlags": { "networkDelayMs": 2500, "delayedRendering": true },
+  "fields": [
+    { "id": "full_name", "label": "Full Name", "type": "text", "required": true },
+    { "id": "email", "label": "Email Address", "type": "email", "required": true },
+    { "id": "mobile_number", "label": "Mobile Number", "type": "tel", "required": true },
+    { "id": "dob", "label": "Date of Birth", "type": "date", "required": true }
+  ],
+  "groundTruth": {
+    "full_name": "Rajesh Kumar Sharma",
+    "email": "rajesh.sharma@example.com",
+    "mobile_number": "9876543210",
+    "dob": "1992-08-15"
+  }
+}

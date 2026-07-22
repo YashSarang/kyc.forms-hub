@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PHP Server-Rendered KYC Form Benchmark (Full Suite)</title>
+  <style>
+    body { font-family: Arial, Helvetica, sans-serif; background-color: #111827; color: #f3f4f6; padding: 20px; }
+    .container { max-width: 950px; margin: 0 auto; background: #1f2937; padding: 35px; border-radius: 8px; border: 1px solid #374151; }
+    h1 { color: #818cf8; border-bottom: 2px solid #374151; padding-bottom: 10px; margin-top: 0; }
+    .badge { display: inline-block; background: #4f46e5; color: white; padding: 4px 12px; border-radius: 4px; font-size: 0.85rem; font-weight: bold; margin-bottom: 20px; }
+    
+    fieldset { border: 1px solid #4b5563; border-radius: 6px; padding: 20px; margin-bottom: 20px; background: #111827; }
+    legend { color: #818cf8; font-weight: bold; padding: 0 10px; font-size: 1.05rem; }
+
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+    .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; }
+    .form-group { margin-bottom: 16px; }
+    label { display: block; margin-bottom: 6px; font-weight: 600; color: #d1d5db; font-size: 0.9rem; }
+    input[type="text"], input[type="email"], input[type="tel"], input[type="date"], input[type="number"], select {
+      width: 100%; padding: 10px; border-radius: 4px; border: 1px solid #4b5563; background: #1f2937; color: white; font-size: 0.95rem; box-sizing: border-box;
+    }
+    input:focus, select:focus { border-color: #818cf8; outline: none; }
+    .radio-group, .checkbox-group { display: flex; gap: 15px; margin-top: 5px; color: #d1d5db; }
+
+    .btn-submit { background: #4f46e5; color: white; border: none; padding: 14px 28px; font-size: 1.1rem; border-radius: 4px; cursor: pointer; font-weight: bold; width: 100%; margin-top: 20px; }
+    .result-box { margin-top: 25px; padding: 20px; background: #030712; border-radius: 6px; border: 1px solid #374151; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <span class="badge">Stack: PHP Server-Rendered Fieldsets (15% Share)</span>
+    <h1>PHP Classic KYC Form (Server Rendered)</h1>
+
+    <form id="phpKycForm">
+      <!-- Fieldset 1 -->
+      <fieldset>
+        <legend>1. Personal Identity & Contact Information</legend>
+        <div class="grid-2">
+          <div class="form-group">
+            <label for="full_name">Full Name *</label>
+            <input type="text" id="full_name" name="full_name" value="Rajesh Kumar Sharma" required>
+          </div>
+          <div class="form-group">
+            <label for="email">Email Address *</label>
+            <input type="email" id="email" name="email" value="rajesh.sharma@example.com" required>
+          </div>
+        </div>
+        <div class="grid-3">
+          <div class="form-group">
+            <label for="first_name">First Name *</label>
+            <input type="text" id="first_name" name="first_name" value="Rajesh" required>
+          </div>
+          <div class="form-group">
+            <label for="middle_name">Middle Name</label>
+            <input type="text" id="middle_name" name="middle_name" value="Kumar">
+          </div>
+          <div class="form-group">
+            <label for="last_name">Last Name *</label>
+            <input type="text" id="last_name" name="last_name" value="Sharma" required>
+          </div>
+        </div>
+        <div class="grid-3">
+          <div class="form-group">
+            <label for="mobile_number">Mobile Number *</label>
+            <input type="tel" id="mobile_number" name="mobile_number" value="9876543210" required>
+          </div>
+          <div class="form-group">
+            <label for="dob">Date of Birth *</label>
+            <input type="date" id="dob" name="dob" value="1992-08-15" required>
+          </div>
+          <div class="form-group">
+            <label for="nationality">Nationality *</label>
+            <select id="nationality" name="nationality" required>
+              <option value="Indian" selected>Indian</option>
+              <option value="American">American</option>
+            </select>
+          </div>
+        </div>
+        <div class="grid-2">
+          <div class="form-group">
+            <label for="marital_status">Marital Status *</label>
+            <select id="marital_status" name="marital_status" required onchange="toggleSpouse(this.value)">
+              <option value="Single">Single</option>
+              <option value="Married" selected>Married</option>
+            </select>
+          </div>
+          <div class="form-group" id="spouseGroup">
+            <label for="spouse_name">Spouse Name *</label>
+            <input type="text" id="spouse_name" name="spouse_name" value="Priya Sharma" required>
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- Fieldset 2 -->
+      <fieldset>
+        <legend>2. Current & Permanent Address</legend>
+        <div class="grid-2">
+          <div class="form-group">
+            <label for="curr_address_line1">Current Address Line 1 *</label>
+            <input type="text" id="curr_address_line1" name="curr_address_line1" value="Flat 402, Sunshine Apartments" required>
+          </div>
+          <div class="form-group">
+            <label for="curr_city">City *</label>
+            <input type="text" id="curr_city" name="curr_city" value="Mumbai" required>
+          </div>
+        </div>
+        <div class="grid-3">
+          <div class="form-group">
+            <label for="curr_state">State *</label>
+            <select id="curr_state" name="curr_state" required>
+              <option value="Maharashtra" selected>Maharashtra</option>
+              <option value="Delhi">Delhi</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="curr_pincode">PIN Code *</label>
+            <input type="text" id="curr_pincode" name="curr_pincode" value="400067" required>
+          </div>
+          <div class="form-group">
+            <label for="curr_country">Country *</label>
+            <select id="curr_country" name="curr_country" required>
+              <option value="India" selected>India</option>
+            </select>
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- Fieldset 3 -->
+      <fieldset>
+        <legend>3. Government Identifiers & Banking</legend>
+        <div class="grid-2">
+          <div class="form-group">
+            <label for="pan_number">PAN Number *</label>
+            <input type="text" id="pan_number" name="pan_number" value="ABCDE1234F" required>
+          </div>
+          <div class="form-group">
+            <label for="aadhaar_number">Aadhaar Number *</label>
+            <input type="text" id="aadhaar_number" name="aadhaar_number" value="123456789012" required>
+          </div>
+        </div>
+        <div class="grid-3">
+          <div class="form-group">
+            <label for="bank_name">Bank Name *</label>
+            <select id="bank_name" name="bank_name" required>
+              <option value="State Bank of India" selected>State Bank of India</option>
+              <option value="HDFC Bank">HDFC Bank</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="branch_name">Branch Name *</label>
+            <input type="text" id="branch_name" name="branch_name" value="Fort Branch, Mumbai" required>
+          </div>
+          <div class="form-group">
+            <label for="account_number">Account Number *</label>
+            <input type="text" id="account_number" name="account_number" value="100234567890" required>
+          </div>
+        </div>
+        <div class="grid-3">
+          <div class="form-group">
+            <label for="ifsc_code">IFSC Code *</label>
+            <input type="text" id="ifsc_code" name="ifsc_code" value="SBIN0000300" required>
+          </div>
+          <div class="form-group">
+            <label for="occupation">Occupation *</label>
+            <input type="text" id="occupation" name="occupation" value="Software Engineer" required>
+          </div>
+          <div class="form-group">
+            <label for="annual_income">Annual Income (INR) *</label>
+            <input type="number" id="annual_income" name="annual_income" value="1200000" required>
+          </div>
+        </div>
+        <div class="grid-2">
+          <div class="form-group">
+            <label for="father_name">Father's Name *</label>
+            <input type="text" id="father_name" name="father_name" value="Ramesh Sharma" required>
+          </div>
+          <div class="form-group">
+            <label for="mother_name">Mother's Name *</label>
+            <input type="text" id="mother_name" name="mother_name" value="Sunita Sharma" required>
+          </div>
+        </div>
+        <div class="grid-2">
+          <div class="form-group">
+            <label for="mobile_otp">Mobile OTP *</label>
+            <input type="text" id="mobile_otp" name="mobile_otp" value="123456" required>
+          </div>
+          <div class="form-group">
+            <label for="email_otp">Email OTP *</label>
+            <input type="text" id="email_otp" name="email_otp" value="654321" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="checkbox-group">
+            <label><input type="checkbox" id="esign_consent" name="esign_consent" checked required> Aadhaar eSign Consent</label>
+            <label><input type="checkbox" id="terms_consent" name="terms_consent" checked required> Terms & Conditions</label>
+          </div>
+        </div>
+      </fieldset>
+
+      <button type="submit" class="btn-submit" id="submitBtn">Submit PHP Application</button>
+    </form>
+
+    <div class="result-box" id="resultBox" style="display:none;">
+      <h3 style="color:#818cf8; margin-top:0;">PHP Evaluation Output</h3>
+      <pre id="resultJson" style="color:#a7f3d0;"></pre>
+    </div>
+  </div>
+
+  <script>
+    function toggleSpouse(val) {
+      const spouseGroup = document.getElementById('spouseGroup');
+      const spouseInput = document.getElementById('spouse_name');
+      if (val === 'Married') {
+        spouseGroup.style.display = 'block';
+        spouseInput.required = true;
+      } else {
+        spouseGroup.style.display = 'none';
+        spouseInput.required = false;
+      }
+    }
+
+    document.getElementById('phpKycForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const formData = new FormData(this);
+      const data = {};
+      formData.forEach((value, key) => {
+        data[key] = value;
+      });
+      data.esign_consent = document.getElementById('esign_consent').checked;
+      data.terms_consent = document.getElementById('terms_consent').checked;
+      data.nominee_name = "Priya Sharma";
+      data.emergency_contact_phone = "9876500000";
+
+      const res = await fetch('/api/verify-submission', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ data })
+      });
+      const result = await res.json();
+      document.getElementById('resultBox').style.display = 'block';
+      document.getElementById('resultJson').textContent = JSON.stringify(result.report, null, 2);
+    });
+  </script>
+</body>
+</html>

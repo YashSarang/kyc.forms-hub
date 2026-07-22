@@ -1,0 +1,19 @@
+{
+  "id": "issue-shadow-dom",
+  "level": 7,
+  "name": "Issue Variant — Shadow DOM Encapsulation",
+  "description": "Critical inputs live inside Shadow Roots; agents must pierce or interact with the encapsulation boundary.",
+  "stressFlags": { "shadowDom": true },
+  "fields": [
+    { "id": "full_name", "label": "Full Name", "type": "text", "required": true, "shadow": true },
+    { "id": "email", "label": "Email Address", "type": "email", "required": true, "shadow": true },
+    { "id": "mobile_number", "label": "Mobile Number", "type": "tel", "required": true, "shadow": true },
+    { "id": "pan_number", "label": "PAN Number", "type": "text", "required": true, "shadow": true }
+  ],
+  "groundTruth": {
+    "full_name": "Rajesh Kumar Sharma",
+    "email": "rajesh.sharma@example.com",
+    "mobile_number": "9876543210",
+    "pan_number": "ABCDE1234F"
+  }
+}

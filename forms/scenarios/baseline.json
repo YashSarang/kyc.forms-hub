@@ -1,0 +1,9 @@
+{
+  "id": "baseline",
+  "level": 0,
+  "name": "Full Canonical KYC Baseline",
+  "description": "Complete 50+ field KYC form across all categories. Used as the repeatable baseline for cross-stack comparison.",
+  "stressFlags": {},
+  "fields": "canonical",
+  "groundTruth": "canonical"
+}

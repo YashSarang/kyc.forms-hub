@@ -1,0 +1,21 @@
+{
+  "id": "issue-hidden-fields",
+  "level": 7,
+  "name": "Issue Variant — Hidden Honeypot Fields",
+  "description": "Invisible honeypot inputs must not be filled; visible required fields must still be completed correctly.",
+  "stressFlags": { "hiddenHoneypotFields": true },
+  "fields": [
+    { "id": "full_name", "label": "Full Name", "type": "text", "required": true },
+    { "id": "email", "label": "Email Address", "type": "email", "required": true },
+    { "id": "honeypot_website", "label": "Website", "type": "text", "required": false, "isHoneypot": true },
+    { "id": "honeypot_company", "label": "Company", "type": "text", "required": false, "isHoneypot": true },
+    { "id": "mobile_number", "label": "Mobile Number", "type": "tel", "required": true }
+  ],
+  "groundTruth": {
+    "full_name": "Rajesh Kumar Sharma",
+    "email": "rajesh.sharma@example.com",
+    "mobile_number": "9876543210",
+    "honeypot_website": "",
+    "honeypot_company": ""
+  }
+}

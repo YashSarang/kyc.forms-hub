@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Level 4 — Dynamic Conditional Logic & Cascading Rules — Vue.js</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <style>
+    body { font-family: system-ui, sans-serif; background-color: #0d1117; color: #f8fafc; padding: 20px; }
+    .container { max-width: 950px; margin: 0 auto; background: #40444a; padding: 35px; border-radius: 14px; border: 1px solid #41b883; }
+    h1 { color: #41b883; border-bottom: 2px solid #41b883; padding-bottom: 12px; margin-top: 0; }
+    .badge { display: inline-block; background: #41b883; color: white; padding: 5px 14px; border-radius: 20px; font-size: 0.85rem; font-weight: bold; margin-bottom: 20px; }
+    .desc { color: #94a3b8; margin-bottom: 20px; }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+    .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; }
+    .form-group { margin-bottom: 16px; }
+    label { display: block; margin-bottom: 6px; font-weight: 600; color: #cbd5e1; font-size: 0.9rem; }
+    input, select, textarea { width: 100%; padding: 11px; border-radius: 6px; border: 1px solid #41b883; background: #0d1117; color: white; font-size: 0.95rem; box-sizing: border-box; }
+    input:focus, select:focus { outline: none; border-color: #41b883; box-shadow: 0 0 0 3px #41b88333; }
+    .radio-group, .checkbox-group { display: flex; gap: 15px; flex-wrap: wrap; margin-top: 5px; }
+    .radio-group label, .checkbox-group label { font-weight: normal; display: flex; align-items: center; gap: 6px; }
+    .btn-submit { background: linear-gradient(135deg, #41b883, #41b883); color: white; border: none; padding: 14px 28px; font-size: 1.1rem; border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%; margin-top: 20px; }
+    .result-box { margin-top: 25px; padding: 20px; background: #00000055; border-radius: 8px; border: 1px solid #41b883; display: none; }
+  </style>
+  
+</head>
+<body>
+  <div id="app" class="container">
+    <span class="badge">Vue.js (10% share)</span>
+    <h1>Level 4 — Dynamic Conditional Logic & Cascading Rules</h1>
+    <p class="desc">Tests dependent fields (spouse name on Married), cascading country/state/city, and live regex validation.</p>
+    <form @submit.prevent="submitForm">
+      <div class="grid-2">
+      <div class="form-group" data-field-id="full_name">
+        <label for="full_name">Full Name *</label>
+        <input type="text" id="full_name" v-model="form.full_name" placeholder="e.g. Rajesh Kumar Sharma" required />
+      </div>
+      <div class="form-group" data-field-id="marital_status">
+        <label for="marital_status">Marital Status *</label>
+        <select id="marital_status" v-model="form.marital_status" required><option value="Single">Single</option><option value="Married">Married</option><option value="Divorced">Divorced</option><option value="Widowed">Widowed</option></select>
+      </div>
+      <div class="form-group" data-field-id="spouse_name">
+        <label for="spouse_name">Spouse Name *</label>
+        <input type="text" id="spouse_name" v-model="form.spouse_name" placeholder="Priya Sharma" required />
+      </div>
+      <div class="form-group" data-field-id="curr_country">
+        <label for="curr_country">Country *</label>
+        <select id="curr_country" v-model="form.curr_country" required><option value="India">India</option><option value="United States">United States</option></select>
+      </div>
+      <div class="form-group" data-field-id="curr_state">
+        <label for="curr_state">State *</label>
+        <select id="curr_state" v-model="form.curr_state" required><option value="Maharashtra">Maharashtra</option><option value="Delhi">Delhi</option><option value="Karnataka">Karnataka</option><option value="Tamil Nadu">Tamil Nadu</option><option value="Telangana">Telangana</option><option value="Gujarat">Gujarat</option></select>
+      </div>
+      <div class="form-group" data-field-id="curr_city">
+        <label for="curr_city">City *</label>
+        <select id="curr_city" v-model="form.curr_city" required></select>
+      </div>
+      <div class="form-group" data-field-id="pan_number">
+        <label for="pan_number">PAN Number *</label>
+        <input type="text" id="pan_number" v-model="form.pan_number" placeholder="ABCDE1234F" required />
+      </div>
+      <div class="form-group" data-field-id="aadhaar_number">
+        <label for="aadhaar_number">Aadhaar Number *</label>
+        <input type="text" id="aadhaar_number" v-model="form.aadhaar_number" placeholder="1234 5678 9012" required />
+      </div>
+      </div>
+      
+      <button type="submit" class="btn-submit" id="realSubmit" :disabled="disabled">Submit Vue Form</button>
+    </form>
+    <div v-if="report" class="result-box">
+      <h3 style="color:#41b883; margin-top:0;">Vue Score: {{ report.score }}/100</h3>
+      <pre style="color:#a7f3d0;">{{ JSON.stringify(report, null, 2) }}</pre>
+    </div>
+  </div>
+  <script>
+    const { createApp, ref } = Vue;
+    createApp({
+      setup() {
+        const form = ref({"full_name":"Rajesh Kumar Sharma","marital_status":"Married","spouse_name":"Priya Sharma","curr_country":"India","curr_state":"Maharashtra","curr_city":"Mumbai","pan_number":"ABCDE1234F","aadhaar_number":"123456789012"});
+        const report = ref(null);
+        const disabled = ref(!!window.__KYC_DELAY_MS__);
+        if (window.__KYC_DELAY_MS__) setTimeout(() => disabled.value = false, window.__KYC_DELAY_MS__);
+        const submitForm = async () => {
+          const res = await fetch('/api/verify-submission', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ scenarioId: 'level4-dynamic', variantId: 'level4-dynamic-v8', data: form.value })
+          });
+          const data = await res.json();
+          report.value = data.report;
+        };
+        return { form, report, submitForm, disabled };
+      }
+    }).mount('#app');
+  </script>
+</body>
+</html>

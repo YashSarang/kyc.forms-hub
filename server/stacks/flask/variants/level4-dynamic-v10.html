@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Level 4 — Dynamic Conditional Logic & Cascading Rules — Flask / Python WTForms</title>
+  <style>
+    body { font-family: system-ui, sans-serif; background-color: #052e16; color: #f8fafc; padding: 20px; }
+    .container { max-width: 950px; margin: 0 auto; background: #386149; padding: 35px; border-radius: 14px; border: 1px solid #10b981; }
+    h1 { color: #34d399; border-bottom: 2px solid #10b981; padding-bottom: 12px; margin-top: 0; }
+    .badge { display: inline-block; background: #10b981; color: white; padding: 5px 14px; border-radius: 20px; font-size: 0.85rem; font-weight: bold; margin-bottom: 20px; }
+    .desc { color: #94a3b8; margin-bottom: 20px; }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+    .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; }
+    .form-group { margin-bottom: 16px; }
+    label { display: block; margin-bottom: 6px; font-weight: 600; color: #cbd5e1; font-size: 0.9rem; }
+    input, select, textarea { width: 100%; padding: 11px; border-radius: 6px; border: 1px solid #10b981; background: #052e16; color: white; font-size: 0.95rem; box-sizing: border-box; }
+    input:focus, select:focus { outline: none; border-color: #34d399; box-shadow: 0 0 0 3px #34d39933; }
+    .radio-group, .checkbox-group { display: flex; gap: 15px; flex-wrap: wrap; margin-top: 5px; }
+    .radio-group label, .checkbox-group label { font-weight: normal; display: flex; align-items: center; gap: 6px; }
+    .btn-submit { background: linear-gradient(135deg, #10b981, #34d399); color: white; border: none; padding: 14px 28px; font-size: 1.1rem; border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%; margin-top: 20px; }
+    .result-box { margin-top: 25px; padding: 20px; background: #00000055; border-radius: 8px; border: 1px solid #10b981; display: none; }
+  
+    .card-block { background: #c14fd; border: 1px solid #10b981; border-radius: 10px; padding: 20px; margin-bottom: 20px; }
+    .card-heading { color: #34d399; font-size: 1.1rem; border-bottom: 1px solid #10b981; padding-bottom: 8px; margin-top: 0; margin-bottom: 18px; }
+  </style>
+  
+</head>
+<body>
+  <div class="container">
+    <span class="badge">Flask / Python WTForms (10% share)</span>
+    <h1>Level 4 — Dynamic Conditional Logic & Cascading Rules</h1>
+    <p class="desc">Tests dependent fields (spouse name on Married), cascading country/state/city, and live regex validation.</p>
+    <form id="flaskForm" data-scenario="level4-dynamic">
+      <input type="hidden" name="csrf_token" value="csrf-token-flask-level4-dynamic">
+      <div class="card-block">
+        <h3 class="card-heading">WTFields Render Block</h3>
+        <div class="grid-2"><div class="form-group " data-field-id="full_name">
+      <label for="full_name">Full Name *</label>
+      <input type="text" id="full_name" name="full_name" value="Rajesh Kumar Sharma" placeholder="e.g. Rajesh Kumar Sharma" required />
+    </div>
+        <div class="form-group " data-field-id="marital_status">
+      <label for="marital_status">Marital Status *</label>
+      <select id="marital_status" name="marital_status" required><option value="Single">Single</option><option value="Married" selected>Married</option><option value="Divorced">Divorced</option><option value="Widowed">Widowed</option></select>
+    </div>
+        <div class="form-group " data-field-id="spouse_name">
+      <label for="spouse_name">Spouse Name *</label>
+      <input type="text" id="spouse_name" name="spouse_name" value="Priya Sharma" placeholder="Priya Sharma" required />
+    </div>
+        <div class="form-group " data-field-id="curr_country">
+      <label for="curr_country">Country *</label>
+      <select id="curr_country" name="curr_country" required><option value="India" selected>India</option><option value="United States">United States</option></select>
+    </div>
+        <div class="form-group " data-field-id="curr_state">
+      <label for="curr_state">State *</label>
+      <select id="curr_state" name="curr_state" required><option value="Maharashtra" selected>Maharashtra</option><option value="Delhi">Delhi</option><option value="Karnataka">Karnataka</option><option value="Tamil Nadu">Tamil Nadu</option><option value="Telangana">Telangana</option><option value="Gujarat">Gujarat</option></select>
+    </div>
+        <div class="form-group " data-field-id="curr_city">
+      <label for="curr_city">City *</label>
+      <select id="curr_city" name="curr_city" required></select>
+    </div>
+        <div class="form-group " data-field-id="pan_number">
+      <label for="pan_number">PAN Number *</label>
+      <input type="text" id="pan_number" name="pan_number" value="ABCDE1234F" placeholder="ABCDE1234F" required />
+    </div>
+        <div class="form-group " data-field-id="aadhaar_number">
+      <label for="aadhaar_number">Aadhaar Number *</label>
+      <input type="text" id="aadhaar_number" name="aadhaar_number" value="123456789012" placeholder="1234 5678 9012" required />
+    </div></div>
+      </div>
+      
+      <button type="submit" class="btn-submit" id="realSubmit">Submit Flask WTForms Application</button>
+    </form>
+    <div class="result-box" id="resultBox">
+      <h3 style="color:#34d399; margin-top:0;">Score: <span id="scoreVal"></span>/100</h3>
+      <pre id="resultJson" style="color:#a7f3d0; white-space:pre-wrap;"></pre>
+    </div>
+  </div>
+  <script>
+    document.getElementById('flaskForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const fd = new FormData(this);
+      const data = {};
+      fd.forEach((v, k) => data[k] = v);
+      if (document.getElementById('esign_consent')) data.esign_consent = document.getElementById('esign_consent').checked;
+      if (document.getElementById('terms_consent')) data.terms_consent = document.getElementById('terms_consent').checked;
+      if (window.__KYC_DELAY_MS__) await new Promise(r => setTimeout(r, window.__KYC_DELAY_MS__));
+      const res = await fetch('/api/verify-submission', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({ scenarioId: 'level4-dynamic', variantId: 'level4-dynamic-v10', data }) });
+      const result = await res.json();
+      document.getElementById('resultBox').style.display = 'block';
+      document.getElementById('scoreVal').textContent = result.report.score;
+      document.getElementById('resultJson').textContent = JSON.stringify(result.report, null, 2);
+    });
+  </script>
+</body>
+</html>

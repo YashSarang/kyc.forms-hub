@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Full Canonical KYC Baseline — Vue.js</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <style>
+    body { font-family: system-ui, sans-serif; background-color: #0d1117; color: #f8fafc; padding: 20px; }
+    .container { max-width: 950px; margin: 0 auto; background: #40444a; padding: 35px; border-radius: 14px; border: 1px solid #41b883; }
+    h1 { color: #41b883; border-bottom: 2px solid #41b883; padding-bottom: 12px; margin-top: 0; }
+    .badge { display: inline-block; background: #41b883; color: white; padding: 5px 14px; border-radius: 20px; font-size: 0.85rem; font-weight: bold; margin-bottom: 20px; }
+    .desc { color: #94a3b8; margin-bottom: 20px; }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+    .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; }
+    .form-group { margin-bottom: 16px; }
+    label { display: block; margin-bottom: 6px; font-weight: 600; color: #cbd5e1; font-size: 0.9rem; }
+    input, select, textarea { width: 100%; padding: 11px; border-radius: 6px; border: 1px solid #41b883; background: #0d1117; color: white; font-size: 0.95rem; box-sizing: border-box; }
+    input:focus, select:focus { outline: none; border-color: #41b883; box-shadow: 0 0 0 3px #41b88333; }
+    .radio-group, .checkbox-group { display: flex; gap: 15px; flex-wrap: wrap; margin-top: 5px; }
+    .radio-group label, .checkbox-group label { font-weight: normal; display: flex; align-items: center; gap: 6px; }
+    .btn-submit { background: linear-gradient(135deg, #41b883, #41b883); color: white; border: none; padding: 14px 28px; font-size: 1.1rem; border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%; margin-top: 20px; }
+    .result-box { margin-top: 25px; padding: 20px; background: #00000055; border-radius: 8px; border: 1px solid #41b883; display: none; }
+  </style>
+  
+</head>
+<body>
+  <div id="app" class="container">
+    <span class="badge">Vue.js (10% share)</span>
+    <h1>Full Canonical KYC Baseline</h1>
+    <p class="desc">Complete 50+ field KYC form across all categories. Used as the repeatable baseline for cross-stack comparison.</p>
+    <form @submit.prevent="submitForm">
+      <div class="grid-2">
+      <div class="form-group" data-field-id="full_name">
+        <label for="full_name">Full Name *</label>
+        <input type="text" id="full_name" v-model="form.full_name" placeholder="e.g. Rajesh Kumar Sharma" required />
+      </div>
+      <div class="form-group" data-field-id="first_name">
+        <label for="first_name">First Name *</label>
+        <input type="text" id="first_name" v-model="form.first_name" placeholder="Rajesh" required />
+      </div>
+      <div class="form-group" data-field-id="middle_name">
+        <label for="middle_name">Middle Name</label>
+        <input type="text" id="middle_name" v-model="form.middle_name" placeholder="Kumar"  />
+      </div>
+      <div class="form-group" data-field-id="last_name">
+        <label for="last_name">Last Name *</label>
+        <input type="text" id="last_name" v-model="form.last_name" placeholder="Sharma" required />
+      </div>
+      <div class="form-group" data-field-id="preferred_name">
+        <label for="preferred_name">Preferred Name</label>
+        <input type="text" id="preferred_name" v-model="form.preferred_name" placeholder="Raj"  />
+      </div>
+      <div class="form-group" data-field-id="gender">
+        <label for="gender">Gender *</label>
+        <div class="radio-group"><label><input type="radio" :name="'gender'" v-model="form.gender" value="Male" required> Male</label><label><input type="radio" :name="'gender'" v-model="form.gender" value="Female" required> Female</label><label><input type="radio" :name="'gender'" v-model="form.gender" value="Other" required> Other</label><label><input type="radio" :name="'gender'" v-model="form.gender" value="Prefer not to say" required> Prefer not to say</label></div>
+      </div>
+      <div class="form-group" data-field-id="dob">
+        <label for="dob">Date of Birth *</label>
+        <input type="date" id="dob" v-model="form.dob"  required />
+      </div>
+      <div class="form-group" data-field-id="age">
+        <label for="age">Age</label>
+        <input type="number" id="age" v-model="form.age"   />
+      </div>
+      <div class="form-group" data-field-id="nationality">
+        <label for="nationality">Nationality *</label>
+        <select id="nationality" v-model="form.nationality" required><option value="Indian">Indian</option><option value="American">American</option><option value="British">British</option><option value="Canadian">Canadian</option><option value="Other">Other</option></select>
+      </div>
+      <div class="form-group" data-field-id="marital_status">
+        <label for="marital_status">Marital Status *</label>
+        <select id="marital_status" v-model="form.marital_status" required><option value="Single">Single</option><option value="Married">Married</option><option value="Divorced">Divorced</option><option value="Widowed">Widowed</option></select>
+      </div>
+      <div class="form-group" data-field-id="mobile_number">
+        <label for="mobile_number">Mobile Number *</label>
+        <input type="tel" id="mobile_number" v-model="form.mobile_number" placeholder="9876543210" required />
+      </div>
+      <div class="form-group" data-field-id="alternate_mobile">
+        <label for="alternate_mobile">Alternate Mobile</label>
+        <input type="tel" id="alternate_mobile" v-model="form.alternate_mobile" placeholder="9876543211"  />
+      </div>
+      <div class="form-group" data-field-id="landline">
+        <label for="landline">Landline Number</label>
+        <input type="tel" id="landline" v-model="form.landline" placeholder="02228901234"  />
+      </div>
+      <div class="form-group" data-field-id="email">
+        <label for="email">Email Address *</label>
+        <input type="email" id="email" v-model="form.email" placeholder="rajesh.sharma@example.com" required />
+      </div>
+      <div class="form-group" data-field-id="curr_address_line1">
+        <label for="curr_address_line1">Current Address Line 1 *</label>
+        <input type="text" id="curr_address_line1" v-model="form.curr_address_line1" placeholder="Flat 402, Sunshine Apartments" required />
+      </div>
+      <div class="form-group" data-field-id="curr_address_line2">
+        <label for="curr_address_line2">Current Address Line 2</label>
+        <input type="text" id="curr_address_line2" v-model="form.curr_address_line2" placeholder="MG Road, Kandivali West"  />
+      </div>
+      <div class="form-group" data-field-id="curr_landmark">
+        <label for="curr_landmark">Landmark</label>
+        <input type="text" id="curr_landmark" v-model="form.curr_landmark" placeholder="Near Metro Station"  />
+      </div>
+      <div class="form-group" data-field-id="curr_city">
+        <label for="curr_city">City *</label>
+        <input type="text" id="curr_city" v-model="form.curr_city" placeholder="Mumbai" required />
+      </div>
+      <div class="form-group" data-field-id="curr_district">
+        <label for="curr_district">District *</label>
+        <input type="text" id="curr_district" v-model="form.curr_district" placeholder="Mumbai Suburban" required />
+      </div>
+      <div class="form-group" data-field-id="curr_state">
+        <label for="curr_state">State *</label>
+        <select id="curr_state" v-model="form.curr_state" required><option value="Maharashtra">Maharashtra</option><option value="Delhi">Delhi</option><option value="Karnataka">Karnataka</option><option value="Tamil Nadu">Tamil Nadu</option><option value="Telangana">Telangana</option><option value="Gujarat">Gujarat</option></select>
+      </div>
+      <div class="form-group" data-field-id="curr_pincode">
+        <label for="curr_pincode">PIN Code *</label>
+        <input type="text" id="curr_pincode" v-model="form.curr_pincode" placeholder="400067" required />
+      </div>
+      <div class="form-group" data-field-id="curr_country">
+        <label for="curr_country">Country *</label>
+        <select id="curr_country" v-model="form.curr_country" required><option value="India">India</option><option value="United States">United States</option><option value="United Kingdom">United Kingdom</option></select>
+      </div>
+      <div class="form-group" data-field-id="same_as_current">
+        <label for="same_as_current">Permanent address same as current address</label>
+        <label><input type="checkbox" id="same_as_current" v-model="form.same_as_current" > Permanent address same as current address</label>
+      </div>
+      <div class="form-group" data-field-id="perm_address_line1">
+        <label for="perm_address_line1">Permanent Address Line 1</label>
+        <input type="text" id="perm_address_line1" v-model="form.perm_address_line1"   />
+      </div>
+      <div class="form-group" data-field-id="perm_city">
+        <label for="perm_city">Permanent City</label>
+        <input type="text" id="perm_city" v-model="form.perm_city"   />
+      </div>
+      <div class="form-group" data-field-id="perm_state">
+        <label for="perm_state">Permanent State</label>
+        <select id="perm_state" v-model="form.perm_state" ><option value="Maharashtra">Maharashtra</option><option value="Delhi">Delhi</option><option value="Karnataka">Karnataka</option><option value="Tamil Nadu">Tamil Nadu</option><option value="Telangana">Telangana</option><option value="Gujarat">Gujarat</option></select>
+      </div>
+      <div class="form-group" data-field-id="perm_pincode">
+        <label for="perm_pincode">Permanent PIN Code</label>
+        <input type="text" id="perm_pincode" v-model="form.perm_pincode"   />
+      </div>
+      <div class="form-group" data-field-id="aadhaar_number">
+        <label for="aadhaar_number">Aadhaar Number *</label>
+        <input type="text" id="aadhaar_number" v-model="form.aadhaar_number" placeholder="1234 5678 9012" required />
+      </div>
+      <div class="form-group" data-field-id="pan_number">
+        <label for="pan_number">PAN Number *</label>
+        <input type="text" id="pan_number" v-model="form.pan_number" placeholder="ABCDE1234F" required />
+      </div>
+      <div class="form-group" data-field-id="passport_number">
+        <label for="passport_number">Passport Number</label>
+        <input type="text" id="passport_number" v-model="form.passport_number" placeholder="Z1234567"  />
+      </div>
+      <div class="form-group" data-field-id="driving_licence">
+        <label for="driving_licence">Driving Licence Number</label>
+        <input type="text" id="driving_licence" v-model="form.driving_licence" placeholder="MH0220190012345"  />
+      </div>
+      <div class="form-group" data-field-id="voter_id">
+        <label for="voter_id">Voter ID</label>
+        <input type="text" id="voter_id" v-model="form.voter_id" placeholder="XYZ9876543"  />
+      </div>
+      <div class="form-group" data-field-id="bank_name">
+        <label for="bank_name">Bank Name *</label>
+        <select id="bank_name" v-model="form.bank_name" required><option value="State Bank of India">State Bank of India</option><option value="HDFC Bank">HDFC Bank</option><option value="ICICI Bank">ICICI Bank</option><option value="Axis Bank">Axis Bank</option><option value="Kotak Mahindra Bank">Kotak Mahindra Bank</option></select>
+      </div>
+      <div class="form-group" data-field-id="branch_name">
+        <label for="branch_name">Branch Name *</label>
+        <input type="text" id="branch_name" v-model="form.branch_name" placeholder="Fort Branch, Mumbai" required />
+      </div>
+      <div class="form-group" data-field-id="account_number">
+        <label for="account_number">Account Number *</label>
+        <input type="text" id="account_number" v-model="form.account_number" placeholder="100234567890" required />
+      </div>
+      <div class="form-group" data-field-id="ifsc_code">
+        <label for="ifsc_code">IFSC Code *</label>
+        <input type="text" id="ifsc_code" v-model="form.ifsc_code" placeholder="SBIN0000300" required />
+      </div>
+      <div class="form-group" data-field-id="account_type">
+        <label for="account_type">Account Type *</label>
+        <div class="radio-group"><label><input type="radio" :name="'account_type'" v-model="form.account_type" value="Savings" required> Savings</label><label><input type="radio" :name="'account_type'" v-model="form.account_type" value="Current" required> Current</label><label><input type="radio" :name="'account_type'" v-model="form.account_type" value="Salary" required> Salary</label></div>
+      </div>
+      <div class="form-group" data-field-id="occupation">
+        <label for="occupation">Occupation *</label>
+        <input type="text" id="occupation" v-model="form.occupation" placeholder="Software Engineer" required />
+      </div>
+      <div class="form-group" data-field-id="employment_type">
+        <label for="employment_type">Employment Type *</label>
+        <select id="employment_type" v-model="form.employment_type" required><option value="Salaried">Salaried</option><option value="Self-Employed">Self-Employed</option><option value="Business Owner">Business Owner</option><option value="Student">Student</option><option value="Retired">Retired</option></select>
+      </div>
+      <div class="form-group" data-field-id="employer_name">
+        <label for="employer_name">Employer Name</label>
+        <input type="text" id="employer_name" v-model="form.employer_name" placeholder="Tech Solutions Pvt Ltd"  />
+      </div>
+      <div class="form-group" data-field-id="designation">
+        <label for="designation">Designation</label>
+        <input type="text" id="designation" v-model="form.designation" placeholder="Senior Developer"  />
+      </div>
+      <div class="form-group" data-field-id="industry">
+        <label for="industry">Industry</label>
+        <input type="text" id="industry" v-model="form.industry" placeholder="Information Technology"  />
+      </div>
+      <div class="form-group" data-field-id="annual_income">
+        <label for="annual_income">Annual Income (INR) *</label>
+        <input type="number" id="annual_income" v-model="form.annual_income" placeholder="1200000" required />
+      </div>
+      <div class="form-group" data-field-id="income_range">
+        <label for="income_range">Income Range *</label>
+        <select id="income_range" v-model="form.income_range" required><option value="Below 1 Lakh">Below 1 Lakh</option><option value="1-5 Lakhs">1-5 Lakhs</option><option value="5-10 Lakhs">5-10 Lakhs</option><option value="10-25 Lakhs">10-25 Lakhs</option><option value="Above 25 Lakhs">Above 25 Lakhs</option></select>
+      </div>
+      <div class="form-group" data-field-id="net_worth">
+        <label for="net_worth">Net Worth (INR)</label>
+        <input type="number" id="net_worth" v-model="form.net_worth" placeholder="5000000"  />
+      </div>
+      <div class="form-group" data-field-id="is_pep">
+        <label for="is_pep">Politically Exposed Person (PEP) *</label>
+        <div class="radio-group"><label><input type="radio" :name="'is_pep'" v-model="form.is_pep" value="No" required> No</label><label><input type="radio" :name="'is_pep'" v-model="form.is_pep" value="Yes" required> Yes</label></div>
+      </div>
+      <div class="form-group" data-field-id="nominee_name">
+        <label for="nominee_name">Nominee Name *</label>
+        <input type="text" id="nominee_name" v-model="form.nominee_name" placeholder="Priya Sharma" required />
+      </div>
+      <div class="form-group" data-field-id="nominee_relationship">
+        <label for="nominee_relationship">Nominee Relationship *</label>
+        <select id="nominee_relationship" v-model="form.nominee_relationship" required><option value="Spouse">Spouse</option><option value="Father">Father</option><option value="Mother">Mother</option><option value="Son">Son</option><option value="Daughter">Daughter</option><option value="Brother">Brother</option><option value="Sister">Sister</option></select>
+      </div>
+      <div class="form-group" data-field-id="nominee_dob">
+        <label for="nominee_dob">Nominee Date of Birth *</label>
+        <input type="date" id="nominee_dob" v-model="form.nominee_dob"  required />
+      </div>
+      <div class="form-group" data-field-id="nominee_share">
+        <label for="nominee_share">Nominee Share (%) *</label>
+        <input type="number" id="nominee_share" v-model="form.nominee_share" placeholder="100" required />
+      </div>
+      <div class="form-group" data-field-id="father_name">
+        <label for="father_name">Father's Name *</label>
+        <input type="text" id="father_name" v-model="form.father_name" placeholder="Ramesh Sharma" required />
+      </div>
+      <div class="form-group" data-field-id="mother_name">
+        <label for="mother_name">Mother's Name *</label>
+        <input type="text" id="mother_name" v-model="form.mother_name" placeholder="Sunita Sharma" required />
+      </div>
+      <div class="form-group" data-field-id="spouse_name">
+        <label for="spouse_name">Spouse Name</label>
+        <input type="text" id="spouse_name" v-model="form.spouse_name" placeholder="Priya Sharma"  />
+      </div>
+      <div class="form-group" data-field-id="emergency_contact_name">
+        <label for="emergency_contact_name">Emergency Contact Name *</label>
+        <input type="text" id="emergency_contact_name" v-model="form.emergency_contact_name" placeholder="Ramesh Sharma" required />
+      </div>
+      <div class="form-group" data-field-id="emergency_contact_phone">
+        <label for="emergency_contact_phone">Emergency Contact Phone *</label>
+        <input type="tel" id="emergency_contact_phone" v-model="form.emergency_contact_phone" placeholder="9876500000" required />
+      </div>
+      <div class="form-group" data-field-id="upload_pan">
+        <label for="upload_pan">PAN Card Document *</label>
+        <input type="text" id="upload_pan" v-model="form.upload_pan"  required />
+      </div>
+      <div class="form-group" data-field-id="upload_aadhaar_front">
+        <label for="upload_aadhaar_front">Aadhaar Front *</label>
+        <input type="text" id="upload_aadhaar_front" v-model="form.upload_aadhaar_front"  required />
+      </div>
+      <div class="form-group" data-field-id="upload_aadhaar_back">
+        <label for="upload_aadhaar_back">Aadhaar Back *</label>
+        <input type="text" id="upload_aadhaar_back" v-model="form.upload_aadhaar_back"  required />
+      </div>
+      <div class="form-group" data-field-id="upload_photo">
+        <label for="upload_photo">Applicant Photo / Selfie *</label>
+        <input type="text" id="upload_photo" v-model="form.upload_photo"  required />
+      </div>
+      <div class="form-group" data-field-id="upload_signature">
+        <label for="upload_signature">Applicant Specimen Signature *</label>
+        <input type="text" id="upload_signature" v-model="form.upload_signature"  required />
+      </div>
+      <div class="form-group" data-field-id="mobile_otp">
+        <label for="mobile_otp">Mobile OTP Code *</label>
+        <input type="text" id="mobile_otp" v-model="form.mobile_otp" placeholder="123456" required />
+      </div>
+      <div class="form-group" data-field-id="email_otp">
+        <label for="email_otp">Email OTP Code *</label>
+        <input type="text" id="email_otp" v-model="form.email_otp" placeholder="654321" required />
+      </div>
+      <div class="form-group" data-field-id="esign_consent">
+        <label for="esign_consent">I consent to digital Aadhaar eSign verification *</label>
+        <label><input type="checkbox" id="esign_consent" v-model="form.esign_consent" required> I consent to digital Aadhaar eSign verification</label>
+      </div>
+      <div class="form-group" data-field-id="terms_consent">
+        <label for="terms_consent">I agree to Terms & Conditions and Privacy Policy *</label>
+        <label><input type="checkbox" id="terms_consent" v-model="form.terms_consent" required> I agree to Terms & Conditions and Privacy Policy</label>
+      </div>
+      <div class="form-group" data-field-id="customer_id">
+        <label for="customer_id">Customer ID</label>
+        <input type="text" id="customer_id" v-model="form.customer_id"   />
+      </div>
+      <div class="form-group" data-field-id="branch_code">
+        <label for="branch_code">Branch Code</label>
+        <input type="text" id="branch_code" v-model="form.branch_code"   />
+      </div>
+      <div class="form-group" data-field-id="agent_id">
+        <label for="agent_id">Agent ID</label>
+        <input type="text" id="agent_id" v-model="form.agent_id" placeholder="AGT-4402"  />
+      </div>
+      <div class="form-group" data-field-id="referral_code">
+        <label for="referral_code">Referral Code</label>
+        <input type="text" id="referral_code" v-model="form.referral_code" placeholder="REF-KYC2026"  />
+      </div>
+      </div>
+      
+      <button type="submit" class="btn-submit" id="realSubmit" :disabled="disabled">Submit Vue Form</button>
+    </form>
+    <div v-if="report" class="result-box">
+      <h3 style="color:#41b883; margin-top:0;">Vue Score: {{ report.score }}/100</h3>
+      <pre style="color:#a7f3d0;">{{ JSON.stringify(report, null, 2) }}</pre>
+    </div>
+  </div>
+  <script>
+    const { createApp, ref } = Vue;
+    createApp({
+      setup() {
+        const form = ref({"full_name":"Rajesh Kumar Sharma","first_name":"Rajesh","middle_name":"Kumar","last_name":"Sharma","preferred_name":"Raj","gender":"Male","dob":"1992-08-15","age":33,"nationality":"Indian","marital_status":"Married","mobile_number":"9876543210","alternate_mobile":"9876543211","landline":"02228901234","email":"rajesh.sharma@example.com","curr_address_line1":"Flat 402, Sunshine Apartments","curr_address_line2":"MG Road, Kandivali West","curr_landmark":"Near Metro Station","curr_city":"Mumbai","curr_district":"Mumbai Suburban","curr_state":"Maharashtra","curr_pincode":"400067","curr_country":"India","same_as_current":true,"perm_address_line1":"Flat 402, Sunshine Apartments","perm_city":"Mumbai","perm_state":"Maharashtra","perm_pincode":"400067","aadhaar_number":"123456789012","pan_number":"ABCDE1234F","passport_number":"Z1234567","driving_licence":"MH0220190012345","voter_id":"XYZ9876543","bank_name":"State Bank of India","branch_name":"Fort Branch, Mumbai","account_number":"100234567890","ifsc_code":"SBIN0000300","account_type":"Savings","occupation":"Software Engineer","employment_type":"Salaried","employer_name":"Tech Solutions Pvt Ltd","designation":"Senior Developer","industry":"Information Technology","annual_income":"1200000","income_range":"10-25 Lakhs","net_worth":"5000000","is_pep":"No","nominee_name":"Priya Sharma","nominee_relationship":"Spouse","nominee_dob":"1994-05-20","nominee_share":"100","father_name":"Ramesh Sharma","mother_name":"Sunita Sharma","spouse_name":"Priya Sharma","emergency_contact_name":"Ramesh Sharma","emergency_contact_phone":"9876500000","upload_pan":null,"upload_aadhaar_front":null,"upload_aadhaar_back":null,"upload_photo":null,"upload_signature":null,"mobile_otp":"123456","email_otp":"654321","esign_consent":true,"terms_consent":true,"customer_id":"CUST-883921","branch_code":"BR-MUM-001","agent_id":"AGT-4402","referral_code":"REF-KYC2026"});
+        const report = ref(null);
+        const disabled = ref(!!window.__KYC_DELAY_MS__);
+        if (window.__KYC_DELAY_MS__) setTimeout(() => disabled.value = false, window.__KYC_DELAY_MS__);
+        const submitForm = async () => {
+          const res = await fetch('/api/verify-submission', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ scenarioId: 'baseline', variantId: 'baseline-v8', data: form.value })
+          });
+          const data = await res.json();
+          report.value = data.report;
+        };
+        return { form, report, submitForm, disabled };
+      }
+    }).mount('#app');
+  </script>
+</body>
+</html>

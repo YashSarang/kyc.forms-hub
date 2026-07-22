@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Plain HTML / jQuery KYC Form Benchmark (Full Suite)</title>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <style>
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #0f172a; color: #f8fafc; padding: 20px; }
+    .container { max-width: 950px; margin: 0 auto; background: #1e293b; padding: 35px; border-radius: 14px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+    h1 { color: #38bdf8; border-bottom: 2px solid #334155; padding-bottom: 12px; margin-top: 0; }
+    .badge { display: inline-block; background: #0284c7; color: white; padding: 5px 14px; border-radius: 20px; font-size: 0.85rem; font-weight: bold; margin-bottom: 20px; }
+    
+    /* jQuery Accordion Sections */
+    .accordion-header { background: #0f172a; border: 1px solid #334155; padding: 14px 20px; border-radius: 8px; cursor: pointer; font-weight: bold; color: #38bdf8; margin-top: 15px; display: flex; justify-content: space-between; align-items: center; }
+    .accordion-header.active { background: #0284c7; color: white; border-color: #38bdf8; }
+    .accordion-content { padding: 20px; background: #111827; border: 1px solid #334155; border-top: none; border-radius: 0 0 8px 8px; display: none; }
+    .accordion-content.active { display: block; }
+
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+    .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; }
+    .form-group { margin-bottom: 16px; }
+    label { display: block; margin-bottom: 6px; font-weight: 600; color: #cbd5e1; font-size: 0.9rem; }
+    input[type="text"], input[type="email"], input[type="tel"], input[type="date"], input[type="number"], input[type="file"], select {
+      width: 100%; padding: 11px; border-radius: 6px; border: 1px solid #475569; background: #0f172a; color: white; font-size: 0.95rem; box-sizing: border-box;
+    }
+    input:focus, select:focus { border-color: #38bdf8; outline: none; }
+    .radio-group, .checkbox-group { display: flex; gap: 15px; margin-top: 5px; color: #cbd5e1; }
+
+    .btn-submit { background: linear-gradient(135deg, #0284c7, #2563eb); color: white; border: none; padding: 14px 28px; font-size: 1.1rem; border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%; margin-top: 25px; }
+    .result-box { margin-top: 25px; padding: 20px; background: #090d16; border-radius: 8px; border: 1px solid #334155; display: none; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <span class="badge">Stack: Plain HTML / jQuery Accordion (20% Share)</span>
+    <h1>jQuery KYC Verification Benchmark</h1>
+
+    <form id="jqueryKycForm">
+      <!-- Section 1 -->
+      <div class="accordion-header active" data-target="sec1">
+        <span>1. Personal Identity Details</span> <span>▼</span>
+      </div>
+      <div class="accordion-content active" id="sec1">
+        <div class="grid-2">
+          <div class="form-group">
+            <label for="full_name">Full Name *</label>
+            <input type="text" id="full_name" name="full_name" value="Rajesh Kumar Sharma" required>
+          </div>
+          <div class="form-group">
+            <label for="preferred_name">Preferred Name</label>
+            <input type="text" id="preferred_name" name="preferred_name" value="Raj">
+          </div>
+        </div>
+        <div class="grid-3">
+          <div class="form-group">
+            <label for="first_name">First Name *</label>
+            <input type="text" id="first_name" name="first_name" value="Rajesh" required>
+          </div>
+          <div class="form-group">
+            <label for="middle_name">Middle Name</label>
+            <input type="text" id="middle_name" name="middle_name" value="Kumar">
+          </div>
+          <div class="form-group">
+            <label for="last_name">Last Name *</label>
+            <input type="text" id="last_name" name="last_name" value="Sharma" required>
+          </div>
+        </div>
+        <div class="grid-3">
+          <div class="form-group">
+            <label>Gender *</label>
+            <div class="radio-group">
+              <label><input type="radio" name="gender" value="Male" checked required> Male</label>
+              <label><input type="radio" name="gender" value="Female"> Female</label>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="dob">Date of Birth *</label>
+            <input type="date" id="dob" name="dob" value="1992-08-15" required>
+          </div>
+          <div class="form-group">
+            <label for="nationality">Nationality *</label>
+            <select id="nationality" name="nationality" required>
+              <option value="Indian" selected>Indian</option>
+              <option value="American">American</option>
+            </select>
+          </div>
+        </div>
+        <div class="grid-2">
+          <div class="form-group">
+            <label for="marital_status">Marital Status *</label>
+            <select id="marital_status" name="marital_status" required>
+              <option value="Single">Single</option>
+              <option value="Married" selected>Married</option>
+              <option value="Divorced">Divorced</option>
+            </select>
+          </div>
+          <div class="form-group" id="spouseGroup">
+            <label for="spouse_name">Spouse Name *</label>
+            <input type="text" id="spouse_name" name="spouse_name" value="Priya Sharma" required>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 2 -->
+      <div class="accordion-header" data-target="sec2">
+        <span>2. Contact & Address Details</span> <span>▶</span>
+      </div>
+      <div class="accordion-content" id="sec2">
+        <div class="grid-3">
+          <div class="form-group">
+            <label for="email">Email Address *</label>
+            <input type="email" id="email" name="email" value="rajesh.sharma@example.com" required>
+          </div>
+          <div class="form-group">
+            <label for="mobile_number">Mobile Number *</label>
+            <input type="tel" id="mobile_number" name="mobile_number" value="9876543210" required>
+          </div>
+          <div class="form-group">
+            <label for="alternate_mobile">Alternate Mobile</label>
+            <input type="tel" id="alternate_mobile" name="alternate_mobile" value="9876543211">
+          </div>
+        </div>
+        <div class="grid-2">
+          <div class="form-group">
+            <label for="curr_address_line1">Current Address Line 1 *</label>
+            <input type="text" id="curr_address_line1" name="curr_address_line1" value="Flat 402, Sunshine Apartments" required>
+          </div>
+          <div class="form-group">
+            <label for="curr_address_line2">Current Address Line 2</label>
+            <input type="text" id="curr_address_line2" name="curr_address_line2" value="MG Road, Kandivali West">
+          </div>
+        </div>
+        <div class="grid-3">
+          <div class="form-group">
+            <label for="curr_city">City *</label>
+            <input type="text" id="curr_city" name="curr_city" value="Mumbai" required>
+          </div>
+          <div class="form-group">
+            <label for="curr_state">State *</label>
+            <select id="curr_state" name="curr_state" required>
+              <option value="Maharashtra" selected>Maharashtra</option>
+              <option value="Delhi">Delhi</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="curr_pincode">PIN Code *</label>
+            <input type="text" id="curr_pincode" name="curr_pincode" value="400067" required>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 3 -->
+      <div class="accordion-header" data-target="sec3">
+        <span>3. Identity Documents & Banking</span> <span>▶</span>
+      </div>
+      <div class="accordion-content" id="sec3">
+        <div class="grid-2">
+          <div class="form-group">
+            <label for="pan_number">PAN Number *</label>
+            <input type="text" id="pan_number" name="pan_number" value="ABCDE1234F" required>
+          </div>
+          <div class="form-group">
+            <label for="aadhaar_number">Aadhaar Number *</label>
+            <input type="text" id="aadhaar_number" name="aadhaar_number" value="123456789012" required>
+          </div>
+        </div>
+        <div class="grid-3">
+          <div class="form-group">
+            <label for="bank_name">Bank Name *</label>
+            <select id="bank_name" name="bank_name" required>
+              <option value="State Bank of India" selected>State Bank of India</option>
+              <option value="HDFC Bank">HDFC Bank</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="branch_name">Branch Name *</label>
+            <input type="text" id="branch_name" name="branch_name" value="Fort Branch, Mumbai" required>
+          </div>
+          <div class="form-group">
+            <label for="account_number">Account Number *</label>
+            <input type="text" id="account_number" name="account_number" value="100234567890" required>
+          </div>
+        </div>
+        <div class="grid-2">
+          <div class="form-group">
+            <label for="ifsc_code">IFSC Code *</label>
+            <input type="text" id="ifsc_code" name="ifsc_code" value="SBIN0000300" required>
+          </div>
+          <div class="form-group">
+            <label>Account Type *</label>
+            <div class="radio-group">
+              <label><input type="radio" name="account_type" value="Savings" checked> Savings</label>
+              <label><input type="radio" name="account_type" value="Current"> Current</label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 4 -->
+      <div class="accordion-header" data-target="sec4">
+        <span>4. Employment, Family & Consents</span> <span>▶</span>
+      </div>
+      <div class="accordion-content" id="sec4">
+        <div class="grid-3">
+          <div class="form-group">
+            <label for="occupation">Occupation *</label>
+            <input type="text" id="occupation" name="occupation" value="Software Engineer" required>
+          </div>
+          <div class="form-group">
+            <label for="annual_income">Annual Income (INR) *</label>
+            <input type="number" id="annual_income" name="annual_income" value="1200000" required>
+          </div>
+          <div class="form-group">
+            <label for="nominee_name">Nominee Name *</label>
+            <input type="text" id="nominee_name" name="nominee_name" value="Priya Sharma" required>
+          </div>
+        </div>
+        <div class="grid-2">
+          <div class="form-group">
+            <label for="father_name">Father's Name *</label>
+            <input type="text" id="father_name" name="father_name" value="Ramesh Sharma" required>
+          </div>
+          <div class="form-group">
+            <label for="mother_name">Mother's Name *</label>
+            <input type="text" id="mother_name" name="mother_name" value="Sunita Sharma" required>
+          </div>
+        </div>
+        <div class="grid-2">
+          <div class="form-group">
+            <label for="mobile_otp">Mobile OTP *</label>
+            <input type="text" id="mobile_otp" name="mobile_otp" value="123456" required>
+          </div>
+          <div class="form-group">
+            <label for="email_otp">Email OTP *</label>
+            <input type="text" id="email_otp" name="email_otp" value="654321" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="checkbox-group">
+            <label><input type="checkbox" id="esign_consent" name="esign_consent" checked required> Aadhaar eSign Consent</label>
+            <label><input type="checkbox" id="terms_consent" name="terms_consent" checked required> Terms & Conditions</label>
+          </div>
+        </div>
+      </div>
+
+      <button type="submit" class="btn-submit" id="submitBtn">Submit Complete jQuery Form</button>
+    </form>
+
+    <div class="result-box" id="resultBox">
+      <h3 style="color:#38bdf8; margin-top:0;">jQuery Benchmark Evaluation Result</h3>
+      <pre id="resultJson" style="color:#a7f3d0; white-space:pre-wrap;"></pre>
+    </div>
+  </div>
+
+  <script>
+    $(document).ready(function() {
+      // Accordion toggle behavior
+      $('.accordion-header').on('click', function() {
+        $('.accordion-header').removeClass('active');
+        $('.accordion-content').removeClass('active').hide();
+        $(this).addClass('active');
+        $('#' + $(this).data('target')).addClass('active').fadeIn(200);
+      });
+
+      $('#marital_status').on('change', function() {
+        if ($(this).val() === 'Married') {
+          $('#spouseGroup').show();
+          $('#spouse_name').attr('required', true);
+        } else {
+          $('#spouseGroup').hide();
+          $('#spouse_name').removeAttr('required');
+        }
+      });
+
+      $('#jqueryKycForm').on('submit', function(e) {
+        e.preventDefault();
+        const data = {};
+        $(this).serializeArray().forEach(item => {
+          data[item.name] = item.value;
+        });
+        data.esign_consent = $('#esign_consent').is(':checked');
+        data.terms_consent = $('#terms_consent').is(':checked');
+        data.curr_country = "India";
+        data.emergency_contact_phone = "9876500000";
+
+        $.ajax({
+          url: '/api/verify-submission',
+          type: 'POST',
+          contentType: 'application/json',
+          data: JSON.stringify({ data }),
+          success: function(response) {
+            $('#resultBox').show();
+            $('#resultJson').text(JSON.stringify(response.report, null, 2));
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>

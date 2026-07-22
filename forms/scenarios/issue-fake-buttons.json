@@ -1,0 +1,19 @@
+{
+  "id": "issue-fake-buttons",
+  "level": 7,
+  "name": "Issue Variant — Fake Submit Buttons",
+  "description": "Decoy submit-styled buttons test whether the agent can identify the real submit control.",
+  "stressFlags": { "fakeSubmitButtons": true, "fakeButtonCount": 3 },
+  "fields": [
+    { "id": "full_name", "label": "Full Name", "type": "text", "required": true },
+    { "id": "email", "label": "Email Address", "type": "email", "required": true },
+    { "id": "mobile_number", "label": "Mobile Number", "type": "tel", "required": true },
+    { "id": "terms_consent", "label": "I agree to Terms & Conditions", "type": "checkbox", "required": true }
+  ],
+  "groundTruth": {
+    "full_name": "Rajesh Kumar Sharma",
+    "email": "rajesh.sharma@example.com",
+    "mobile_number": "9876543210",
+    "terms_consent": true
+  }
+}

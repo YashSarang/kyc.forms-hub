@@ -1,0 +1,110 @@
+{
+  "version": "1.1.0",
+  "scenarios": [
+    {
+      "id": "baseline",
+      "level": 0,
+      "name": "Full Canonical KYC Baseline",
+      "description": "Complete 50+ field KYC form across all categories. Used as the repeatable baseline for cross-stack comparison.",
+      "stressFlags": {}
+    },
+    {
+      "id": "level1-basic",
+      "level": 1,
+      "name": "Level 1 — Basic Text Inputs",
+      "description": "Tests fundamental single-line text, email, and phone input detection and value setting.",
+      "stressFlags": {}
+    },
+    {
+      "id": "level2-selection",
+      "level": 2,
+      "name": "Level 2 — Selection Controls",
+      "description": "Tests native dropdowns, radio buttons, checkboxes, and toggle-style controls.",
+      "stressFlags": {}
+    },
+    {
+      "id": "level3-pickers",
+      "level": 3,
+      "name": "Level 3 — Pickers, Comboboxes & Uploads",
+      "description": "Tests date pickers, searchable/select combos, and file upload widgets.",
+      "stressFlags": {}
+    },
+    {
+      "id": "level4-dynamic",
+      "level": 4,
+      "name": "Level 4 — Dynamic Conditional Logic & Cascading Rules",
+      "description": "Tests dependent fields (spouse name on Married), cascading country/state/city, and live regex validation.",
+      "stressFlags": {}
+    },
+    {
+      "id": "level5-complex",
+      "level": 5,
+      "name": "Level 5 — Multi-step Wizards, Modals & Embedded Iframes",
+      "description": "Tests agent navigation across wizard steps, modal dialogs, side drawers, and iframe-embedded fields.",
+      "stressFlags": { "multiStep": true, "modalFields": true, "iframeField": true }
+    },
+    {
+      "id": "level6-frameworks",
+      "level": 6,
+      "name": "Level 6 — Framework Shadow DOM & Web Components",
+      "description": "Tests Shadow DOM encapsulated inputs, custom web components, and framework-specific rendering idioms.",
+      "stressFlags": { "shadowDom": true, "webComponents": true }
+    },
+    {
+      "id": "level7-adversarial",
+      "level": 7,
+      "name": "Level 7 — Adversarial Stress Conditions",
+      "description": "Tests agent resilience against duplicate labels, decoy buttons, network delays, hidden honeypot fields, and dynamic IDs.",
+      "stressFlags": { "duplicateLabels": true, "fakeSubmitButtons": true, "hiddenHoneypotFields": true, "dynamicIds": true, "networkDelayMs": 1500 }
+    },
+    {
+      "id": "issue-combined",
+      "level": 7,
+      "name": "Issue Variant — Combined Adversarial Stack",
+      "description": "Duplicate labels, fake buttons, hidden honeypots, dynamic IDs, and network delay applied together.",
+      "stressFlags": { "duplicateLabels": true, "fakeSubmitButtons": true, "fakeButtonCount": 2, "hiddenHoneypotFields": true, "dynamicIds": true, "networkDelayMs": 1800, "randomizedFieldOrder": true }
+    },
+    {
+      "id": "issue-duplicate-labels",
+      "level": 7,
+      "name": "Issue Variant — Duplicate Labels",
+      "description": "Non-unique labels force agents to use context, IDs, or surrounding text to disambiguate fields.",
+      "stressFlags": { "duplicateLabels": true }
+    },
+    {
+      "id": "issue-dynamic-ids",
+      "level": 7,
+      "name": "Issue Variant — Dynamic IDs & Labels",
+      "description": "Element IDs and labels mutate on each page load; agents must rely on stable attributes or semantic selectors.",
+      "stressFlags": { "dynamicIds": true, "randomizedFieldOrder": true }
+    },
+    {
+      "id": "issue-fake-buttons",
+      "level": 7,
+      "name": "Issue Variant — Fake Submit Buttons",
+      "description": "Decoy submit-styled buttons test whether the agent can identify the real submit control.",
+      "stressFlags": { "fakeSubmitButtons": true, "fakeButtonCount": 3 }
+    },
+    {
+      "id": "issue-hidden-fields",
+      "level": 7,
+      "name": "Issue Variant — Hidden Honeypot Fields",
+      "description": "Invisible honeypot inputs must not be filled; visible required fields must still be completed correctly.",
+      "stressFlags": { "hiddenHoneypotFields": true }
+    },
+    {
+      "id": "issue-network-delay",
+      "level": 7,
+      "name": "Issue Variant — Network Latency",
+      "description": "Artificial API and rendering delay tests agent wait/retry behavior.",
+      "stressFlags": { "networkDelayMs": 2500, "delayedRendering": true }
+    },
+    {
+      "id": "issue-shadow-dom",
+      "level": 7,
+      "name": "Issue Variant — Shadow DOM Encapsulation",
+      "description": "Critical inputs live inside Shadow Roots; agents must pierce or interact with the encapsulation boundary.",
+      "stressFlags": { "shadowDom": true }
+    }
+  ]
+}

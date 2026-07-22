@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Issue Variant — Hidden Honeypot Fields — Angular Reactive</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+  <style>
+    body { font-family: system-ui, sans-serif; background-color: #1e1b4b; color: #f8fafc; padding: 20px; }
+    .container { max-width: 950px; margin: 0 auto; background: #514e7e; padding: 35px; border-radius: 14px; border: 1px solid #dd1b16; }
+    h1 { color: #dd1b16; border-bottom: 2px solid #dd1b16; padding-bottom: 12px; margin-top: 0; }
+    .badge { display: inline-block; background: #dd1b16; color: white; padding: 5px 14px; border-radius: 20px; font-size: 0.85rem; font-weight: bold; margin-bottom: 20px; }
+    .desc { color: #94a3b8; margin-bottom: 20px; }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+    .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; }
+    .form-group { margin-bottom: 16px; }
+    label { display: block; margin-bottom: 6px; font-weight: 600; color: #cbd5e1; font-size: 0.9rem; }
+    input, select, textarea { width: 100%; padding: 11px; border-radius: 6px; border: 1px solid #dd1b16; background: #1e1b4b; color: white; font-size: 0.95rem; box-sizing: border-box; }
+    input:focus, select:focus { outline: none; border-color: #dd1b16; box-shadow: 0 0 0 3px #dd1b1633; }
+    .radio-group, .checkbox-group { display: flex; gap: 15px; flex-wrap: wrap; margin-top: 5px; }
+    .radio-group label, .checkbox-group label { font-weight: normal; display: flex; align-items: center; gap: 6px; }
+    .btn-submit { background: linear-gradient(135deg, #dd1b16, #dd1b16); color: white; border: none; padding: 14px 28px; font-size: 1.1rem; border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%; margin-top: 20px; }
+    .result-box { margin-top: 25px; padding: 20px; background: #00000055; border-radius: 8px; border: 1px solid #dd1b16; display: none; }
+  </style>
+  
+</head>
+<body ng-app="kycApp" ng-controller="KycController">
+  <div class="container">
+    <span class="badge">Angular Reactive (15% share)</span>
+    <h1>Issue Variant — Hidden Honeypot Fields</h1>
+    <p class="desc">Invisible honeypot inputs must not be filled; visible required fields must still be completed correctly.</p>
+    <form ng-submit="submitForm()">
+      <div class="grid-2">
+      <div class="form-group" data-field-id="full_name">
+        <label for="full_name">Full Name *</label>
+        <input type="text" id="full_name" ng-model="form.full_name" placeholder="e.g. Rajesh Kumar Sharma" required />
+      </div>
+      <div class="form-group" data-field-id="email">
+        <label for="email">Email Address *</label>
+        <input type="email" id="email" ng-model="form.email" placeholder="rajesh.sharma@example.com" required />
+      </div>
+        <input type="text" name="honeypot_website" style="position:absolute;left:-9999px" tabindex="-1" autocomplete="off" />
+        <input type="text" name="honeypot_company" style="position:absolute;left:-9999px" tabindex="-1" autocomplete="off" />
+      <div class="form-group" data-field-id="mobile_number">
+        <label for="mobile_number">Mobile Number *</label>
+        <input type="tel" id="mobile_number" ng-model="form.mobile_number" placeholder="9876543210" required />
+      </div>
+      </div>
+      
+      <button type="submit" class="btn-submit" id="realSubmit">Submit Angular Form</button>
+    </form>
+    <div ng-if="report" class="result-box">
+      <h3 style="color:#dd1b16; margin-top:0;">Score: {{ report.score }}/100</h3>
+      <pre style="color:#a7f3d0;">{{ report | json }}</pre>
+    </div>
+  </div>
+  <script>
+    angular.module('kycApp', [])
+      .controller('KycController', ['$scope', '$http', function($scope, $http) {
+        $scope.form = {"full_name":"Rajesh Kumar Sharma","email":"rajesh.sharma@example.com","honeypot_website":"","honeypot_company":"","mobile_number":"9876543210"};
+        $scope.submitForm = function() {
+          const submit = () => {
+            const payload = Object.assign({}, $scope.form);
+            if (payload.dob instanceof Date) payload.dob = payload.dob.toISOString().split('T')[0];
+            $http.post('/api/verify-submission', { scenarioId: 'issue-hidden-fields', variantId: 'issue-hidden-fields-v1', data: payload })
+              .then(r => { $scope.report = r.data.report; });
+          };
+          if (window.__KYC_DELAY_MS__) setTimeout(submit, window.__KYC_DELAY_MS__);
+          else submit();
+        };
+      }]);
+  </script>
+</body>
+</html>

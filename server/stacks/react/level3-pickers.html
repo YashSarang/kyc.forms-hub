@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Level 3 — Pickers, Comboboxes & Uploads — React / Next.js</title>
+  <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <style>
+    body { font-family: system-ui, sans-serif; background-color: #0b0f19; color: #f8fafc; padding: 20px; }
+    .container { max-width: 950px; margin: 0 auto; background: #3e424c; padding: 35px; border-radius: 14px; border: 1px solid #0284c7; }
+    h1 { color: #38bdf8; border-bottom: 2px solid #0284c7; padding-bottom: 12px; margin-top: 0; }
+    .badge { display: inline-block; background: #0284c7; color: white; padding: 5px 14px; border-radius: 20px; font-size: 0.85rem; font-weight: bold; margin-bottom: 20px; }
+    .desc { color: #94a3b8; margin-bottom: 20px; }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+    .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; }
+    .form-group { margin-bottom: 16px; }
+    label { display: block; margin-bottom: 6px; font-weight: 600; color: #cbd5e1; font-size: 0.9rem; }
+    input, select, textarea { width: 100%; padding: 11px; border-radius: 6px; border: 1px solid #0284c7; background: #0b0f19; color: white; font-size: 0.95rem; box-sizing: border-box; }
+    input:focus, select:focus { outline: none; border-color: #38bdf8; box-shadow: 0 0 0 3px #38bdf833; }
+    .radio-group, .checkbox-group { display: flex; gap: 15px; flex-wrap: wrap; margin-top: 5px; }
+    .radio-group label, .checkbox-group label { font-weight: normal; display: flex; align-items: center; gap: 6px; }
+    .btn-submit { background: linear-gradient(135deg, #0284c7, #38bdf8); color: white; border: none; padding: 14px 28px; font-size: 1.1rem; border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%; margin-top: 20px; }
+    .result-box { margin-top: 25px; padding: 20px; background: #00000055; border-radius: 8px; border: 1px solid #0284c7; display: none; }
+  </style>
+  
+</head>
+<body>
+  <div id="root"></div>
+  <script type="text/babel">
+    const { useState, useEffect } = React;
+    const initialState = {"full_name":"Rajesh Kumar Sharma","dob":"1992-08-15","nominee_dob":"1994-05-20","bank_name":"State Bank of India","income_range":"10-25 Lakhs","pan_number":"ABCDE1234F","aadhaar_number":"123456789012","upload_pan":null,"upload_aadhaar_front":null};
+
+    function honeypotField(name) {
+      return <input type="text" name={name} style={{ position: 'absolute', left: '-9999px' }} tabIndex={-1} autoComplete="off" />;
+    }
+
+    function KycForm() {
+      const [formData, setFormData] = useState(initialState);
+      const [report, setReport] = useState(null);
+      const [disabled, setDisabled] = useState(!!window.__KYC_DELAY_MS__);
+
+      useEffect(() => {
+        if (window.__KYC_DELAY_MS__) {
+          const t = setTimeout(() => setDisabled(false), window.__KYC_DELAY_MS__);
+          return () => clearTimeout(t);
+        }
+      }, []);
+
+      const handleChange = (e) => {
+        const { name, value, type, checked } = e.target;
+        setFormData(prev => ({ ...prev, [name]: type === 'checkbox' ? checked : value }));
+      };
+
+      const handleSubmit = async (e) => {
+        e.preventDefault();
+        const res = await fetch('/api/verify-submission', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ scenarioId: 'level3-pickers', variantId: '', data: formData })
+        });
+        const result = await res.json();
+        setReport(result.report);
+      };
+
+      return (
+        <div className="container">
+          <span className="badge">React / Next.js (30% share)</span>
+          <h1>Level 3 — Pickers, Comboboxes & Uploads</h1>
+          <p className="desc">Tests date pickers, searchable/select combos, and file upload widgets.</p>
+          <form onSubmit={handleSubmit}>
+            <div className="grid-2">
+      <div className="form-group" data-field-id="full_name">
+        <label>Full Name *</label>
+        <input type="text" name="full_name" value={formData.full_name} onChange={handleChange} placeholder="e.g. Rajesh Kumar Sharma" required />
+      </div>
+      <div className="form-group" data-field-id="dob">
+        <label>Date of Birth *</label>
+        <input type="date" name="dob" value={formData.dob} onChange={handleChange}  required />
+      </div>
+      <div className="form-group" data-field-id="nominee_dob">
+        <label>Nominee Date of Birth *</label>
+        <input type="date" name="nominee_dob" value={formData.nominee_dob} onChange={handleChange}  required />
+      </div>
+      <div className="form-group" data-field-id="bank_name">
+        <label>Bank Name *</label>
+        <select name="bank_name" value={formData.bank_name} onChange={handleChange} required><option value="State Bank of India">State Bank of India</option><option value="HDFC Bank">HDFC Bank</option><option value="ICICI Bank">ICICI Bank</option><option value="Axis Bank">Axis Bank</option><option value="Kotak Mahindra Bank">Kotak Mahindra Bank</option></select>
+      </div>
+      <div className="form-group" data-field-id="income_range">
+        <label>Income Range *</label>
+        <select name="income_range" value={formData.income_range} onChange={handleChange} required><option value="Below 1 Lakh">Below 1 Lakh</option><option value="1-5 Lakhs">1-5 Lakhs</option><option value="5-10 Lakhs">5-10 Lakhs</option><option value="10-25 Lakhs">10-25 Lakhs</option><option value="Above 25 Lakhs">Above 25 Lakhs</option></select>
+      </div>
+      <div className="form-group" data-field-id="pan_number">
+        <label>PAN Number *</label>
+        <input type="text" name="pan_number" value={formData.pan_number} onChange={handleChange} placeholder="ABCDE1234F" required />
+      </div>
+      <div className="form-group" data-field-id="aadhaar_number">
+        <label>Aadhaar Number *</label>
+        <input type="text" name="aadhaar_number" value={formData.aadhaar_number} onChange={handleChange} placeholder="1234 5678 9012" required />
+      </div>
+      <div className="form-group" data-field-id="upload_pan">
+        <label>PAN Card Document *</label>
+        <input type="text" name="upload_pan" value={formData.upload_pan} onChange={handleChange}  required />
+      </div>
+      <div className="form-group" data-field-id="upload_aadhaar_front">
+        <label>Aadhaar Front *</label>
+        <input type="text" name="upload_aadhaar_front" value={formData.upload_aadhaar_front} onChange={handleChange}  required />
+      </div>
+            </div>
+            
+            <button type="submit" className="btn-submit" id="realSubmit" disabled={disabled}>Submit Form</button>
+          </form>
+          {report && (
+            <div className="result-box">
+              <h3 style={{ color: '#38bdf8', marginTop: 0 }}>Score: {report.score}/100</h3>
+              <pre style={{ color: '#a7f3d0', whiteSpace: 'pre-wrap' }}>{JSON.stringify(report, null, 2)}</pre>
+            </div>
+          )}
+        </div>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<KycForm />);
+  </script>
+</body>
+</html>

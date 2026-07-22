@@ -1,0 +1,19 @@
+{
+  "id": "level1-basic",
+  "level": 1,
+  "name": "Level 1 — Basic Text Inputs",
+  "description": "Tests fundamental single-line text, email, and phone input detection and value setting.",
+  "stressFlags": {},
+  "fields": [
+    { "id": "first_name", "label": "First Name", "type": "text", "required": true },
+    { "id": "last_name", "label": "Last Name", "type": "text", "required": true },
+    { "id": "email", "label": "Email Address", "type": "email", "required": true },
+    { "id": "mobile_number", "label": "Mobile Number", "type": "tel", "required": true }
+  ],
+  "groundTruth": {
+    "first_name": "Rajesh",
+    "last_name": "Sharma",
+    "email": "rajesh.sharma@example.com",
+    "mobile_number": "9876543210"
+  }
+}

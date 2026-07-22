@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Level 2 — Selection Controls — PHP Server-Rendered</title>
+  <style>
+    body { font-family: system-ui, sans-serif; background-color: #111827; color: #f8fafc; padding: 20px; }
+    .container { max-width: 950px; margin: 0 auto; background: #444b5a; padding: 35px; border-radius: 14px; border: 1px solid #4f46e5; }
+    h1 { color: #818cf8; border-bottom: 2px solid #4f46e5; padding-bottom: 12px; margin-top: 0; }
+    .badge { display: inline-block; background: #4f46e5; color: white; padding: 5px 14px; border-radius: 20px; font-size: 0.85rem; font-weight: bold; margin-bottom: 20px; }
+    .desc { color: #94a3b8; margin-bottom: 20px; }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+    .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; }
+    .form-group { margin-bottom: 16px; }
+    label { display: block; margin-bottom: 6px; font-weight: 600; color: #cbd5e1; font-size: 0.9rem; }
+    input, select, textarea { width: 100%; padding: 11px; border-radius: 6px; border: 1px solid #4f46e5; background: #111827; color: white; font-size: 0.95rem; box-sizing: border-box; }
+    input:focus, select:focus { outline: none; border-color: #818cf8; box-shadow: 0 0 0 3px #818cf833; }
+    .radio-group, .checkbox-group { display: flex; gap: 15px; flex-wrap: wrap; margin-top: 5px; }
+    .radio-group label, .checkbox-group label { font-weight: normal; display: flex; align-items: center; gap: 6px; }
+    .btn-submit { background: linear-gradient(135deg, #4f46e5, #818cf8); color: white; border: none; padding: 14px 28px; font-size: 1.1rem; border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%; margin-top: 20px; }
+    .result-box { margin-top: 25px; padding: 20px; background: #00000055; border-radius: 8px; border: 1px solid #4f46e5; display: none; }
+  
+    fieldset { border: 1px solid #4f46e5; border-radius: 6px; padding: 18px; margin-bottom: 20px; }
+    legend { color: #818cf8; font-weight: bold; padding: 0 10px; }
+  </style>
+  
+</head>
+<body>
+  <div class="container">
+    <span class="badge">PHP Server-Rendered (15% share)</span>
+    <h1>Level 2 — Selection Controls</h1>
+    <p class="desc">Tests native dropdowns, radio buttons, checkboxes, and toggle-style controls.</p>
+    <form id="phpKycForm" data-scenario="level2-selection">
+      <input type="hidden" name="csrf_token" value="csrf-token-level2-selection">
+      <fieldset>
+        <legend>KYC Fields</legend>
+        <div class="grid-2"><div class="form-group " data-field-id="full_name">
+      <label for="full_name">Full Name *</label>
+      <input type="text" id="full_name" name="full_name" value="Rajesh Kumar Sharma" placeholder="e.g. Rajesh Kumar Sharma" required />
+    </div>
+        <div class="form-group " data-field-id="gender">
+      <label for="gender">Gender *</label>
+      <div class="radio-group"><label><input type="radio" name="gender" value="Male" checked required> Male</label><label><input type="radio" name="gender" value="Female" required> Female</label><label><input type="radio" name="gender" value="Other" required> Other</label><label><input type="radio" name="gender" value="Prefer not to say" required> Prefer not to say</label></div>
+    </div>
+        <div class="form-group " data-field-id="nationality">
+      <label for="nationality">Nationality *</label>
+      <select id="nationality" name="nationality" required><option value="Indian" selected>Indian</option><option value="American">American</option><option value="British">British</option><option value="Canadian">Canadian</option><option value="Other">Other</option></select>
+    </div>
+        <div class="form-group " data-field-id="marital_status">
+      <label for="marital_status">Marital Status *</label>
+      <select id="marital_status" name="marital_status" required><option value="Single">Single</option><option value="Married" selected>Married</option><option value="Divorced">Divorced</option><option value="Widowed">Widowed</option></select>
+    </div>
+        <div class="form-group " data-field-id="account_type">
+      <label for="account_type">Account Type *</label>
+      <div class="radio-group"><label><input type="radio" name="account_type" value="Savings" checked required> Savings</label><label><input type="radio" name="account_type" value="Current" required> Current</label><label><input type="radio" name="account_type" value="Salary" required> Salary</label></div>
+    </div>
+        <div class="form-group " data-field-id="esign_consent">
+      <label for="esign_consent">I consent to digital Aadhaar eSign verification *</label>
+      <label><input type="checkbox" id="esign_consent" name="esign_consent" checked required> I consent to digital Aadhaar eSign verification</label>
+    </div>
+        <div class="form-group " data-field-id="terms_consent">
+      <label for="terms_consent">I agree to Terms & Conditions and Privacy Policy *</label>
+      <label><input type="checkbox" id="terms_consent" name="terms_consent" checked required> I agree to Terms & Conditions and Privacy Policy</label>
+    </div></div>
+      </fieldset>
+      
+      <button type="submit" class="btn-submit" id="realSubmit">Submit PHP Application</button>
+    </form>
+    <div class="result-box" id="resultBox">
+      <h3 style="color:#818cf8; margin-top:0;">Score: <span id="scoreVal"></span>/100</h3>
+      <pre id="resultJson" style="color:#a7f3d0; white-space:pre-wrap;"></pre>
+    </div>
+  </div>
+  <script>
+    document.getElementById('phpKycForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const fd = new FormData(this);
+      const data = {};
+      fd.forEach((v, k) => data[k] = v);
+      if (document.getElementById('esign_consent')) data.esign_consent = document.getElementById('esign_consent').checked;
+      if (document.getElementById('terms_consent')) data.terms_consent = document.getElementById('terms_consent').checked;
+      if (window.__KYC_DELAY_MS__) await new Promise(r => setTimeout(r, window.__KYC_DELAY_MS__));
+      const res = await fetch('/api/verify-submission', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({ scenarioId: 'level2-selection', variantId: 'level2-selection-v1', data }) });
+      const result = await res.json();
+      document.getElementById('resultBox').style.display = 'block';
+      document.getElementById('scoreVal').textContent = result.report.score;
+      document.getElementById('resultJson').textContent = JSON.stringify(result.report, null, 2);
+    });
+  </script>
+</body>
+</html>

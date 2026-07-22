@@ -1,0 +1,25 @@
+{
+  "id": "level5-complex",
+  "level": 5,
+  "name": "Level 5 — Multi-step Wizards, Modals & Embedded Iframes",
+  "description": "Tests agent navigation across wizard steps, modal dialogs, side drawers, and iframe-embedded fields.",
+  "stressFlags": { "multiStep": true, "modalFields": true, "iframeField": true },
+  "fields": [
+    { "id": "first_name", "label": "First Name", "type": "text", "required": true, "step": 1 },
+    { "id": "email", "label": "Email Address", "type": "email", "required": true, "step": 1 },
+    { "id": "mobile_number", "label": "Mobile Number", "type": "tel", "required": true, "step": 2 },
+    { "id": "curr_city", "label": "City", "type": "text", "required": true, "step": 2 },
+    { "id": "pan_number", "label": "PAN Number", "type": "text", "required": true, "modal": true },
+    { "id": "aadhaar_number", "label": "Aadhaar Number", "type": "text", "required": true, "modal": true },
+    { "id": "terms_consent", "label": "I agree to Terms & Conditions", "type": "checkbox", "required": true, "iframe": true }
+  ],
+  "groundTruth": {
+    "first_name": "Rajesh",
+    "email": "rajesh.sharma@example.com",
+    "mobile_number": "9876543210",
+    "curr_city": "Mumbai",
+    "pan_number": "ABCDE1234F",
+    "aadhaar_number": "123456789012",
+    "terms_consent": true
+  }
+}

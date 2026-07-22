@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Level 7 — Adversarial Stress Conditions — React / Next.js</title>
+  <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <style>
+    body { font-family: system-ui, sans-serif; background-color: #0b0f19; color: #f8fafc; padding: 20px; }
+    .container { max-width: 950px; margin: 0 auto; background: #3e424c; padding: 35px; border-radius: 14px; border: 1px solid #0284c7; }
+    h1 { color: #38bdf8; border-bottom: 2px solid #0284c7; padding-bottom: 12px; margin-top: 0; }
+    .badge { display: inline-block; background: #0284c7; color: white; padding: 5px 14px; border-radius: 20px; font-size: 0.85rem; font-weight: bold; margin-bottom: 20px; }
+    .desc { color: #94a3b8; margin-bottom: 20px; }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+    .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; }
+    .form-group { margin-bottom: 16px; }
+    label { display: block; margin-bottom: 6px; font-weight: 600; color: #cbd5e1; font-size: 0.9rem; }
+    input, select, textarea { width: 100%; padding: 11px; border-radius: 6px; border: 1px solid #0284c7; background: #0b0f19; color: white; font-size: 0.95rem; box-sizing: border-box; }
+    input:focus, select:focus { outline: none; border-color: #38bdf8; box-shadow: 0 0 0 3px #38bdf833; }
+    .radio-group, .checkbox-group { display: flex; gap: 15px; flex-wrap: wrap; margin-top: 5px; }
+    .radio-group label, .checkbox-group label { font-weight: normal; display: flex; align-items: center; gap: 6px; }
+    .btn-submit { background: linear-gradient(135deg, #0284c7, #38bdf8); color: white; border: none; padding: 14px 28px; font-size: 1.1rem; border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%; margin-top: 20px; }
+    .result-box { margin-top: 25px; padding: 20px; background: #00000055; border-radius: 8px; border: 1px solid #0284c7; display: none; }
+  </style>
+  <script>window.__KYC_DELAY_MS__ = 1500;</script>
+</head>
+<body>
+  <div id="root"></div>
+  <script type="text/babel">
+    const { useState, useEffect } = React;
+    const initialState = {"full_name_primary":"Rajesh Kumar Sharma","full_name_decoy":"","email":"rajesh.sharma@example.com","mobile_number":"9876543210","terms_consent":true};
+
+    function honeypotField(name) {
+      return <input type="text" name={name} style={{ position: 'absolute', left: '-9999px' }} tabIndex={-1} autoComplete="off" />;
+    }
+
+    function KycForm() {
+      const [formData, setFormData] = useState(initialState);
+      const [report, setReport] = useState(null);
+      const [disabled, setDisabled] = useState(!!window.__KYC_DELAY_MS__);
+
+      useEffect(() => {
+        if (window.__KYC_DELAY_MS__) {
+          const t = setTimeout(() => setDisabled(false), window.__KYC_DELAY_MS__);
+          return () => clearTimeout(t);
+        }
+      }, []);
+
+      const handleChange = (e) => {
+        const { name, value, type, checked } = e.target;
+        setFormData(prev => ({ ...prev, [name]: type === 'checkbox' ? checked : value }));
+      };
+
+      const handleSubmit = async (e) => {
+        e.preventDefault();
+        const res = await fetch('/api/verify-submission', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ scenarioId: 'level7-adversarial', variantId: 'level7-adversarial-v5', data: formData })
+        });
+        const result = await res.json();
+        setReport(result.report);
+      };
+
+      return (
+        <div className="container">
+          <span className="badge">React / Next.js (30% share)</span>
+          <h1>Level 7 — Adversarial Stress Conditions</h1>
+          <p className="desc">Tests agent resilience against duplicate labels, decoy buttons, network delays, hidden honeypot fields, and dynamic IDs.</p>
+          <form onSubmit={handleSubmit}>
+            <div className="grid-2">
+      <div className="form-group" data-field-id="full_name_primary">
+        <label>Name *</label>
+        <input type="text" name="full_name_primary" value={formData.full_name_primary} onChange={handleChange}  required />
+      </div>
+        {honeypotField("full_name_decoy")}
+      <div className="form-group" data-field-id="email">
+        <label>Email *</label>
+        <input type="email" name="email" value={formData.email} onChange={handleChange} placeholder="rajesh.sharma@example.com" required />
+      </div>
+      <div className="form-group" data-field-id="mobile_number">
+        <label>Mobile *</label>
+        <input type="tel" name="mobile_number" value={formData.mobile_number} onChange={handleChange} placeholder="9876543210" required />
+      </div>
+      <div className="form-group" data-field-id="terms_consent">
+        <label>I agree to Terms & Conditions *</label>
+        <label><input type="checkbox" name="terms_consent" checked={formData.terms_consent} onChange={handleChange} required /> I agree to Terms & Conditions</label>
+      </div>
+            </div>
+            <button type="button" className="btn-submit fake-submit" style="background:#7f1d1d;margin-bottom:10px;">Submit Application 1</button>
+      <button type="button" className="btn-submit fake-submit" style="background:#7f1d1d;margin-bottom:10px;">Submit Application 2</button>
+            <button type="submit" className="btn-submit" id="realSubmit" disabled={disabled}>Submit Form</button>
+          </form>
+          {report && (
+            <div className="result-box">
+              <h3 style={{ color: '#38bdf8', marginTop: 0 }}>Score: {report.score}/100</h3>
+              <pre style={{ color: '#a7f3d0', whiteSpace: 'pre-wrap' }}>{JSON.stringify(report, null, 2)}</pre>
+            </div>
+          )}
+        </div>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<KycForm />);
+  </script>
+</body>
+</html>

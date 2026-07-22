@@ -1,0 +1,29 @@
+{
+  "id": "issue-combined",
+  "level": 7,
+  "name": "Issue Variant — Combined Adversarial Stack",
+  "description": "Duplicate labels, fake buttons, hidden honeypots, dynamic IDs, and network delay applied together.",
+  "stressFlags": {
+    "duplicateLabels": true,
+    "fakeSubmitButtons": true,
+    "fakeButtonCount": 2,
+    "hiddenHoneypotFields": true,
+    "dynamicIds": true,
+    "networkDelayMs": 1800,
+    "randomizedFieldOrder": true
+  },
+  "fields": [
+    { "id": "full_name", "label": "Name", "type": "text", "required": true },
+    { "id": "email", "label": "Email", "type": "email", "required": true },
+    { "id": "honeypot_code", "label": "Referral Code", "type": "text", "required": false, "isHoneypot": true },
+    { "id": "mobile_number", "label": "Mobile", "type": "tel", "required": true },
+    { "id": "terms_consent", "label": "I agree to Terms & Conditions", "type": "checkbox", "required": true }
+  ],
+  "groundTruth": {
+    "full_name": "Rajesh Kumar Sharma",
+    "email": "rajesh.sharma@example.com",
+    "mobile_number": "9876543210",
+    "honeypot_code": "",
+    "terms_consent": true
+  }
+}

@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vue.js KYC Form Benchmark (Full Suite)</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <style>
+    body { font-family: 'Segoe UI', system-ui, sans-serif; background-color: #0d1117; color: #c9d1d9; padding: 20px; }
+    .container { max-width: 950px; margin: 0 auto; background: #161b22; padding: 35px; border-radius: 14px; border: 1px solid #30363d; }
+    h1 { color: #41b883; margin-top: 0; border-bottom: 2px solid #30363d; padding-bottom: 10px; }
+    .badge { display: inline-block; background: #41b883; color: #0d1117; font-weight: bold; padding: 5px 14px; border-radius: 20px; font-size: 0.85rem; margin-bottom: 20px; }
+    
+    .panel { background: #0d1117; border: 1px solid #30363d; border-radius: 10px; padding: 20px; margin-bottom: 20px; }
+    .panel-title { color: #41b883; font-size: 1.1rem; border-bottom: 1px solid #30363d; padding-bottom: 8px; margin-top: 0; margin-bottom: 18px; }
+
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+    .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; }
+    .form-group { margin-bottom: 16px; }
+    label { display: block; margin-bottom: 6px; font-weight: 600; color: #8b949e; font-size: 0.9rem; }
+    input[type="text"], input[type="email"], input[type="tel"], input[type="date"], input[type="number"], select {
+      width: 100%; padding: 11px; border-radius: 6px; border: 1px solid #30363d; background: #161b22; color: white; font-size: 0.95rem; box-sizing: border-box;
+    }
+    input:focus, select:focus { border-color: #41b883; outline: none; }
+    .radio-group, .checkbox-group { display: flex; gap: 15px; margin-top: 5px; color: #c9d1d9; }
+
+    .btn-submit { background: #41b883; color: #0d1117; border: none; padding: 14px 28px; font-size: 1.1rem; border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%; margin-top: 20px; }
+    .result-box { margin-top: 25px; padding: 20px; background: #090d16; border-radius: 8px; border: 1px solid #30363d; }
+  </style>
+</head>
+<body>
+  <div id="app" class="container">
+    <span class="badge">Stack: Vue.js v-model Reactive (10% Share)</span>
+    <h1>Vue.js KYC Benchmark Suite</h1>
+
+    <form @submit.prevent="submitForm">
+      <!-- Section 1 -->
+      <div class="panel">
+        <h3 class="panel-title">1. Personal Identity & Contact</h3>
+        <div class="grid-2">
+          <div class="form-group">
+            <label for="full_name">Full Name *</label>
+            <input type="text" id="full_name" v-model="form.full_name" required>
+          </div>
+          <div class="form-group">
+            <label for="email">Email Address *</label>
+            <input type="email" id="email" v-model="form.email" required>
+          </div>
+        </div>
+        <div class="grid-3">
+          <div class="form-group">
+            <label for="first_name">First Name *</label>
+            <input type="text" id="first_name" v-model="form.first_name" required>
+          </div>
+          <div class="form-group">
+            <label for="middle_name">Middle Name</label>
+            <input type="text" id="middle_name" v-model="form.middle_name">
+          </div>
+          <div class="form-group">
+            <label for="last_name">Last Name *</label>
+            <input type="text" id="last_name" v-model="form.last_name" required>
+          </div>
+        </div>
+        <div class="grid-3">
+          <div class="form-group">
+            <label for="mobile_number">Mobile Number *</label>
+            <input type="tel" id="mobile_number" v-model="form.mobile_number" required>
+          </div>
+          <div class="form-group">
+            <label for="dob">Date of Birth *</label>
+            <input type="date" id="dob" v-model="form.dob" required>
+          </div>
+          <div class="form-group">
+            <label for="nationality">Nationality *</label>
+            <select id="nationality" v-model="form.nationality" required>
+              <option value="Indian">Indian</option>
+              <option value="American">American</option>
+            </select>
+          </div>
+        </div>
+        <div class="grid-2">
+          <div class="form-group">
+            <label for="marital_status">Marital Status *</label>
+            <select id="marital_status" v-model="form.marital_status" required>
+              <option value="Single">Single</option>
+              <option value="Married">Married</option>
+            </select>
+          </div>
+          <div class="form-group" v-if="form.marital_status === 'Married'">
+            <label for="spouse_name">Spouse Name *</label>
+            <input type="text" id="spouse_name" v-model="form.spouse_name" required>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 2 -->
+      <div class="panel">
+        <h3 class="panel-title">2. Address & Identity Documents</h3>
+        <div class="grid-2">
+          <div class="form-group">
+            <label for="curr_address_line1">Current Address Line 1 *</label>
+            <input type="text" id="curr_address_line1" v-model="form.curr_address_line1" required>
+          </div>
+          <div class="form-group">
+            <label for="curr_city">City *</label>
+            <input type="text" id="curr_city" v-model="form.curr_city" required>
+          </div>
+        </div>
+        <div class="grid-3">
+          <div class="form-group">
+            <label for="curr_state">State *</label>
+            <select id="curr_state" v-model="form.curr_state" required>
+              <option value="Maharashtra">Maharashtra</option>
+              <option value="Delhi">Delhi</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="curr_pincode">PIN Code *</label>
+            <input type="text" id="curr_pincode" v-model="form.curr_pincode" required>
+          </div>
+          <div class="form-group">
+            <label for="curr_country">Country *</label>
+            <select id="curr_country" v-model="form.curr_country" required>
+              <option value="India">India</option>
+            </select>
+          </div>
+        </div>
+        <div class="grid-2">
+          <div class="form-group">
+            <label for="pan_number">PAN Number *</label>
+            <input type="text" id="pan_number" v-model="form.pan_number" required>
+          </div>
+          <div class="form-group">
+            <label for="aadhaar_number">Aadhaar Number *</label>
+            <input type="text" id="aadhaar_number" v-model="form.aadhaar_number" required>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 3 -->
+      <div class="panel">
+        <h3 class="panel-title">3. Banking, Financials & Consents</h3>
+        <div class="grid-3">
+          <div class="form-group">
+            <label for="bank_name">Bank Name *</label>
+            <select id="bank_name" v-model="form.bank_name" required>
+              <option value="State Bank of India">State Bank of India</option>
+              <option value="HDFC Bank">HDFC Bank</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="branch_name">Branch Name *</label>
+            <input type="text" id="branch_name" v-model="form.branch_name" required>
+          </div>
+          <div class="form-group">
+            <label for="account_number">Account Number *</label>
+            <input type="text" id="account_number" v-model="form.account_number" required>
+          </div>
+        </div>
+        <div class="grid-3">
+          <div class="form-group">
+            <label for="ifsc_code">IFSC Code *</label>
+            <input type="text" id="ifsc_code" v-model="form.ifsc_code" required>
+          </div>
+          <div class="form-group">
+            <label for="occupation">Occupation *</label>
+            <input type="text" id="occupation" v-model="form.occupation" required>
+          </div>
+          <div class="form-group">
+            <label for="annual_income">Annual Income (INR) *</label>
+            <input type="number" id="annual_income" v-model="form.annual_income" required>
+          </div>
+        </div>
+        <div class="grid-2">
+          <div class="form-group">
+            <label for="father_name">Father's Name *</label>
+            <input type="text" id="father_name" v-model="form.father_name" required>
+          </div>
+          <div class="form-group">
+            <label for="mother_name">Mother's Name *</label>
+            <input type="text" id="mother_name" v-model="form.mother_name" required>
+          </div>
+        </div>
+        <div class="grid-2">
+          <div class="form-group">
+            <label for="mobile_otp">Mobile OTP *</label>
+            <input type="text" id="mobile_otp" v-model="form.mobile_otp" required>
+          </div>
+          <div class="form-group">
+            <label for="email_otp">Email OTP *</label>
+            <input type="text" id="email_otp" v-model="form.email_otp" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="checkbox-group">
+            <label><input type="checkbox" id="esign_consent" v-model="form.esign_consent" required> Aadhaar eSign Consent</label>
+            <label><input type="checkbox" id="terms_consent" v-model="form.terms_consent" required> Terms & Conditions</label>
+          </div>
+        </div>
+      </div>
+
+      <button type="submit" class="btn-submit" id="submitBtn">Submit Complete Vue Form</button>
+    </form>
+
+    <div v-if="report" class="result-box">
+      <h3 style="color:#41b883; margin-top:0;">Vue Evaluation Score: {{ report.score }}/100</h3>
+      <pre style="color:#a7f3d0;">{{ JSON.stringify(report, null, 2) }}</pre>
+    </div>
+  </div>
+
+  <script>
+    const { createApp, ref } = Vue;
+
+    createApp({
+      setup() {
+        const form = ref({
+          full_name: 'Rajesh Kumar Sharma',
+          first_name: 'Rajesh',
+          middle_name: 'Kumar',
+          last_name: 'Sharma',
+          email: 'rajesh.sharma@example.com',
+          mobile_number: '9876543210',
+          gender: 'Male',
+          dob: '1992-08-15',
+          nationality: 'Indian',
+          marital_status: 'Married',
+          spouse_name: 'Priya Sharma',
+          curr_address_line1: 'Flat 402, Sunshine Apartments',
+          curr_city: 'Mumbai',
+          curr_state: 'Maharashtra',
+          curr_pincode: '400067',
+          curr_country: 'India',
+          pan_number: 'ABCDE1234F',
+          aadhaar_number: '123456789012',
+          bank_name: 'State Bank of India',
+          branch_name: 'Fort Branch, Mumbai',
+          account_number: '100234567890',
+          ifsc_code: 'SBIN0000300',
+          account_type: 'Savings',
+          occupation: 'Software Engineer',
+          annual_income: '1200000',
+          father_name: 'Ramesh Sharma',
+          mother_name: 'Sunita Sharma',
+          nominee_name: 'Priya Sharma',
+          emergency_contact_phone: '9876500000',
+          mobile_otp: '123456',
+          email_otp: '654321',
+          esign_consent: true,
+          terms_consent: true
+        });
+
+        const report = ref(null);
+
+        const submitForm = async () => {
+          const res = await fetch('/api/verify-submission', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ data: form.value })
+          });
+          const data = await res.json();
+          report.value = data.report;
+        };
+
+        return { form, report, submitForm };
+      }
+    }).mount('#app');
+  </script>
+</body>
+</html>

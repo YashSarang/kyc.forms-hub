@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Angular KYC Form Benchmark (Full Suite)</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+  <style>
+    body { font-family: 'Roboto', sans-serif; background-color: #0f172a; color: #f8fafc; padding: 20px; }
+    .container { max-width: 950px; margin: 0 auto; background: #1e1b4b; padding: 35px; border-radius: 14px; border: 1px solid #3730a3; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+    h1 { color: #818cf8; margin-top: 0; border-bottom: 2px solid #3730a3; padding-bottom: 10px; }
+    .badge { display: inline-block; background: #dd1b16; color: white; padding: 5px 14px; border-radius: 20px; font-size: 0.85rem; font-weight: bold; margin-bottom: 20px; }
+    
+    .card-step { background: #111827; border: 1px solid #3730a3; border-radius: 10px; padding: 20px; margin-bottom: 20px; }
+    .step-title { color: #818cf8; font-size: 1.1rem; border-bottom: 1px solid #3730a3; padding-bottom: 8px; margin-top: 0; margin-bottom: 18px; }
+
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+    .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; }
+    .form-group { margin-bottom: 16px; }
+    label { display: block; margin-bottom: 6px; font-weight: 600; color: #c7d2fe; font-size: 0.9rem; }
+    input[type="text"], input[type="email"], input[type="tel"], input[type="date"], input[type="number"], select {
+      width: 100%; padding: 11px; border-radius: 6px; border: 1px solid #4338ca; background: #0f172a; color: white; font-size: 0.95rem; box-sizing: border-box;
+    }
+    input:focus, select:focus { border-color: #818cf8; outline: none; }
+    .radio-group, .checkbox-group { display: flex; gap: 15px; margin-top: 5px; color: #c7d2fe; }
+
+    .btn-submit { background: linear-gradient(135deg, #dd1b16, #b91c1c); color: white; border: none; padding: 14px 28px; font-size: 1.1rem; border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%; margin-top: 20px; }
+    .result-box { margin-top: 25px; padding: 20px; background: #090d16; border-radius: 8px; border: 1px solid #3730a3; }
+  </style>
+</head>
+<body ng-app="kycApp" ng-controller="KycController">
+  <div class="container">
+    <span class="badge">Stack: Angular Reactive Forms (15% Share)</span>
+    <h1>Angular KYC Benchmark Suite</h1>
+
+    <form ng-submit="submitForm()">
+      <!-- Step 1 Card -->
+      <div class="card-step">
+        <h3 class="step-title">1. Personal Identity & Contact</h3>
+        <div class="grid-2">
+          <div class="form-group">
+            <label for="full_name">Full Name *</label>
+            <input type="text" id="full_name" ng-model="form.full_name" required>
+          </div>
+          <div class="form-group">
+            <label for="email">Email Address *</label>
+            <input type="email" id="email" ng-model="form.email" required>
+          </div>
+        </div>
+        <div class="grid-3">
+          <div class="form-group">
+            <label for="first_name">First Name *</label>
+            <input type="text" id="first_name" ng-model="form.first_name" required>
+          </div>
+          <div class="form-group">
+            <label for="middle_name">Middle Name</label>
+            <input type="text" id="middle_name" ng-model="form.middle_name">
+          </div>
+          <div class="form-group">
+            <label for="last_name">Last Name *</label>
+            <input type="text" id="last_name" ng-model="form.last_name" required>
+          </div>
+        </div>
+        <div class="grid-3">
+          <div class="form-group">
+            <label for="mobile_number">Mobile Number *</label>
+            <input type="tel" id="mobile_number" ng-model="form.mobile_number" required>
+          </div>
+          <div class="form-group">
+            <label for="dob">Date of Birth *</label>
+            <input type="date" id="dob" ng-model="form.dob" required>
+          </div>
+          <div class="form-group">
+            <label for="nationality">Nationality *</label>
+            <select id="nationality" ng-model="form.nationality" required>
+              <option value="Indian">Indian</option>
+              <option value="American">American</option>
+            </select>
+          </div>
+        </div>
+        <div class="grid-2">
+          <div class="form-group">
+            <label for="marital_status">Marital Status *</label>
+            <select id="marital_status" ng-model="form.marital_status" required>
+              <option value="Single">Single</option>
+              <option value="Married">Married</option>
+            </select>
+          </div>
+          <div class="form-group" ng-if="form.marital_status === 'Married'">
+            <label for="spouse_name">Spouse Name *</label>
+            <input type="text" id="spouse_name" ng-model="form.spouse_name" ng-required="form.marital_status === 'Married'">
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 2 Card -->
+      <div class="card-step">
+        <h3 class="step-title">2. Address & Identity Documents</h3>
+        <div class="grid-2">
+          <div class="form-group">
+            <label for="curr_address_line1">Current Address Line 1 *</label>
+            <input type="text" id="curr_address_line1" ng-model="form.curr_address_line1" required>
+          </div>
+          <div class="form-group">
+            <label for="curr_city">City *</label>
+            <input type="text" id="curr_city" ng-model="form.curr_city" required>
+          </div>
+        </div>
+        <div class="grid-3">
+          <div class="form-group">
+            <label for="curr_state">State *</label>
+            <select id="curr_state" ng-model="form.curr_state" required>
+              <option value="Maharashtra">Maharashtra</option>
+              <option value="Delhi">Delhi</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="curr_pincode">PIN Code *</label>
+            <input type="text" id="curr_pincode" ng-model="form.curr_pincode" required>
+          </div>
+          <div class="form-group">
+            <label for="curr_country">Country *</label>
+            <select id="curr_country" ng-model="form.curr_country" required>
+              <option value="India">India</option>
+            </select>
+          </div>
+        </div>
+        <div class="grid-2">
+          <div class="form-group">
+            <label for="pan_number">PAN Number *</label>
+            <input type="text" id="pan_number" ng-model="form.pan_number" required>
+          </div>
+          <div class="form-group">
+            <label for="aadhaar_number">Aadhaar Number *</label>
+            <input type="text" id="aadhaar_number" ng-model="form.aadhaar_number" required>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 3 Card -->
+      <div class="card-step">
+        <h3 class="step-title">3. Banking, Financials & Family</h3>
+        <div class="grid-3">
+          <div class="form-group">
+            <label for="bank_name">Bank Name *</label>
+            <select id="bank_name" ng-model="form.bank_name" required>
+              <option value="State Bank of India">State Bank of India</option>
+              <option value="HDFC Bank">HDFC Bank</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="branch_name">Branch Name *</label>
+            <input type="text" id="branch_name" ng-model="form.branch_name" required>
+          </div>
+          <div class="form-group">
+            <label for="account_number">Account Number *</label>
+            <input type="text" id="account_number" ng-model="form.account_number" required>
+          </div>
+        </div>
+        <div class="grid-3">
+          <div class="form-group">
+            <label for="ifsc_code">IFSC Code *</label>
+            <input type="text" id="ifsc_code" ng-model="form.ifsc_code" required>
+          </div>
+          <div class="form-group">
+            <label for="occupation">Occupation *</label>
+            <input type="text" id="occupation" ng-model="form.occupation" required>
+          </div>
+          <div class="form-group">
+            <label for="annual_income">Annual Income (INR) *</label>
+            <input type="number" id="annual_income" ng-model="form.annual_income" required>
+          </div>
+        </div>
+        <div class="grid-2">
+          <div class="form-group">
+            <label for="father_name">Father's Name *</label>
+            <input type="text" id="father_name" ng-model="form.father_name" required>
+          </div>
+          <div class="form-group">
+            <label for="mother_name">Mother's Name *</label>
+            <input type="text" id="mother_name" ng-model="form.mother_name" required>
+          </div>
+        </div>
+        <div class="grid-2">
+          <div class="form-group">
+            <label for="mobile_otp">Mobile OTP *</label>
+            <input type="text" id="mobile_otp" ng-model="form.mobile_otp" required>
+          </div>
+          <div class="form-group">
+            <label for="email_otp">Email OTP *</label>
+            <input type="text" id="email_otp" ng-model="form.email_otp" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="checkbox-group">
+            <label><input type="checkbox" id="esign_consent" ng-model="form.esign_consent" required> Aadhaar eSign Consent</label>
+            <label><input type="checkbox" id="terms_consent" ng-model="form.terms_consent" required> Terms & Conditions</label>
+          </div>
+        </div>
+      </div>
+
+      <button type="submit" class="btn-submit" id="submitBtn">Submit Complete Angular Form</button>
+    </form>
+
+    <div ng-if="report" class="result-box">
+      <h3 style="color:#818cf8; margin-top:0;">Angular Evaluation Score: {{ report.score }}/100</h3>
+      <pre style="color:#a7f3d0;">{{ report | json }}</pre>
+    </div>
+  </div>
+
+  <script>
+    angular.module('kycApp', [])
+      .controller('KycController', ['$scope', '$http', function($scope, $http) {
+        $scope.form = {
+          full_name: 'Rajesh Kumar Sharma',
+          first_name: 'Rajesh',
+          middle_name: 'Kumar',
+          last_name: 'Sharma',
+          email: 'rajesh.sharma@example.com',
+          mobile_number: '9876543210',
+          gender: 'Male',
+          dob: new Date('1992-08-15'),
+          nationality: 'Indian',
+          marital_status: 'Married',
+          spouse_name: 'Priya Sharma',
+          curr_address_line1: 'Flat 402, Sunshine Apartments',
+          curr_city: 'Mumbai',
+          curr_state: 'Maharashtra',
+          curr_pincode: '400067',
+          curr_country: 'India',
+          pan_number: 'ABCDE1234F',
+          aadhaar_number: '123456789012',
+          bank_name: 'State Bank of India',
+          branch_name: 'Fort Branch, Mumbai',
+          account_number: '100234567890',
+          ifsc_code: 'SBIN0000300',
+          account_type: 'Savings',
+          occupation: 'Software Engineer',
+          annual_income: 1200000,
+          father_name: 'Ramesh Sharma',
+          mother_name: 'Sunita Sharma',
+          nominee_name: 'Priya Sharma',
+          emergency_contact_phone: '9876500000',
+          mobile_otp: '123456',
+          email_otp: '654321',
+          esign_consent: true,
+          terms_consent: true
+        };
+
+        $scope.submitForm = function() {
+          const payload = Object.assign({}, $scope.form);
+          if (payload.dob instanceof Date) payload.dob = payload.dob.toISOString().split('T')[0];
+
+          $http.post('/api/verify-submission', { data: payload })
+            .then(function(response) {
+              $scope.report = response.data.report;
+            });
+        };
+      }]);
+  </script>
+</body>
+</html>

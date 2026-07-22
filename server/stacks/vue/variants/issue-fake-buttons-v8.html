@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Issue Variant — Fake Submit Buttons — Vue.js</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <style>
+    body { font-family: system-ui, sans-serif; background-color: #0d1117; color: #f8fafc; padding: 20px; }
+    .container { max-width: 950px; margin: 0 auto; background: #40444a; padding: 35px; border-radius: 14px; border: 1px solid #41b883; }
+    h1 { color: #41b883; border-bottom: 2px solid #41b883; padding-bottom: 12px; margin-top: 0; }
+    .badge { display: inline-block; background: #41b883; color: white; padding: 5px 14px; border-radius: 20px; font-size: 0.85rem; font-weight: bold; margin-bottom: 20px; }
+    .desc { color: #94a3b8; margin-bottom: 20px; }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+    .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; }
+    .form-group { margin-bottom: 16px; }
+    label { display: block; margin-bottom: 6px; font-weight: 600; color: #cbd5e1; font-size: 0.9rem; }
+    input, select, textarea { width: 100%; padding: 11px; border-radius: 6px; border: 1px solid #41b883; background: #0d1117; color: white; font-size: 0.95rem; box-sizing: border-box; }
+    input:focus, select:focus { outline: none; border-color: #41b883; box-shadow: 0 0 0 3px #41b88333; }
+    .radio-group, .checkbox-group { display: flex; gap: 15px; flex-wrap: wrap; margin-top: 5px; }
+    .radio-group label, .checkbox-group label { font-weight: normal; display: flex; align-items: center; gap: 6px; }
+    .btn-submit { background: linear-gradient(135deg, #41b883, #41b883); color: white; border: none; padding: 14px 28px; font-size: 1.1rem; border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%; margin-top: 20px; }
+    .result-box { margin-top: 25px; padding: 20px; background: #00000055; border-radius: 8px; border: 1px solid #41b883; display: none; }
+  </style>
+  
+</head>
+<body>
+  <div id="app" class="container">
+    <span class="badge">Vue.js (10% share)</span>
+    <h1>Issue Variant — Fake Submit Buttons</h1>
+    <p class="desc">Decoy submit-styled buttons test whether the agent can identify the real submit control.</p>
+    <form @submit.prevent="submitForm">
+      <div class="grid-2">
+      <div class="form-group" data-field-id="full_name">
+        <label for="full_name">Full Name *</label>
+        <input type="text" id="full_name" v-model="form.full_name" placeholder="e.g. Rajesh Kumar Sharma" required />
+      </div>
+      <div class="form-group" data-field-id="email">
+        <label for="email">Email Address *</label>
+        <input type="email" id="email" v-model="form.email" placeholder="rajesh.sharma@example.com" required />
+      </div>
+      <div class="form-group" data-field-id="mobile_number">
+        <label for="mobile_number">Mobile Number *</label>
+        <input type="tel" id="mobile_number" v-model="form.mobile_number" placeholder="9876543210" required />
+      </div>
+      <div class="form-group" data-field-id="terms_consent">
+        <label for="terms_consent">I agree to Terms & Conditions *</label>
+        <label><input type="checkbox" id="terms_consent" v-model="form.terms_consent" required> I agree to Terms & Conditions</label>
+      </div>
+      </div>
+      <button type="button" class="btn-submit fake-submit" style="background:#7f1d1d;margin-bottom:10px;">Submit Application 1</button>
+      <button type="button" class="btn-submit fake-submit" style="background:#7f1d1d;margin-bottom:10px;">Submit Application 2</button>
+      <button type="button" class="btn-submit fake-submit" style="background:#7f1d1d;margin-bottom:10px;">Submit Application 3</button>
+      <button type="submit" class="btn-submit" id="realSubmit" :disabled="disabled">Submit Vue Form</button>
+    </form>
+    <div v-if="report" class="result-box">
+      <h3 style="color:#41b883; margin-top:0;">Vue Score: {{ report.score }}/100</h3>
+      <pre style="color:#a7f3d0;">{{ JSON.stringify(report, null, 2) }}</pre>
+    </div>
+  </div>
+  <script>
+    const { createApp, ref } = Vue;
+    createApp({
+      setup() {
+        const form = ref({"full_name":"Rajesh Kumar Sharma","email":"rajesh.sharma@example.com","mobile_number":"9876543210","terms_consent":true});
+        const report = ref(null);
+        const disabled = ref(!!window.__KYC_DELAY_MS__);
+        if (window.__KYC_DELAY_MS__) setTimeout(() => disabled.value = false, window.__KYC_DELAY_MS__);
+        const submitForm = async () => {
+          const res = await fetch('/api/verify-submission', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ scenarioId: 'issue-fake-buttons', variantId: 'issue-fake-buttons-v8', data: form.value })
+          });
+          const data = await res.json();
+          report.value = data.report;
+        };
+        return { form, report, submitForm, disabled };
+      }
+    }).mount('#app');
+  </script>
+</body>
+</html>
