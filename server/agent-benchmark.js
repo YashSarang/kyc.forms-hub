@@ -24,7 +24,8 @@
 const fs = require('fs');
 const path = require('path');
 const http = require('http');
-const { execSync } = require('child_process');
+const https = require('https');
+const { execFileSync } = require('child_process');
 
 function parseArgs() {
   const args = process.argv.slice(2);
@@ -50,7 +51,8 @@ function getConfig() {
 
 function fetchJson(url) {
   return new Promise((resolve, reject) => {
-    const req = http.get(url, (res) => {
+    const client = url.startsWith('https:') ? https : http;
+    const req = client.get(url, (res) => {
       let body = '';
       res.on('data', chunk => { body += chunk; });
       res.on('end', () => {

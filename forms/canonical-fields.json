@@ -90,12 +90,13 @@
     },
     {
       "name": "Document Uploads",
+      "description": "File upload placeholders. Required is false because the benchmark does not persist uploaded files; agents may supply a dummy filename if a stack requires a value.",
       "fields": [
-        { "id": "upload_pan", "label": "PAN Card Document", "type": "file", "required": true, "accept": ".jpg,.png,.pdf" },
-        { "id": "upload_aadhaar_front", "label": "Aadhaar Front", "type": "file", "required": true, "accept": ".jpg,.png,.pdf" },
-        { "id": "upload_aadhaar_back", "label": "Aadhaar Back", "type": "file", "required": true, "accept": ".jpg,.png,.pdf" },
-        { "id": "upload_photo", "label": "Applicant Photo / Selfie", "type": "file", "required": true, "accept": ".jpg,.png" },
-        { "id": "upload_signature", "label": "Applicant Specimen Signature", "type": "file", "required": true, "accept": ".jpg,.png" }
+        { "id": "upload_pan", "label": "PAN Card Document", "type": "file", "required": false, "accept": ".jpg,.png,.pdf" },
+        { "id": "upload_aadhaar_front", "label": "Aadhaar Front", "type": "file", "required": false, "accept": ".jpg,.png,.pdf" },
+        { "id": "upload_aadhaar_back", "label": "Aadhaar Back", "type": "file", "required": false, "accept": ".jpg,.png,.pdf" },
+        { "id": "upload_photo", "label": "Applicant Photo / Selfie", "type": "file", "required": false, "accept": ".jpg,.png" },
+        { "id": "upload_signature", "label": "Applicant Specimen Signature", "type": "file", "required": false, "accept": ".jpg,.png" }
       ]
     },
     {

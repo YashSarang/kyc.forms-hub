@@ -58,7 +58,7 @@
         "annual_income": 1200000,
         "income_range": "10-25 Lakhs",
         "net_worth": 5000000,
-        "is_pep": "No",
+        "is_pep": false,
 
         "nominee_name": "Priya Sharma",
         "nominee_relationship": "Spouse",
@@ -142,7 +142,7 @@
         "annual_income": 1800000,
         "income_range": "10-25 Lakhs",
         "net_worth": 8000000,
-        "is_pep": "No",
+        "is_pep": false,
 
         "nominee_name": "Vikram Iyer",
         "nominee_relationship": "Spouse",

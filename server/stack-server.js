@@ -4,10 +4,13 @@ const { renderStackForm, STACK_META } = require('./form-renderers');
 const { getVariant, listScenariosWithVariants, getVariantProfileId } = require('./variants');
 const { getStackForms, getStackPort, getStackMeta } = require('./distribution');
 
-function createStackServer(stackId, centralApiBaseUrl = 'http://localhost:3000') {
+function createStackServer(stackId, centralApiBaseUrl) {
+  const resolvedApiUrl = centralApiBaseUrl || process.env.CENTRAL_API_URL || 'http://localhost:3000';
   const app = express();
   const meta = getStackMeta(stackId);
+  const theme = STACK_META[stackId];
   if (!meta) throw new Error(`Unknown stack: ${stackId}`);
+  if (!theme) throw new Error(`Missing theme metadata for stack: ${stackId}`);
 
   const assignedForms = getStackForms(stackId);
 
@@ -33,15 +36,15 @@ function createStackServer(stackId, centralApiBaseUrl = 'http://localhost:3000')
       <head>
         <title>${meta.name} Benchmark Server</title>
         <style>
-          body { font-family: system-ui, sans-serif; background: ${meta.bg}; color: #f8fafc; padding: 40px; }
-          .card { background: ${adjustColor(meta.bg, 20)}; border-radius: 12px; padding: 25px; max-width: 900px; margin: 0 auto; border: 1px solid ${meta.accent}; }
-          h1 { color: ${meta.color}; }
+          body { font-family: system-ui, sans-serif; background: ${theme.bg}; color: #f8fafc; padding: 40px; }
+          .card { background: ${adjustColor(theme.bg, 20)}; border-radius: 12px; padding: 25px; max-width: 900px; margin: 0 auto; border: 1px solid ${theme.accent}; }
+          h1 { color: ${theme.color}; }
           h2 { color: #94a3b8; font-size: 1.1rem; margin-top: 24px; }
           ul { list-style: none; padding: 0; }
           li { margin-bottom: 8px; }
           a { color: #60a5fa; text-decoration: none; font-weight: 600; margin-right: 4px; }
           a:hover { text-decoration: underline; }
-          .badge { display: inline-block; background: ${meta.accent}; color: white; padding: 4px 12px; border-radius: 20px; font-size: 0.85rem; font-weight: bold; }
+          .badge { display: inline-block; background: ${theme.accent}; color: white; padding: 4px 12px; border-radius: 20px; font-size: 0.85rem; font-weight: bold; }
           .profile-tag { display: inline-block; font-size: 0.65rem; padding: 1px 5px; border-radius: 4px; margin-right: 8px; vertical-align: middle; }
           .profile-a { background: #065f46; color: #a7f3d0; }
           .profile-b { background: #7c2d12; color: #fed7aa; }
@@ -52,7 +55,7 @@ function createStackServer(stackId, centralApiBaseUrl = 'http://localhost:3000')
           <span class="badge">${meta.name} (${Math.round(meta.share * 100)}% share) · Port ${meta.port}</span>
           <h1>${meta.name} Form Server</h1>
           <p>Total forms assigned: <strong>${assignedForms.length}</strong></p>
-          <p>Central API: <code>${centralApiBaseUrl}</code></p>
+          <p>Central API: <code>${resolvedApiUrl}</code></p>
           <h2>Assigned Forms</h2>
           <ul>
             ${scenarioLinks}
@@ -76,7 +79,7 @@ function createStackServer(stackId, centralApiBaseUrl = 'http://localhost:3000')
     const variant = getVariant(scenarioId, parseInt(variantIndex, 10));
     if (!variant) return res.status(404).send('Scenario not found');
     res.set('Content-Type', 'text/html');
-    res.send(renderStackForm(variant, stackId, centralApiBaseUrl));
+    res.send(renderStackForm(variant, stackId, resolvedApiUrl));
   });
 
   app.get('/api/forms', (req, res) => {

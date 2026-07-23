@@ -86,19 +86,20 @@ function resolveScenarioGroundTruth(scenario, profileId) {
 }
 
 function getVariant(scenarioId, variantIndex) {
-  if (variantIndex < 1 || variantIndex > VARIANTS_PER_SCENARIO) {
-    throw new Error(`Variant index must be between 1 and ${VARIANTS_PER_SCENARIO}`);
+  const index = Number(variantIndex);
+  if (!Number.isInteger(index) || index < 1 || index > VARIANTS_PER_SCENARIO) {
+    return null;
   }
   const scenario = scenarios.getScenario(scenarioId);
   if (!scenario) return null;
 
-  const profileId = getVariantProfileId(scenarioId, variantIndex);
+  const profileId = getVariantProfileId(scenarioId, index);
   const groundTruth = resolveScenarioGroundTruth(scenario, profileId);
 
   return {
     ...scenario,
-    variantId: `${scenarioId}-v${variantIndex}`,
-    variantIndex,
+    variantId: `${scenarioId}-v${index}`,
+    variantIndex: index,
     expectedProfile: profileId,
     groundTruth
   };

@@ -1,6 +1,9 @@
 const http = require('http');
+const https = require('https');
+const { URL } = require('url');
 const scenarios = require('./scenarios');
 const { getVariant } = require('./variants');
+const { CONFIG } = require('./config');
 
 const arg = process.argv[2] || 'baseline';
 let scenarioId = arg;
@@ -11,6 +14,10 @@ let scenario;
 if (variantMatch) {
   scenarioId = variantMatch[1];
   scenario = getVariant(scenarioId, parseInt(variantMatch[2], 10));
+  if (!scenario) {
+    console.error(`Variant '${arg}' not found`);
+    process.exit(1);
+  }
   variantId = scenario.variantId;
 } else {
   scenario = scenarios.getScenario(scenarioId);
@@ -27,10 +34,12 @@ const testPayload = JSON.stringify({
   data: scenario.groundTruth
 });
 
+const apiUrl = new URL('/api/verify-submission', CONFIG.publicBaseUrl);
+const client = apiUrl.protocol === 'https:' ? https : http;
 const options = {
-  hostname: 'localhost',
-  port: 3000,
-  path: '/api/verify-submission',
+  hostname: apiUrl.hostname,
+  port: apiUrl.port || (apiUrl.protocol === 'https:' ? 443 : 80),
+  path: apiUrl.pathname,
   method: 'POST',
   headers: {
     'Content-Type': 'application/json',
@@ -38,12 +47,22 @@ const options = {
   }
 };
 
-const req = http.request(options, (res) => {
+const req = client.request(options, (res) => {
   let body = '';
   res.on('data', (chunk) => body += chunk);
   res.on('end', () => {
+    if (res.statusCode !== 200) {
+      console.error(`Server returned ${res.statusCode}: ${body}`);
+      process.exit(1);
+    }
     console.log(`--- Verification Result for scenario '${scenarioId}' ---`);
-    const parsed = JSON.parse(body);
+    let parsed;
+    try {
+      parsed = JSON.parse(body);
+    } catch (err) {
+      console.error('Invalid JSON response:', body);
+      process.exit(1);
+    }
     console.log('Score:', parsed.report?.score);
     console.log('Metrics:', parsed.report?.metrics);
     if (parsed.success && parsed.report.score === 100) {

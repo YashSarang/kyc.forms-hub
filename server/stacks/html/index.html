@@ -3,43 +3,221 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Plain HTML / jQuery KYC Form Benchmark (Full Suite)</title>
+  <meta name="description" content="Plain HTML jQuery accordion KYC benchmark form — full canonical field suite for AI agent evaluation.">
+  <title>HTML/jQuery KYC Benchmark — Sky Blue</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
   <style>
-    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #0f172a; color: #f8fafc; padding: 20px; }
-    .container { max-width: 950px; margin: 0 auto; background: #1e293b; padding: 35px; border-radius: 14px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-    h1 { color: #38bdf8; border-bottom: 2px solid #334155; padding-bottom: 12px; margin-top: 0; }
-    .badge { display: inline-block; background: #0284c7; color: white; padding: 5px 14px; border-radius: 20px; font-size: 0.85rem; font-weight: bold; margin-bottom: 20px; }
-    
-    /* jQuery Accordion Sections */
-    .accordion-header { background: #0f172a; border: 1px solid #334155; padding: 14px 20px; border-radius: 8px; cursor: pointer; font-weight: bold; color: #38bdf8; margin-top: 15px; display: flex; justify-content: space-between; align-items: center; }
-    .accordion-header.active { background: #0284c7; color: white; border-color: #38bdf8; }
-    .accordion-content { padding: 20px; background: #111827; border: 1px solid #334155; border-top: none; border-radius: 0 0 8px 8px; display: none; }
+    :root {
+      --primary: #0ea5e9;
+      --accent:  #38bdf8;
+      --bright:  #7dd3fc;
+      --bg:      #03080f;
+      --surface: #080f1a;
+      --inner:   #040b14;
+      --border:  #0c2a42;
+      --text:    #e0f2fe;
+      --muted:   #7dd3fc;
+      --input-bg:#03080f;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    body {
+      font-family: 'Inter', 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      margin: 0;
+      padding: 24px 16px;
+      min-height: 100vh;
+    }
+
+    /* ── Stack Identity Banner ── */
+    .stack-banner {
+      max-width: 980px;
+      margin: 0 auto 20px;
+      background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+      border-radius: 14px;
+      padding: 18px 28px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      box-shadow: 0 8px 32px rgba(14,165,233,0.3);
+    }
+    .stack-logo { font-size: 2.2rem; line-height: 1; }
+    .stack-banner-info h2 {
+      margin: 0;
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: 0.02em;
+    }
+    .stack-banner-info p {
+      margin: 2px 0 0;
+      font-size: 0.82rem;
+      color: #bae6fd;
+      font-weight: 500;
+    }
+    .stack-share-pill {
+      margin-left: auto;
+      background: rgba(255,255,255,0.15);
+      color: #fff;
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .container {
+      max-width: 980px;
+      margin: 0 auto;
+      background: var(--surface);
+      padding: 36px 40px;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.7), 0 0 0 1px rgba(14,165,233,0.08);
+    }
+
+    h1 {
+      color: var(--accent);
+      margin: 0 0 28px;
+      font-size: 1.7rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    /* ── jQuery Accordion ── */
+    .accordion-header {
+      background: var(--inner);
+      border: 1px solid var(--border);
+      padding: 14px 20px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 700;
+      color: var(--accent);
+      margin-top: 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: all 0.2s;
+      font-size: 0.95rem;
+    }
+    .accordion-header.active {
+      background: linear-gradient(90deg, #0284c7 0%, #0369a1 100%);
+      color: white;
+      border-color: var(--accent);
+      border-radius: 10px 10px 0 0;
+    }
+    .accordion-header:hover:not(.active) { border-color: var(--accent); }
+    .accordion-chevron { transition: transform 0.2s; font-style: normal; }
+    .accordion-header.active .accordion-chevron { transform: rotate(90deg); }
+
+    .accordion-content {
+      padding: 24px;
+      background: var(--inner);
+      border: 1px solid var(--border);
+      border-top: none;
+      border-radius: 0 0 10px 10px;
+      display: none;
+    }
     .accordion-content.active { display: block; }
 
-    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-    .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; }
-    .form-group { margin-bottom: 16px; }
-    label { display: block; margin-bottom: 6px; font-weight: 600; color: #cbd5e1; font-size: 0.9rem; }
-    input[type="text"], input[type="email"], input[type="tel"], input[type="date"], input[type="number"], input[type="file"], select {
-      width: 100%; padding: 11px; border-radius: 6px; border: 1px solid #475569; background: #0f172a; color: white; font-size: 0.95rem; box-sizing: border-box;
-    }
-    input:focus, select:focus { border-color: #38bdf8; outline: none; }
-    .radio-group, .checkbox-group { display: flex; gap: 15px; margin-top: 5px; color: #cbd5e1; }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 18px; }
 
-    .btn-submit { background: linear-gradient(135deg, #0284c7, #2563eb); color: white; border: none; padding: 14px 28px; font-size: 1.1rem; border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%; margin-top: 25px; }
-    .result-box { margin-top: 25px; padding: 20px; background: #090d16; border-radius: 8px; border: 1px solid #334155; display: none; }
+    .form-group { margin-bottom: 16px; }
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 600;
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+    input[type="text"], input[type="email"], input[type="tel"],
+    input[type="date"], input[type="number"], input[type="file"], select {
+      width: 100%;
+      padding: 11px 14px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--input-bg);
+      color: var(--text);
+      font-size: 0.95rem;
+      font-family: inherit;
+      transition: border 0.2s, box-shadow 0.2s;
+    }
+    input:focus, select:focus {
+      border-color: var(--accent);
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(56,189,248,0.15);
+    }
+    select option { background: var(--surface); }
+
+    .radio-group, .checkbox-group { display: flex; gap: 18px; margin-top: 6px; flex-wrap: wrap; }
+    .radio-group label, .checkbox-group label {
+      font-weight: 400;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      color: var(--text);
+      font-size: 0.92rem;
+    }
+    input[type="radio"], input[type="checkbox"] { accent-color: var(--accent); width: 16px; height: 16px; }
+
+    .btn-submit {
+      background: linear-gradient(135deg, var(--primary), #0369a1);
+      color: white;
+      border: none;
+      padding: 14px 32px;
+      font-size: 1rem;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 700;
+      font-family: inherit;
+      width: 100%;
+      margin-top: 28px;
+      transition: opacity 0.2s, transform 0.1s;
+      box-shadow: 0 4px 20px rgba(14,165,233,0.4);
+    }
+    .btn-submit:hover { opacity: 0.9; transform: translateY(-1px); }
+
+    .result-box {
+      margin-top: 28px;
+      padding: 24px;
+      background: var(--bg);
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      display: none;
+    }
+    .result-box h3 { color: var(--accent); margin-top: 0; }
+    .result-box pre { color: #7dd3fc; font-size: 0.85rem; overflow-x: auto; white-space: pre-wrap; }
+
+    @media (max-width: 640px) {
+      .grid-2, .grid-3 { grid-template-columns: 1fr; }
+      .container { padding: 22px 18px; }
+    }
   </style>
 </head>
 <body>
+  <!-- Stack Identity Banner -->
+  <div class="stack-banner">
+    <div class="stack-logo">🌐</div>
+    <div class="stack-banner-info">
+      <h2>Plain HTML — jQuery Accordion</h2>
+      <p>Theme: <strong>Sky Blue</strong> &nbsp;·&nbsp; jQuery 3.7 &nbsp;·&nbsp; Traditional DOM manipulation</p>
+    </div>
+    <span class="stack-share-pill">20% Market Share · Port 3010</span>
+  </div>
+
   <div class="container">
-    <span class="badge">Stack: Plain HTML / jQuery Accordion (20% Share)</span>
     <h1>jQuery KYC Verification Benchmark</h1>
 
     <form id="jqueryKycForm">
       <!-- Section 1 -->
       <div class="accordion-header active" data-target="sec1">
-        <span>1. Personal Identity Details</span> <span>▼</span>
+        <span>👤 1. Personal Identity Details</span>
+        <span class="accordion-chevron">▶</span>
       </div>
       <div class="accordion-content active" id="sec1">
         <div class="grid-2">
@@ -72,6 +250,7 @@
             <div class="radio-group">
               <label><input type="radio" name="gender" value="Male" checked required> Male</label>
               <label><input type="radio" name="gender" value="Female"> Female</label>
+              <label><input type="radio" name="gender" value="Other"> Other</label>
             </div>
           </div>
           <div class="form-group">
@@ -83,6 +262,7 @@
             <select id="nationality" name="nationality" required>
               <option value="Indian" selected>Indian</option>
               <option value="American">American</option>
+              <option value="British">British</option>
             </select>
           </div>
         </div>
@@ -104,7 +284,8 @@
 
       <!-- Section 2 -->
       <div class="accordion-header" data-target="sec2">
-        <span>2. Contact & Address Details</span> <span>▶</span>
+        <span>📞 2. Contact &amp; Address Details</span>
+        <span class="accordion-chevron">▶</span>
       </div>
       <div class="accordion-content" id="sec2">
         <div class="grid-3">
@@ -141,6 +322,8 @@
             <select id="curr_state" name="curr_state" required>
               <option value="Maharashtra" selected>Maharashtra</option>
               <option value="Delhi">Delhi</option>
+              <option value="Karnataka">Karnataka</option>
+              <option value="Tamil Nadu">Tamil Nadu</option>
             </select>
           </div>
           <div class="form-group">
@@ -152,7 +335,8 @@
 
       <!-- Section 3 -->
       <div class="accordion-header" data-target="sec3">
-        <span>3. Identity Documents & Banking</span> <span>▶</span>
+        <span>🪪 3. Identity Documents &amp; Banking</span>
+        <span class="accordion-chevron">▶</span>
       </div>
       <div class="accordion-content" id="sec3">
         <div class="grid-2">
@@ -171,6 +355,7 @@
             <select id="bank_name" name="bank_name" required>
               <option value="State Bank of India" selected>State Bank of India</option>
               <option value="HDFC Bank">HDFC Bank</option>
+              <option value="ICICI Bank">ICICI Bank</option>
             </select>
           </div>
           <div class="form-group">
@@ -199,7 +384,8 @@
 
       <!-- Section 4 -->
       <div class="accordion-header" data-target="sec4">
-        <span>4. Employment, Family & Consents</span> <span>▶</span>
+        <span>👨‍👩‍👧 4. Employment, Family &amp; Consents</span>
+        <span class="accordion-chevron">▶</span>
       </div>
       <div class="accordion-content" id="sec4">
         <div class="grid-3">
@@ -239,7 +425,7 @@
         <div class="form-group">
           <div class="checkbox-group">
             <label><input type="checkbox" id="esign_consent" name="esign_consent" checked required> Aadhaar eSign Consent</label>
-            <label><input type="checkbox" id="terms_consent" name="terms_consent" checked required> Terms & Conditions</label>
+            <label><input type="checkbox" id="terms_consent" name="terms_consent" checked required> Terms &amp; Conditions</label>
           </div>
         </div>
       </div>
@@ -248,8 +434,8 @@
     </form>
 
     <div class="result-box" id="resultBox">
-      <h3 style="color:#38bdf8; margin-top:0;">jQuery Benchmark Evaluation Result</h3>
-      <pre id="resultJson" style="color:#a7f3d0; white-space:pre-wrap;"></pre>
+      <h3>🌐 jQuery Benchmark Evaluation Result</h3>
+      <pre id="resultJson"></pre>
     </div>
   </div>
 
@@ -257,10 +443,16 @@
     $(document).ready(function() {
       // Accordion toggle behavior
       $('.accordion-header').on('click', function() {
+        const target = $(this).data('target');
+        const isActive = $(this).hasClass('active');
+
         $('.accordion-header').removeClass('active');
-        $('.accordion-content').removeClass('active').hide();
-        $(this).addClass('active');
-        $('#' + $(this).data('target')).addClass('active').fadeIn(200);
+        $('.accordion-content').removeClass('active').slideUp(180);
+
+        if (!isActive) {
+          $(this).addClass('active');
+          $('#' + target).addClass('active').slideDown(180);
+        }
       });
 
       $('#marital_status').on('change', function() {
@@ -276,13 +468,11 @@
       $('#jqueryKycForm').on('submit', function(e) {
         e.preventDefault();
         const data = {};
-        $(this).serializeArray().forEach(item => {
-          data[item.name] = item.value;
-        });
+        $(this).serializeArray().forEach(item => { data[item.name] = item.value; });
         data.esign_consent = $('#esign_consent').is(':checked');
         data.terms_consent = $('#terms_consent').is(':checked');
-        data.curr_country = "India";
-        data.emergency_contact_phone = "9876500000";
+        data.curr_country = 'India';
+        data.emergency_contact_phone = '9876500000';
 
         $.ajax({
           url: '/api/verify-submission',
@@ -290,7 +480,7 @@
           contentType: 'application/json',
           data: JSON.stringify({ data }),
           success: function(response) {
-            $('#resultBox').show();
+            $('#resultBox').slideDown(200);
             $('#resultJson').text(JSON.stringify(response.report, null, 2));
           }
         });

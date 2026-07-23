@@ -7,22 +7,38 @@ const scenarios = require('./scenarios');
 const { renderStackForm } = require('./form-renderers');
 const { STACKS, getStackPort, getStackForms, getDistributionSummary } = require('./distribution');
 const { getAllProfiles, getProfile, getVariant } = require('./variants');
+const { CONFIG, VALID_STACKS } = require('./config');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
 
-app.use(cors());
-app.use(express.json({ limit: '10mb' }));
+if (CONFIG.trustProxy) app.set('trust proxy', true);
+
+app.use(cors({ origin: CONFIG.corsOrigin }));
+app.use(express.json({ limit: CONFIG.jsonLimit }));
 app.use(express.urlencoded({ extended: true }));
+
+// Minimal security headers for production hosting without adding complexity.
+app.use((req, res, next) => {
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+  res.setHeader('X-Frame-Options', 'DENY');
+  res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+  next();
+});
+
+function validateStack(stack) {
+  if (!VALID_STACKS.includes(stack)) {
+    return `Invalid stack '${stack}'. Valid: ${VALID_STACKS.join(', ')}`;
+  }
+  return null;
+}
 
 // Serve full baseline forms at legacy stack URLs (variant v1 / Profile A)
 app.get('/stacks/:stack/index.html', (req, res) => {
   const stack = req.params.stack;
-  const validStacks = ['html', 'react', 'angular', 'vue', 'php', 'flask'];
-  if (!validStacks.includes(stack)) {
-    return res.status(400).send(`Invalid stack '${stack}'. Valid: ${validStacks.join(', ')}`);
-  }
+  const error = validateStack(stack);
+  if (error) return res.status(400).send(error);
   const variant = getVariant('baseline', 1);
+  if (!variant) return res.status(404).send("Scenario 'baseline' not found");
   res.set('Content-Type', 'text/html');
   res.send(renderStackForm(variant, stack, ''));
 });
@@ -30,10 +46,8 @@ app.get('/stacks/:stack/index.html', (req, res) => {
 // Dynamically render scenario forms for any supported stack (defaults to variant v1 / Profile A)
 app.get('/form/:stack/:scenarioId', (req, res) => {
   const { stack, scenarioId } = req.params;
-  const validStacks = ['html', 'react', 'angular', 'vue', 'php', 'flask'];
-  if (!validStacks.includes(stack)) {
-    return res.status(400).send(`Invalid stack '${stack}'. Valid: ${validStacks.join(', ')}`);
-  }
+  const error = validateStack(stack);
+  if (error) return res.status(400).send(error);
   const variant = getVariant(scenarioId, 1);
   if (!variant) {
     return res.status(404).send(`Scenario '${scenarioId}' not found`);
@@ -45,10 +59,8 @@ app.get('/form/:stack/:scenarioId', (req, res) => {
 // Render a specific variant on the central orchestrator
 app.get('/form/:stack/:scenarioId/v:variantIndex', (req, res) => {
   const { stack, scenarioId, variantIndex } = req.params;
-  const validStacks = ['html', 'react', 'angular', 'vue', 'php', 'flask'];
-  if (!validStacks.includes(stack)) {
-    return res.status(400).send(`Invalid stack '${stack}'. Valid: ${validStacks.join(', ')}`);
-  }
+  const error = validateStack(stack);
+  if (error) return res.status(400).send(error);
   const variant = getVariant(scenarioId, parseInt(variantIndex, 10));
   if (!variant) {
     return res.status(404).send(`Scenario '${scenarioId}' variant ${variantIndex} not found`);
@@ -87,6 +99,7 @@ app.get('/api/agent-manifest', (req, res) => {
       if (!match) return;
       const [, scenarioId, variantIndex] = match;
       const variant = getVariant(scenarioId, parseInt(variantIndex, 10));
+      if (!variant) return;
       manifest.push({
         variantId,
         scenarioId,
@@ -94,8 +107,8 @@ app.get('/api/agent-manifest', (req, res) => {
         stack: stack.id,
         stackName: stack.name,
         expectedProfile: variant.expectedProfile,
-        centralUrl: `http://localhost:3000/form/${stack.id}/${scenarioId}/v${variantIndex}`,
-        directUrl: `http://localhost:${port}/form/${scenarioId}/v${variantIndex}`
+        centralUrl: `${CONFIG.publicBaseUrl}/form/${stack.id}/${scenarioId}/v${variantIndex}`,
+        directUrl: `${CONFIG.publicBaseUrl.replace(/:\d+$/, '')}:${port}/form/${scenarioId}/v${variantIndex}`
       });
     });
   });
@@ -117,7 +130,9 @@ app.get('/agent-portal', (req, res) => {
       if (!match) return;
       const [, scenarioId, variantIndex] = match;
       const variant = getVariant(scenarioId, parseInt(variantIndex, 10));
+      if (!variant) return;
       const profile = variant.expectedProfile;
+      const directBase = CONFIG.publicBaseUrl.replace(/:\d+$/, '');
       rows.push(`
         <tr>
           <td>${scenarioId}</td>
@@ -126,7 +141,7 @@ app.get('/agent-portal', (req, res) => {
           <td><span class="profile profile-${profile.toLowerCase()}">Profile ${profile}</span></td>
           <td>
             <a href="/form/${stack.id}/${scenarioId}/v${variantIndex}">Central</a>
-            <a href="http://localhost:${port}/form/${scenarioId}/v${variantIndex}">Direct</a>
+            <a href="${directBase}:${port}/form/${scenarioId}/v${variantIndex}">Direct</a>
           </td>
         </tr>
       `);
@@ -224,17 +239,18 @@ app.get('/', (req, res) => {
         </ul>
         <h2>Stack Servers (Ports)</h2>
         <ul>
-          ${STACKS.map(s => `<li><a href="http://localhost:${s.port}">${s.name}</a> — port ${s.port} · ${Math.round(s.share * 100)}% share</li>`).join('\n          ')}
+          ${STACKS.map(s => `<li><a href="${CONFIG.publicBaseUrl.replace(/:\d+$/, '')}:${s.port}">${s.name}</a> — port ${s.port} · ${Math.round(s.share * 100)}% share</li>`).join('\n          ')}
         </ul>
         <h2>API Endpoints</h2>
         <ul>
+          <li class="api">GET <a href="/health">/health</a> — health check</li>
           <li class="api">GET <a href="/api/scenarios">/api/scenarios</a> — list all scenarios</li>
           <li class="api">GET <a href="/api/scenarios/baseline">/api/scenarios/:id</a> — scenario details & ground truth</li>
           <li class="api">GET <a href="/api/canonical-fields">/api/canonical-fields</a> — canonical field definitions</li>
           <li class="api">GET <a href="/api/distribution">/api/distribution</a> — market-share distribution of all 225 forms</li>
           <li class="api">POST /api/verify-submission — evaluate a submission (body: { scenarioId, variantId?, data })</li>
           <li class="api">POST /api/benchmark/run — record an agent run</li>
-          <li class="api">GET /api/benchmark/report — aggregate benchmark report</li>
+          <li class="api">GET <a href="/api/benchmark/report">/api/benchmark/report</a> — aggregate benchmark report</li>
         </ul>
       </div>
     </body>
@@ -242,10 +258,35 @@ app.get('/', (req, res) => {
   `);
 });
 
+// Health check endpoint for load balancers / container orchestrators.
+app.get('/health', (req, res) => {
+  res.json({ success: true, status: 'ok', uptime: process.uptime() });
+});
+
 app.use((req, res) => {
   res.status(404).json({ success: false, error: 'Endpoint not found' });
 });
 
-app.listen(PORT, () => {
-  console.log(`KYC Form Hub server running on http://localhost:${PORT}`);
+// Generic error handler — keeps responses JSON and avoids leaking stack traces in production.
+app.use((err, req, res, next) => {
+  console.error('Unhandled error:', err);
+  const message = CONFIG.nodeEnv === 'production' ? 'Internal server error' : err.message;
+  res.status(err.status || 500).json({ success: false, error: message });
 });
+
+const server = app.listen(CONFIG.port, CONFIG.host, () => {
+  console.log(`KYC Form Hub server running on http://${CONFIG.host}:${CONFIG.port}`);
+});
+
+function shutdown(signal) {
+  console.log(`Received ${signal}. Shutting down gracefully...`);
+  server.close(() => {
+    console.log('Server closed.');
+    process.exit(0);
+  });
+}
+
+process.on('SIGTERM', () => shutdown('SIGTERM'));
+process.on('SIGINT', () => shutdown('SIGINT'));
+
+module.exports = { app, server };

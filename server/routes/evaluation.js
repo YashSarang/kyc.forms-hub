@@ -18,7 +18,12 @@ function compareValues(expected, actual) {
   }
   if (typeof expected === 'boolean') {
     if (typeof actual === 'boolean') return actual === expected;
-    return (actualNorm.toLowerCase() === 'true' || actualNorm.toLowerCase() === 'on' || actualNorm === '1') === expected;
+    const truthy = ['true', 'on', '1', 'yes'];
+    const falsy = ['false', 'off', '0', 'no'];
+    const lower = actualNorm.toLowerCase();
+    if (truthy.includes(lower)) return expected === true;
+    if (falsy.includes(lower)) return expected === false;
+    return false;
   }
   if (typeof expected === 'number') {
     return Number(actualNorm) === expected;
@@ -121,9 +126,13 @@ router.post('/verify-submission', (req, res) => {
   const scenarioId = req.body.scenarioId || req.query.scenario || 'baseline';
   const variantId = req.body.variantId || req.query.variant || null;
 
+  if (!scenarioId || typeof scenarioId !== 'string') {
+    return res.status(400).json({ success: false, error: 'scenarioId is required' });
+  }
+
   let scenario;
   let resolvedVariantId = variantId;
-  if (variantId) {
+  if (variantId && typeof variantId === 'string') {
     const match = variantId.match(/^(.+)-v(\d+)$/);
     if (match) {
       scenario = getVariant(match[1], parseInt(match[2], 10));
@@ -139,7 +148,7 @@ router.post('/verify-submission', (req, res) => {
     return res.status(404).json({ success: false, error: `Scenario '${scenarioId}' not found` });
   }
 
-  const submission = req.body.data || req.body;
+  const submission = req.body.data && typeof req.body.data === 'object' ? req.body.data : req.body;
   const report = evaluateSubmission(submission, scenario.groundTruth, scenario);
 
   res.json({

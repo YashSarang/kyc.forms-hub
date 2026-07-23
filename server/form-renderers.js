@@ -1,5 +1,14 @@
 const scenarios = require('./scenarios');
 
+function escapeHtml(str) {
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
 const STACK_META = {
   html: { name: 'Plain HTML / jQuery', share: '20%', color: '#38bdf8', bg: '#0f172a', accent: '#0284c7' },
   react: { name: 'React / Next.js', share: '30%', color: '#38bdf8', bg: '#0b0f19', accent: '#0284c7' },
@@ -43,12 +52,12 @@ function shuffleArray(arr) {
 
 function fieldInputHtml(field, scenario, attrs = {}) {
   const flags = scenario.stressFlags || {};
-  const id = attrs.id || field.id;
-  const name = attrs.name || field.id;
-  const value = fieldValue(scenario, field);
+  const id = escapeHtml(attrs.id || field.id);
+  const name = escapeHtml(attrs.name || field.id);
+  const value = escapeHtml(fieldValue(scenario, field));
   const required = field.required ? ' required' : '';
   const options = field.options || [];
-  const placeholder = field.placeholder ? ` placeholder="${field.placeholder}"` : '';
+  const placeholder = field.placeholder ? ` placeholder="${escapeHtml(field.placeholder)}"` : '';
 
   if (field.isHoneypot && flags.hiddenHoneypotFields) {
     return `<input type="text" id="${id}" name="${name}" value="" style="position:absolute;left:-9999px;" tabindex="-1" autocomplete="off" />`;
@@ -57,19 +66,21 @@ function fieldInputHtml(field, scenario, attrs = {}) {
   switch (field.type) {
     case 'radio':
       return `<div class="radio-group">${options.map(opt => {
-        const checked = value === opt ? ' checked' : '';
-        return `<label><input type="radio" name="${name}" value="${opt}"${checked}${required}> ${opt}</label>`;
+        const optVal = escapeHtml(opt);
+        const checked = value === optVal ? ' checked' : '';
+        return `<label><input type="radio" name="${name}" value="${optVal}"${checked}${required}> ${optVal}</label>`;
       }).join('')}</div>`;
     case 'checkbox':
       const checked = (field.readOnly && scenario.groundTruth[field.id] === true) ? ' checked' : '';
-      return `<label><input type="checkbox" id="${id}" name="${name}"${checked}${required}> ${field.label}</label>`;
+      return `<label><input type="checkbox" id="${id}" name="${name}"${checked}${required}> ${escapeHtml(field.label)}</label>`;
     case 'select':
     case 'combobox':
     case 'searchable_select':
-      const placeholderOption = `<option value="" disabled ${value === '' ? 'selected' : ''}>${field.placeholder || 'Select...'}</option>`;
+      const placeholderOption = `<option value="" disabled ${value === '' ? 'selected' : ''}>${escapeHtml(field.placeholder || 'Select...')}</option>`;
       return `<select id="${id}" name="${name}"${required}>${placeholderOption}${options.map(opt => {
-        const selected = value === opt ? ' selected' : '';
-        return `<option value="${opt}"${selected}>${opt}</option>`;
+        const optVal = escapeHtml(opt);
+        const selected = value === optVal ? ' selected' : '';
+        return `<option value="${optVal}"${selected}>${optVal}</option>`;
       }).join('')}</select>`;
     case 'date':
       return `<input type="date" id="${id}" name="${name}" value="${value}"${required} />`;
@@ -90,8 +101,8 @@ function fieldInputHtml(field, scenario, attrs = {}) {
 
 function fieldWrapperHtml(field, scenario, inputHtml, extraClasses = '') {
   if (field.isHoneypot && (scenario.stressFlags || {}).hiddenHoneypotFields) return inputHtml;
-  return `<div class="form-group ${extraClasses}" data-field-id="${field.id}">
-      <label for="${field.id}">${field.label}${field.required ? ' *' : ''}</label>
+  return `<div class="form-group ${escapeHtml(extraClasses)}" data-field-id="${escapeHtml(field.id)}">
+      <label for="${escapeHtml(field.id)}">${escapeHtml(field.label)}${field.required ? ' *' : ''}</label>
       ${inputHtml}
     </div>`;
 }
@@ -138,6 +149,8 @@ function renderHtmlStack(scenario, stack = 'html', apiBaseUrl = '') {
   const meta = STACK_META.html;
   const flags = scenario.stressFlags || {};
   const fields = prepareFields(scenario);
+  const scenarioName = escapeHtml(scenario.name);
+  const scenarioDesc = escapeHtml(scenario.description);
 
   const fieldHtml = fields.map(f => {
     const input = fieldInputHtml(f, scenario);
@@ -168,18 +181,18 @@ function renderHtmlStack(scenario, stack = 'html', apiBaseUrl = '') {
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="kyc-expected-profile" content="${scenario.expectedProfile || 'A'}">
-  <title>${scenario.name} — ${meta.name}</title>
+  <meta name="kyc-expected-profile" content="${escapeHtml(scenario.expectedProfile || 'A')}">
+  <title>${scenarioName} — ${escapeHtml(meta.name)}</title>
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
   <style>${commonStyles(meta)}</style>
   ${commonDelayScript(flags)}
 </head>
 <body>
   <div class="container">
-    <span class="badge">${meta.name} (${meta.share} share)</span>
-    <h1>${scenario.name}</h1>
-    <p class="desc">${scenario.description}</p>
-    <form id="kycForm" data-scenario="${scenario.id}" novalidate>
+    <span class="badge">${escapeHtml(meta.name)} (${escapeHtml(meta.share)} share)</span>
+    <h1>${scenarioName}</h1>
+    <p class="desc">${scenarioDesc}</p>
+    <form id="kycForm" data-scenario="${escapeHtml(scenario.id)}" novalidate>
       <div class="grid-2">${fieldHtml}</div>
       ${commonFakeButtons(flags)}
       <button type="submit" class="btn-submit" id="realSubmit">Submit Form</button>
@@ -237,14 +250,16 @@ function renderPhpStack(scenario, stack = 'php', apiBaseUrl = '') {
   const meta = STACK_META.php;
   const flags = scenario.stressFlags || {};
   const fields = prepareFields(scenario);
+  const scenarioName = escapeHtml(scenario.name);
+  const scenarioDesc = escapeHtml(scenario.description);
   const fieldHtml = fields.map(f => fieldWrapperHtml(f, scenario, fieldInputHtml(f, scenario))).join('\n        ');
 
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="kyc-expected-profile" content="${scenario.expectedProfile || 'A'}">
-  <title>${scenario.name} — ${meta.name}</title>
+  <meta name="kyc-expected-profile" content="${escapeHtml(scenario.expectedProfile || 'A')}">
+  <title>${scenarioName} — ${escapeHtml(meta.name)}</title>
   <style>${commonStyles(meta)}
     fieldset { border: 1px solid ${meta.accent}; border-radius: 6px; padding: 18px; margin-bottom: 20px; }
     legend { color: ${meta.color}; font-weight: bold; padding: 0 10px; }
@@ -253,11 +268,11 @@ function renderPhpStack(scenario, stack = 'php', apiBaseUrl = '') {
 </head>
 <body>
   <div class="container">
-    <span class="badge">${meta.name} (${meta.share} share)</span>
-    <h1>${scenario.name}</h1>
-    <p class="desc">${scenario.description}</p>
-    <form id="phpKycForm" data-scenario="${scenario.id}" novalidate>
-      <input type="hidden" name="csrf_token" value="csrf-token-${scenario.id}">
+    <span class="badge">${escapeHtml(meta.name)} (${escapeHtml(meta.share)} share)</span>
+    <h1>${scenarioName}</h1>
+    <p class="desc">${scenarioDesc}</p>
+    <form id="phpKycForm" data-scenario="${escapeHtml(scenario.id)}" novalidate>
+      <input type="hidden" name="csrf_token" value="csrf-token-${escapeHtml(scenario.id)}">
       <fieldset>
         <legend>KYC Fields</legend>
         <div class="grid-2">${fieldHtml}</div>
@@ -296,14 +311,16 @@ function renderFlaskStack(scenario, stack = 'flask', apiBaseUrl = '') {
   const meta = STACK_META.flask;
   const flags = scenario.stressFlags || {};
   const fields = prepareFields(scenario);
+  const scenarioName = escapeHtml(scenario.name);
+  const scenarioDesc = escapeHtml(scenario.description);
   const fieldHtml = fields.map(f => fieldWrapperHtml(f, scenario, fieldInputHtml(f, scenario))).join('\n        ');
 
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="kyc-expected-profile" content="${scenario.expectedProfile || 'A'}">
-  <title>${scenario.name} — ${meta.name}</title>
+  <meta name="kyc-expected-profile" content="${escapeHtml(scenario.expectedProfile || 'A')}">
+  <title>${scenarioName} — ${escapeHtml(meta.name)}</title>
   <style>${commonStyles(meta)}
     .card-block { background: ${adjustColor(meta.bg, -10)}; border: 1px solid ${meta.accent}; border-radius: 10px; padding: 20px; margin-bottom: 20px; }
     .card-heading { color: ${meta.color}; font-size: 1.1rem; border-bottom: 1px solid ${meta.accent}; padding-bottom: 8px; margin-top: 0; margin-bottom: 18px; }
@@ -312,11 +329,11 @@ function renderFlaskStack(scenario, stack = 'flask', apiBaseUrl = '') {
 </head>
 <body>
   <div class="container">
-    <span class="badge">${meta.name} (${meta.share} share)</span>
-    <h1>${scenario.name}</h1>
-    <p class="desc">${scenario.description}</p>
-    <form id="flaskForm" data-scenario="${scenario.id}" novalidate>
-      <input type="hidden" name="csrf_token" value="csrf-token-flask-${scenario.id}">
+    <span class="badge">${escapeHtml(meta.name)} (${escapeHtml(meta.share)} share)</span>
+    <h1>${scenarioName}</h1>
+    <p class="desc">${scenarioDesc}</p>
+    <form id="flaskForm" data-scenario="${escapeHtml(scenario.id)}" novalidate>
+      <input type="hidden" name="csrf_token" value="csrf-token-flask-${escapeHtml(scenario.id)}">
       <div class="card-block">
         <h3 class="card-heading">WTFields Render Block</h3>
         <div class="grid-2">${fieldHtml}</div>
@@ -355,6 +372,8 @@ function renderReactStack(scenario, stack = 'react', apiBaseUrl = '') {
   const meta = STACK_META.react;
   const flags = scenario.stressFlags || {};
   const fields = prepareFields(scenario);
+  const scenarioName = escapeHtml(scenario.name);
+  const scenarioDesc = escapeHtml(scenario.description);
 
   const initialState = {};
   scenario.fields.forEach(f => {
@@ -392,8 +411,8 @@ function renderReactStack(scenario, stack = 'react', apiBaseUrl = '') {
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="kyc-expected-profile" content="${scenario.expectedProfile || 'A'}">
-  <title>${scenario.name} — ${meta.name}</title>
+  <meta name="kyc-expected-profile" content="${escapeHtml(scenario.expectedProfile || 'A')}">
+  <title>${scenarioName} — ${escapeHtml(meta.name)}</title>
   <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -432,7 +451,7 @@ function renderReactStack(scenario, stack = 'react', apiBaseUrl = '') {
         const res = await fetch('${apiBaseUrl}/api/verify-submission', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ scenarioId: '${scenario.id}', variantId: '${scenario.variantId || ''}', data: formData })
+          body: JSON.stringify({ scenarioId: '${escapeHtml(scenario.id)}', variantId: '${escapeHtml(scenario.variantId || '')}', data: formData })
         });
         const result = await res.json();
         setReport(result.report);
@@ -440,15 +459,15 @@ function renderReactStack(scenario, stack = 'react', apiBaseUrl = '') {
         await fetch('${apiBaseUrl}/api/benchmark/run', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ agentId, agentName: agentId, scenarioId: '${scenario.id}', variantId: '${scenario.variantId || ''}', stack: '${stack}', data: formData, report: result.report, metadata: { source: 'form-submission' } })
+          body: JSON.stringify({ agentId, agentName: agentId, scenarioId: '${escapeHtml(scenario.id)}', variantId: '${escapeHtml(scenario.variantId || '')}', stack: '${stack}', data: formData, report: result.report, metadata: { source: 'form-submission' } })
         });
       };
 
       return (
         <div className="container">
-          <span className="badge">${meta.name} (${meta.share} share)</span>
-          <h1>${scenario.name}</h1>
-          <p className="desc">${scenario.description}</p>
+          <span className="badge">${escapeHtml(meta.name)} (${escapeHtml(meta.share)} share)</span>
+          <h1>${scenarioName}</h1>
+          <p className="desc">${scenarioDesc}</p>
           <form onSubmit={handleSubmit} noValidate>
             <div className="grid-2">
 ${inputs}
@@ -476,6 +495,8 @@ function renderAngularStack(scenario, stack = 'angular', apiBaseUrl = '') {
   const meta = STACK_META.angular;
   const flags = scenario.stressFlags || {};
   const fields = prepareFields(scenario);
+  const scenarioName = escapeHtml(scenario.name);
+  const scenarioDesc = escapeHtml(scenario.description);
 
   const initialState = {};
   scenario.fields.forEach(f => {
@@ -511,17 +532,17 @@ function renderAngularStack(scenario, stack = 'angular', apiBaseUrl = '') {
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="kyc-expected-profile" content="${scenario.expectedProfile || 'A'}">
-  <title>${scenario.name} — ${meta.name}</title>
+  <meta name="kyc-expected-profile" content="${escapeHtml(scenario.expectedProfile || 'A')}">
+  <title>${scenarioName} — ${escapeHtml(meta.name)}</title>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
   <style>${commonStyles(meta)}</style>
   ${commonDelayScript(flags)}
 </head>
 <body ng-app="kycApp" ng-controller="KycController">
   <div class="container">
-    <span class="badge">${meta.name} (${meta.share} share)</span>
-    <h1>${scenario.name}</h1>
-    <p class="desc">${scenario.description}</p>
+    <span class="badge">${escapeHtml(meta.name)} (${escapeHtml(meta.share)} share)</span>
+    <h1>${scenarioName}</h1>
+    <p class="desc">${scenarioDesc}</p>
     <form ng-submit="submitForm()" novalidate>
       <div class="grid-2">
 ${inputs}
@@ -543,7 +564,7 @@ ${inputs}
             const payload = Object.assign({}, $scope.form);
             if (payload.dob instanceof Date) payload.dob = payload.dob.toISOString().split('T')[0];
             const agentId = new URLSearchParams(window.location.search).get('agentId') || 'anonymous-agent';
-            $http.post('${apiBaseUrl}/api/verify-submission', { scenarioId: '${scenario.id}', variantId: '${scenario.variantId || ''}', data: payload })
+            $http.post('${apiBaseUrl}/api/verify-submission', { scenarioId: '${escapeHtml(scenario.id)}', variantId: '${escapeHtml(scenario.variantId || '')}', data: payload })
               .then(r => {
                 $scope.report = r.data.report;
                 return $http.post('${apiBaseUrl}/api/benchmark/run', { agentId, agentName: agentId, scenarioId: '${scenario.id}', variantId: '${scenario.variantId || ''}', stack: '${stack}', data: payload, report: r.data.report, metadata: { source: 'form-submission' } });
@@ -562,6 +583,8 @@ function renderVueStack(scenario, stack = 'vue', apiBaseUrl = '') {
   const meta = STACK_META.vue;
   const flags = scenario.stressFlags || {};
   const fields = prepareFields(scenario);
+  const scenarioName = escapeHtml(scenario.name);
+  const scenarioDesc = escapeHtml(scenario.description);
 
   const initialState = {};
   scenario.fields.forEach(f => {
@@ -597,17 +620,17 @@ function renderVueStack(scenario, stack = 'vue', apiBaseUrl = '') {
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="kyc-expected-profile" content="${scenario.expectedProfile || 'A'}">
-  <title>${scenario.name} — ${meta.name}</title>
+  <meta name="kyc-expected-profile" content="${escapeHtml(scenario.expectedProfile || 'A')}">
+  <title>${scenarioName} — ${escapeHtml(meta.name)}</title>
   <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
   <style>${commonStyles(meta)}</style>
   ${commonDelayScript(flags)}
 </head>
 <body>
   <div id="app" class="container">
-    <span class="badge">${meta.name} (${meta.share} share)</span>
-    <h1>${scenario.name}</h1>
-    <p class="desc">${scenario.description}</p>
+    <span class="badge">${escapeHtml(meta.name)} (${escapeHtml(meta.share)} share)</span>
+    <h1>${scenarioName}</h1>
+    <p class="desc">${scenarioDesc}</p>
     <form @submit.prevent="submitForm" novalidate>
       <div class="grid-2">
 ${inputs}
@@ -632,7 +655,7 @@ ${inputs}
           const res = await fetch('${apiBaseUrl}/api/verify-submission', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ scenarioId: '${scenario.id}', variantId: '${scenario.variantId || ''}', data: form.value })
+            body: JSON.stringify({ scenarioId: '${escapeHtml(scenario.id)}', variantId: '${escapeHtml(scenario.variantId || '')}', data: form.value })
           });
           const data = await res.json();
           report.value = data.report;
@@ -640,7 +663,7 @@ ${inputs}
           await fetch('${apiBaseUrl}/api/benchmark/run', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ agentId, agentName: agentId, scenarioId: '${scenario.id}', variantId: '${scenario.variantId || ''}', stack: '${stack}', data: form.value, report: data.report, metadata: { source: 'form-submission' } })
+            body: JSON.stringify({ agentId, agentName: agentId, scenarioId: '${escapeHtml(scenario.id)}', variantId: '${escapeHtml(scenario.variantId || '')}', stack: '${stack}', data: form.value, report: data.report, metadata: { source: 'form-submission' } })
           });
         };
         return { form, report, submitForm, disabled };

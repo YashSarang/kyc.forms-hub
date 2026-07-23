@@ -29,6 +29,9 @@ A comprehensive benchmark suite for evaluating autonomous AI form-filling agents
 - 📄 [Form-Canonical-Fields.md](Form-Canonical-Fields.md) - Full list of canonical KYC fields.
 - 🎛️ [Input-Fields-type.md](Input-Fields-type.md) - Input widgets and dynamic interaction patterns.
 - 📈 [BENCHMARK_REPORT.md](BENCHMARK_REPORT.md) - Benchmark report template and sample output.
+- 🧠 [METHODOLOGY.md](METHODOLOGY.md) - Design methodology and thought process.
+- 🤝 [CONTRIBUTING.md](CONTRIBUTING.md) - Contribution guidelines.
+- 📜 [LICENSE](LICENSE) - MIT license.
 
 ---
 
@@ -42,6 +45,37 @@ npm run stacks     # six stack servers on ports 3010-3015 (new terminal)
 ```
 
 Open `http://localhost:3000` to browse all form variants and see distribution details.
+
+For local development with a `.env` file:
+```bash
+cp .env.example .env
+npm run dev
+npm run stacks:dev
+```
+
+### Production Deployment
+
+KYC Form Hub is a set of plain Node.js/Express servers. Key environment variables:
+
+| Variable | Default | Purpose |
+|---|---|---|
+| `PORT` | `3000` | Central orchestrator port |
+| `HOST` | `0.0.0.0` | Bind address |
+| `PUBLIC_BASE_URL` | `http://localhost:3000` | Used in manifest, portal, and generated links |
+| `CORS_ORIGIN` | `*` | CORS origin for API endpoints |
+| `TRUST_PROXY` | `false` | Trust `X-Forwarded-*` headers when behind a reverse proxy |
+| `BENCHMARK_STORAGE_PATH` | *(in-memory)* | JSON file path to persist benchmark runs across restarts |
+| `STACK_*_PORT` | `3010-3015` | Per-stack server ports |
+| `CENTRAL_API_URL` | `http://localhost:3000` | URL stack servers use to call the central API |
+
+Copy `.env.example` to `.env` and adjust for your host. A reverse proxy (nginx, Caddy, cloud load balancer) can terminate TLS and forward to the orchestrator and stack ports.
+
+> **Persistence note:** Benchmark runs are stored in memory by default and are lost on restart. Set `BENCHMARK_STORAGE_PATH=benchmark-runs.json` for lightweight JSON persistence. This is intended as a temporary aid for tuning agents, not a long-term analytics database.
+
+### Health Checks
+
+- Orchestrator: `GET /health`
+- Stack servers: each stack root page (`/`) returns a list of assigned forms.
 
 ### Agent Entry Point
 
@@ -72,10 +106,10 @@ Two canonical user profiles are provided in `forms/profiles.json`. Every form va
 The **central orchestrator** (`:3000`) hosts global APIs, the scenario catalog, and `/form/{stack}/{scenarioId}`. Each **stack server** hosts only the variants assigned to it by market share and submits results back to the central API.
 
 ### Form Distribution
-- 15 scenarios × 10 variants = **150 distinct ground-truth forms**.
-- Variant `v1` of every scenario is **mirrored on all 6 stacks** (consistency core) = 90 forms.
+- 15 scenarios × 10 variants = **150 distinct scenario variants** (each with a fixed ground truth).
+- Variant `v1` of every scenario is **mirrored on all 6 stacks** (consistency core) = 90 served stack instances.
 - Variants `v2`–`v10` are distributed by market share:
-  - React 41, HTML 27, Angular 20, PHP 20, Vue 14, Flask 13 = 135 forms.
+  - React 41, HTML 27, Angular 20, PHP 20, Vue 14, Flask 13 = 135 served stack instances.
 - **Total served forms = 225**.
 
 Get the live allocation: `GET http://localhost:3000/api/distribution`
@@ -88,6 +122,11 @@ npm run generate
 This creates:
 - `server/stacks/{stack}/{scenario}.html` (15 per stack)
 - `server/stacks/{stack}/variants/{scenario}-v{n}.html` (market-share allocation)
+
+After changing `PUBLIC_BASE_URL` or stack ports, regenerate the link catalog:
+```bash
+npm run generate:links
+```
 
 ### Stack Endpoints — Legacy Full Baseline
 - HTML / jQuery: `http://localhost:3000/stacks/html/index.html`
@@ -115,6 +154,7 @@ http://localhost:3011/form/level4-dynamic/v5
 ```
 
 ### API Endpoints
+- `GET /health` — orchestrator health check
 - `GET /api/scenarios` — list scenarios
 - `GET /api/scenarios/:id` — scenario details and ground truth
 - `GET /api/canonical-fields` — canonical field definitions
@@ -124,7 +164,7 @@ http://localhost:3011/form/level4-dynamic/v5
 - `GET /api/agent-manifest` — JSON list of every form URL with expected profile
 - `POST /api/verify-submission` — evaluate submission `{ scenarioId, variantId?, data }`
 - `POST /api/benchmark/run` — record an agent run
-- `GET /api/benchmark/report` — aggregate report
+- `GET /api/benchmark/report` — aggregate report (add `?format=html` for a UI)
 
 ### User Profiles
 
@@ -161,13 +201,29 @@ Track overall results in real time:
 curl "http://localhost:3000/api/benchmark/report?agentId=my-agent"
 ```
 
+Or open the human-friendly report:
+```
+http://localhost:3000/api/benchmark/report?agentId=my-agent&format=html
+```
+
 Or open the agent portal: `http://localhost:3000/agent-portal`
+
+### Saving Agent Performance for Later Tuning
+
+Whenever a form is submitted with `?agentId=<agent-id>`, the result is recorded as a benchmark run. To keep these runs across server restarts, set:
+
+```bash
+BENCHMARK_STORAGE_PATH=benchmark-runs.json
+```
+
+This produces a temporary JSON log that you can inspect to identify which scenarios/stacks/fields your agent struggles with. We can discuss richer approaches (SQLite, S3, webhook callbacks, per-field drill-down dashboards) when you are ready.
 
 ### Verify a Scenario
 ```bash
 npm test                         # baseline scenario
 npm run test:scenario level4-dynamic
 npm run test:scenario level1-basic-v3   # variant verification
+npm run test:all                 # every scenario variant (requires running server)
 ```
 
 ---

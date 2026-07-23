@@ -1,12 +1,13 @@
 {
   "name": "kyc-form-hub",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Benchmark platform for evaluating AI form-filling agents across 50+ canonical KYC fields, 6 web tech stacks, 7 difficulty levels, and adversarial issue variants.",
   "main": "server/index.js",
   "scripts": {
     "start": "node server/index.js",
-    "dev": "node server/index.js",
+    "dev": "node -r dotenv/config server/index.js",
     "stacks": "node server/run-stack-servers.js",
+    "stacks:dev": "node -r dotenv/config server/run-stack-servers.js",
     "stack:html": "node server/stack-server-html.js",
     "stack:react": "node server/stack-server-react.js",
     "stack:angular": "node server/stack-server-angular.js",
@@ -15,13 +16,19 @@
     "stack:flask": "node server/stack-server-flask.js",
     "test": "node server/test-verification.js baseline",
     "test:scenario": "node server/test-verification.js",
+    "test:all": "node server/test-all-scenarios.js",
     "generate": "node server/generate-forms-new.js",
+    "generate:links": "node server/generate-form-links.js",
     "agent:benchmark": "node server/agent-benchmark.js"
   },
   "dependencies": {
     "express": "^4.19.2",
     "cors": "^2.8.5",
-    "body-parser": "^1.20.2"
+    "body-parser": "^1.20.2",
+    "dotenv": "^16.4.5"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   },
   "license": "MIT"
 }

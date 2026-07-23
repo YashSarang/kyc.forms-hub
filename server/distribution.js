@@ -1,13 +1,14 @@
 const scenarios = require('./scenarios');
-const { VARIANTS_PER_SCENARIO, listVariantIds } = require('./variants');
+const { VARIANTS_PER_SCENARIO } = require('./variants');
+const { CONFIG } = require('./config');
 
 const STACKS = [
-  { id: 'html', name: 'Plain HTML / jQuery', share: 0.20, port: 3010 },
-  { id: 'react', name: 'React / Next.js', share: 0.30, port: 3011 },
-  { id: 'angular', name: 'Angular Reactive', share: 0.15, port: 3012 },
-  { id: 'vue', name: 'Vue.js', share: 0.10, port: 3013 },
-  { id: 'php', name: 'PHP Server-Rendered', share: 0.15, port: 3014 },
-  { id: 'flask', name: 'Flask / Python WTForms', share: 0.10, port: 3015 }
+  { id: 'html', name: 'Plain HTML / jQuery', share: 0.20, port: CONFIG.stacks.html.port },
+  { id: 'react', name: 'React / Next.js', share: 0.30, port: CONFIG.stacks.react.port },
+  { id: 'angular', name: 'Angular Reactive', share: 0.15, port: CONFIG.stacks.angular.port },
+  { id: 'vue', name: 'Vue.js', share: 0.10, port: CONFIG.stacks.vue.port },
+  { id: 'php', name: 'PHP Server-Rendered', share: 0.15, port: CONFIG.stacks.php.port },
+  { id: 'flask', name: 'Flask / Python WTForms', share: 0.10, port: CONFIG.stacks.flask.port }
 ];
 
 function distributeVariants() {
@@ -32,7 +33,7 @@ function distributeVariants() {
     const assigned = assignToStacksByQuota(toDistribute, remainingQuota);
     Object.entries(assigned).forEach(([stackId, variantIds]) => {
       distribution[stackId].push(...variantIds);
-      variantIds.forEach(() => remainingQuota[stackId]--);
+      // Quota is already decremented inside assignToStacksByQuota.
     });
   });
 

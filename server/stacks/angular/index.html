@@ -3,40 +3,200 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Angular KYC Form Benchmark (Full Suite)</title>
+  <meta name="description" content="AngularJS ng-model reactive KYC benchmark form — full canonical field suite for AI agent evaluation.">
+  <title>Angular KYC Benchmark — Angular Red</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
   <style>
-    body { font-family: 'Roboto', sans-serif; background-color: #0f172a; color: #f8fafc; padding: 20px; }
-    .container { max-width: 950px; margin: 0 auto; background: #1e1b4b; padding: 35px; border-radius: 14px; border: 1px solid #3730a3; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-    h1 { color: #818cf8; margin-top: 0; border-bottom: 2px solid #3730a3; padding-bottom: 10px; }
-    .badge { display: inline-block; background: #dd1b16; color: white; padding: 5px 14px; border-radius: 20px; font-size: 0.85rem; font-weight: bold; margin-bottom: 20px; }
-    
-    .card-step { background: #111827; border: 1px solid #3730a3; border-radius: 10px; padding: 20px; margin-bottom: 20px; }
-    .step-title { color: #818cf8; font-size: 1.1rem; border-bottom: 1px solid #3730a3; padding-bottom: 8px; margin-top: 0; margin-bottom: 18px; }
-
-    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-    .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; }
-    .form-group { margin-bottom: 16px; }
-    label { display: block; margin-bottom: 6px; font-weight: 600; color: #c7d2fe; font-size: 0.9rem; }
-    input[type="text"], input[type="email"], input[type="tel"], input[type="date"], input[type="number"], select {
-      width: 100%; padding: 11px; border-radius: 6px; border: 1px solid #4338ca; background: #0f172a; color: white; font-size: 0.95rem; box-sizing: border-box;
+    :root {
+      --primary: #e11d48;
+      --accent:  #fb7185;
+      --bg:      #0f0008;
+      --surface: #1a0510;
+      --card:    #110008;
+      --border:  #3d0520;
+      --text:    #fce7f3;
+      --muted:   #fca5a5;
+      --input-bg:#0f0008;
     }
-    input:focus, select:focus { border-color: #818cf8; outline: none; }
-    .radio-group, .checkbox-group { display: flex; gap: 15px; margin-top: 5px; color: #c7d2fe; }
 
-    .btn-submit { background: linear-gradient(135deg, #dd1b16, #b91c1c); color: white; border: none; padding: 14px 28px; font-size: 1.1rem; border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%; margin-top: 20px; }
-    .result-box { margin-top: 25px; padding: 20px; background: #090d16; border-radius: 8px; border: 1px solid #3730a3; }
+    *, *::before, *::after { box-sizing: border-box; }
+    body {
+      font-family: 'Roboto', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      margin: 0;
+      padding: 24px 16px;
+      min-height: 100vh;
+    }
+
+    /* ── Stack Identity Banner ── */
+    .stack-banner {
+      max-width: 980px;
+      margin: 0 auto 20px;
+      background: linear-gradient(135deg, #be123c 0%, #9f1239 100%);
+      border-radius: 14px;
+      padding: 18px 28px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      box-shadow: 0 8px 32px rgba(225,29,72,0.3);
+    }
+    .stack-logo { font-size: 2.2rem; line-height: 1; }
+    .stack-banner-info h2 {
+      margin: 0;
+      font-size: 1.15rem;
+      font-weight: 900;
+      color: #fff;
+      letter-spacing: 0.02em;
+    }
+    .stack-banner-info p {
+      margin: 2px 0 0;
+      font-size: 0.82rem;
+      color: #fecdd3;
+      font-weight: 500;
+    }
+    .stack-share-pill {
+      margin-left: auto;
+      background: rgba(255,255,255,0.15);
+      color: #fff;
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .container {
+      max-width: 980px;
+      margin: 0 auto;
+      background: var(--surface);
+      padding: 36px 40px;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.7), 0 0 0 1px rgba(225,29,72,0.08);
+    }
+
+    h1 {
+      color: var(--accent);
+      margin: 0 0 28px;
+      font-size: 1.7rem;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+    }
+
+    .card-step {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+    .step-title {
+      color: var(--accent);
+      font-size: 1rem;
+      font-weight: 700;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 10px;
+      margin: 0 0 20px;
+    }
+    .step-icon { margin-right: 6px; }
+
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 18px; }
+
+    .form-group { margin-bottom: 16px; }
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 500;
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+    input[type="text"], input[type="email"], input[type="tel"],
+    input[type="date"], input[type="number"], select {
+      width: 100%;
+      padding: 11px 14px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--input-bg);
+      color: var(--text);
+      font-size: 0.95rem;
+      font-family: inherit;
+      transition: border 0.2s, box-shadow 0.2s;
+    }
+    input:focus, select:focus {
+      border-color: var(--accent);
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(251,113,133,0.15);
+    }
+    select option { background: var(--surface); }
+
+    .radio-group, .checkbox-group { display: flex; gap: 18px; margin-top: 6px; flex-wrap: wrap; }
+    .radio-group label, .checkbox-group label {
+      font-weight: 400;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      color: var(--text);
+      font-size: 0.92rem;
+    }
+    input[type="radio"], input[type="checkbox"] { accent-color: var(--accent); width: 16px; height: 16px; }
+
+    .btn-submit {
+      background: linear-gradient(135deg, var(--primary), #9f1239);
+      color: white;
+      border: none;
+      padding: 14px 32px;
+      font-size: 1rem;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 700;
+      font-family: inherit;
+      width: 100%;
+      margin-top: 24px;
+      transition: opacity 0.2s, transform 0.1s;
+      box-shadow: 0 4px 20px rgba(225,29,72,0.4);
+    }
+    .btn-submit:hover { opacity: 0.9; transform: translateY(-1px); }
+
+    .result-box {
+      margin-top: 28px;
+      padding: 24px;
+      background: var(--bg);
+      border-radius: 12px;
+      border: 1px solid var(--border);
+    }
+    .result-box h3 { color: var(--accent); margin-top: 0; }
+    .result-box pre { color: #fca5a5; font-size: 0.85rem; overflow-x: auto; }
+
+    @media (max-width: 640px) {
+      .grid-2, .grid-3 { grid-template-columns: 1fr; }
+      .container { padding: 22px 18px; }
+    }
   </style>
 </head>
 <body ng-app="kycApp" ng-controller="KycController">
+
+  <!-- Stack Identity Banner -->
+  <div class="stack-banner">
+    <div class="stack-logo">🅰️</div>
+    <div class="stack-banner-info">
+      <h2>Angular — ng-model Reactive Forms</h2>
+      <p>Theme: <strong>Angular Red</strong> &nbsp;·&nbsp; AngularJS 1.8 &nbsp;·&nbsp; Two-way data binding</p>
+    </div>
+    <span class="stack-share-pill">15% Market Share · Port 3012</span>
+  </div>
+
   <div class="container">
-    <span class="badge">Stack: Angular Reactive Forms (15% Share)</span>
     <h1>Angular KYC Benchmark Suite</h1>
 
     <form ng-submit="submitForm()">
       <!-- Step 1 Card -->
       <div class="card-step">
-        <h3 class="step-title">1. Personal Identity & Contact</h3>
+        <h3 class="step-title"><span class="step-icon">👤</span> 1. Personal Identity &amp; Contact</h3>
         <div class="grid-2">
           <div class="form-group">
             <label for="full_name">Full Name *</label>
@@ -75,6 +235,7 @@
             <select id="nationality" ng-model="form.nationality" required>
               <option value="Indian">Indian</option>
               <option value="American">American</option>
+              <option value="British">British</option>
             </select>
           </div>
         </div>
@@ -84,6 +245,7 @@
             <select id="marital_status" ng-model="form.marital_status" required>
               <option value="Single">Single</option>
               <option value="Married">Married</option>
+              <option value="Divorced">Divorced</option>
             </select>
           </div>
           <div class="form-group" ng-if="form.marital_status === 'Married'">
@@ -95,7 +257,7 @@
 
       <!-- Step 2 Card -->
       <div class="card-step">
-        <h3 class="step-title">2. Address & Identity Documents</h3>
+        <h3 class="step-title"><span class="step-icon">🏠</span> 2. Address &amp; Identity Documents</h3>
         <div class="grid-2">
           <div class="form-group">
             <label for="curr_address_line1">Current Address Line 1 *</label>
@@ -112,6 +274,8 @@
             <select id="curr_state" ng-model="form.curr_state" required>
               <option value="Maharashtra">Maharashtra</option>
               <option value="Delhi">Delhi</option>
+              <option value="Karnataka">Karnataka</option>
+              <option value="Tamil Nadu">Tamil Nadu</option>
             </select>
           </div>
           <div class="form-group">
@@ -139,13 +303,14 @@
 
       <!-- Step 3 Card -->
       <div class="card-step">
-        <h3 class="step-title">3. Banking, Financials & Family</h3>
+        <h3 class="step-title"><span class="step-icon">🏦</span> 3. Banking, Financials &amp; Family</h3>
         <div class="grid-3">
           <div class="form-group">
             <label for="bank_name">Bank Name *</label>
             <select id="bank_name" ng-model="form.bank_name" required>
               <option value="State Bank of India">State Bank of India</option>
               <option value="HDFC Bank">HDFC Bank</option>
+              <option value="ICICI Bank">ICICI Bank</option>
             </select>
           </div>
           <div class="form-group">
@@ -183,6 +348,16 @@
         </div>
         <div class="grid-2">
           <div class="form-group">
+            <label for="nominee_name">Nominee Name *</label>
+            <input type="text" id="nominee_name" ng-model="form.nominee_name" required>
+          </div>
+          <div class="form-group">
+            <label for="emergency_contact_phone">Emergency Contact Phone *</label>
+            <input type="tel" id="emergency_contact_phone" ng-model="form.emergency_contact_phone" required>
+          </div>
+        </div>
+        <div class="grid-2">
+          <div class="form-group">
             <label for="mobile_otp">Mobile OTP *</label>
             <input type="text" id="mobile_otp" ng-model="form.mobile_otp" required>
           </div>
@@ -194,7 +369,7 @@
         <div class="form-group">
           <div class="checkbox-group">
             <label><input type="checkbox" id="esign_consent" ng-model="form.esign_consent" required> Aadhaar eSign Consent</label>
-            <label><input type="checkbox" id="terms_consent" ng-model="form.terms_consent" required> Terms & Conditions</label>
+            <label><input type="checkbox" id="terms_consent" ng-model="form.terms_consent" required> Terms &amp; Conditions</label>
           </div>
         </div>
       </div>
@@ -203,8 +378,8 @@
     </form>
 
     <div ng-if="report" class="result-box">
-      <h3 style="color:#818cf8; margin-top:0;">Angular Evaluation Score: {{ report.score }}/100</h3>
-      <pre style="color:#a7f3d0;">{{ report | json }}</pre>
+      <h3>🅰️ Angular Evaluation Score: {{ report.score }}/100</h3>
+      <pre>{{ report | json }}</pre>
     </div>
   </div>
 
@@ -212,46 +387,43 @@
     angular.module('kycApp', [])
       .controller('KycController', ['$scope', '$http', function($scope, $http) {
         $scope.form = {
-          full_name: 'Rajesh Kumar Sharma',
-          first_name: 'Rajesh',
-          middle_name: 'Kumar',
-          last_name: 'Sharma',
-          email: 'rajesh.sharma@example.com',
-          mobile_number: '9876543210',
-          gender: 'Male',
-          dob: new Date('1992-08-15'),
-          nationality: 'Indian',
-          marital_status: 'Married',
-          spouse_name: 'Priya Sharma',
-          curr_address_line1: 'Flat 402, Sunshine Apartments',
-          curr_city: 'Mumbai',
-          curr_state: 'Maharashtra',
-          curr_pincode: '400067',
-          curr_country: 'India',
-          pan_number: 'ABCDE1234F',
-          aadhaar_number: '123456789012',
-          bank_name: 'State Bank of India',
-          branch_name: 'Fort Branch, Mumbai',
-          account_number: '100234567890',
-          ifsc_code: 'SBIN0000300',
-          account_type: 'Savings',
-          occupation: 'Software Engineer',
-          annual_income: 1200000,
-          father_name: 'Ramesh Sharma',
-          mother_name: 'Sunita Sharma',
-          nominee_name: 'Priya Sharma',
-          emergency_contact_phone: '9876500000',
-          mobile_otp: '123456',
-          email_otp: '654321',
-          esign_consent: true,
-          terms_consent: true
+          full_name:              'Rajesh Kumar Sharma',
+          first_name:             'Rajesh',
+          middle_name:            'Kumar',
+          last_name:              'Sharma',
+          email:                  'rajesh.sharma@example.com',
+          mobile_number:          '9876543210',
+          gender:                 'Male',
+          dob:                    '1992-08-15',  /* Fixed: was new Date() object — must be string for date input */
+          nationality:            'Indian',
+          marital_status:         'Married',
+          spouse_name:            'Priya Sharma',
+          curr_address_line1:     'Flat 402, Sunshine Apartments',
+          curr_city:              'Mumbai',
+          curr_state:             'Maharashtra',
+          curr_pincode:           '400067',
+          curr_country:           'India',
+          pan_number:             'ABCDE1234F',
+          aadhaar_number:         '123456789012',
+          bank_name:              'State Bank of India',
+          branch_name:            'Fort Branch, Mumbai',
+          account_number:         '100234567890',
+          ifsc_code:              'SBIN0000300',
+          account_type:           'Savings',
+          occupation:             'Software Engineer',
+          annual_income:          1200000,
+          father_name:            'Ramesh Sharma',
+          mother_name:            'Sunita Sharma',
+          nominee_name:           'Priya Sharma',
+          emergency_contact_phone:'9876500000',
+          mobile_otp:             '123456',
+          email_otp:              '654321',
+          esign_consent:          true,
+          terms_consent:          true
         };
 
         $scope.submitForm = function() {
-          const payload = Object.assign({}, $scope.form);
-          if (payload.dob instanceof Date) payload.dob = payload.dob.toISOString().split('T')[0];
-
-          $http.post('/api/verify-submission', { data: payload })
+          $http.post('/api/verify-submission', { data: $scope.form })
             .then(function(response) {
               $scope.report = response.data.report;
             });

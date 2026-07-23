@@ -3,130 +3,332 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>React / Next.js KYC Benchmark Form (Full Suite)</title>
+  <meta name="description" content="React controlled-component KYC benchmark form — full canonical field suite for AI agent evaluation.">
+  <title>React KYC Benchmark — Cyan Electric</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   <style>
-    body { font-family: 'Inter', -apple-system, sans-serif; background-color: #0b0f19; color: #e2e8f0; margin: 0; padding: 20px; }
-    .container { max-width: 1000px; margin: 0 auto; background: #151c2c; padding: 35px; border-radius: 16px; border: 1px solid #1e293b; box-shadow: 0 20px 40px rgba(0,0,0,0.6); }
-    h1 { color: #38bdf8; margin-top: 0; font-size: 1.8rem; }
-    .badge { display: inline-block; background: #0284c7; color: white; padding: 5px 14px; border-radius: 20px; font-size: 0.85rem; font-weight: bold; margin-bottom: 25px; }
-    
-    /* React Tab Navigation */
-    .tabs-nav { display: flex; gap: 8px; border-bottom: 2px solid #1e293b; margin-bottom: 30px; overflow-x: auto; padding-bottom: 10px; }
-    .tab-btn { background: #0f172a; color: #94a3b8; border: 1px solid #1e293b; padding: 10px 18px; border-radius: 8px; cursor: pointer; font-size: 0.9rem; font-weight: 600; white-space: nowrap; transition: all 0.2s; }
-    .tab-btn.active { background: #0284c7; color: white; border-color: #38bdf8; }
-    .tab-btn:hover:not(.active) { background: #1e293b; color: #e2e8f0; }
+    :root {
+      --primary: #06b6d4;
+      --accent:  #22d3ee;
+      --bg:      #060e14;
+      --surface: #0d1b26;
+      --border:  #0e3347;
+      --text:    #e0f7fa;
+      --muted:   #7dd3e8;
+      --input-bg:#071218;
+    }
 
-    .section-title { color: #38bdf8; font-size: 1.2rem; border-bottom: 1px solid #334155; padding-bottom: 8px; margin-top: 25px; margin-bottom: 20px; }
+    *, *::before, *::after { box-sizing: border-box; }
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      margin: 0;
+      padding: 24px 16px;
+      min-height: 100vh;
+    }
+
+    /* ── Stack Identity Banner ── */
+    .stack-banner {
+      max-width: 1020px;
+      margin: 0 auto 20px;
+      background: linear-gradient(135deg, #0891b2 0%, #0e7490 100%);
+      border-radius: 14px;
+      padding: 18px 28px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      box-shadow: 0 8px 32px rgba(6,182,212,0.25);
+    }
+    .stack-logo { font-size: 2.2rem; line-height: 1; }
+    .stack-banner-info h2 {
+      margin: 0;
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: 0.02em;
+    }
+    .stack-banner-info p {
+      margin: 2px 0 0;
+      font-size: 0.82rem;
+      color: #cffafe;
+      font-weight: 500;
+    }
+    .stack-share-pill {
+      margin-left: auto;
+      background: rgba(255,255,255,0.15);
+      color: #fff;
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .container {
+      max-width: 1020px;
+      margin: 0 auto;
+      background: var(--surface);
+      padding: 36px 40px;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.6), 0 0 0 1px rgba(6,182,212,0.08);
+    }
+
+    h1 {
+      color: var(--accent);
+      margin: 0 0 28px;
+      font-size: 1.7rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    /* ── Tab Nav ── */
+    .tabs-nav {
+      display: flex;
+      gap: 6px;
+      border-bottom: 2px solid var(--border);
+      margin-bottom: 32px;
+      overflow-x: auto;
+      padding-bottom: 0;
+      scrollbar-width: none;
+    }
+    .tabs-nav::-webkit-scrollbar { display: none; }
+    .tab-btn {
+      background: transparent;
+      color: var(--muted);
+      border: none;
+      border-bottom: 3px solid transparent;
+      padding: 10px 18px;
+      margin-bottom: -2px;
+      cursor: pointer;
+      font-size: 0.88rem;
+      font-weight: 600;
+      white-space: nowrap;
+      transition: all 0.2s;
+      font-family: inherit;
+    }
+    .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+    .tab-btn:hover:not(.active) { color: var(--text); }
+
+    /* ── Progress Bar ── */
+    .progress-wrap {
+      height: 4px;
+      background: var(--border);
+      border-radius: 2px;
+      margin-bottom: 32px;
+      overflow: hidden;
+    }
+    .progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      border-radius: 2px;
+      transition: width 0.35s ease;
+    }
+
+    .section-title {
+      color: var(--accent);
+      font-size: 1.05rem;
+      font-weight: 700;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 8px;
+      margin: 0 0 22px;
+    }
+
     .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
     .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
 
     .form-group { margin-bottom: 18px; }
-    label { display: block; margin-bottom: 6px; font-weight: 600; color: #cbd5e1; font-size: 0.9rem; }
-    input[type="text"], input[type="email"], input[type="tel"], input[type="date"], input[type="number"], input[type="file"], select {
-      width: 100%; padding: 11px 14px; border-radius: 8px; border: 1px solid #334155; background: #0b0f19; color: white; font-size: 0.95rem; box-sizing: border-box; transition: border 0.2s;
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 600;
+      color: var(--muted);
+      font-size: 0.85rem;
     }
-    input:focus, select:focus { border-color: #38bdf8; outline: none; box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2); }
-    .radio-group, .checkbox-group { display: flex; gap: 15px; margin-top: 6px; }
-    .radio-group label, .checkbox-group label { font-weight: normal; cursor: pointer; display: flex; align-items: center; gap: 6px; color: #cbd5e1; }
+    input[type="text"], input[type="email"], input[type="tel"],
+    input[type="date"], input[type="number"], input[type="file"], select {
+      width: 100%;
+      padding: 11px 14px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--input-bg);
+      color: var(--text);
+      font-size: 0.95rem;
+      font-family: inherit;
+      transition: border 0.2s, box-shadow 0.2s;
+    }
+    input:focus, select:focus {
+      border-color: var(--accent);
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(34,211,238,0.15);
+    }
+    select option { background: var(--surface); }
 
-    .nav-actions { display: flex; justify-content: space-between; margin-top: 35px; border-top: 1px solid #1e293b; padding-top: 20px; }
-    .btn-secondary { background: #334155; color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; font-weight: 600; }
-    .btn-primary { background: linear-gradient(135deg, #0284c7, #2563eb); color: white; border: none; padding: 12px 28px; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 1rem; }
-    .btn-primary:hover { opacity: 0.9; }
+    .radio-group, .checkbox-group { display: flex; gap: 18px; margin-top: 6px; flex-wrap: wrap; }
+    .radio-group label, .checkbox-group label {
+      font-weight: 500;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      color: var(--text);
+      font-size: 0.92rem;
+    }
+    input[type="radio"], input[type="checkbox"] { accent-color: var(--accent); width: 16px; height: 16px; }
 
-    .result-box { margin-top: 30px; padding: 25px; background: #040711; border-radius: 12px; border: 1px solid #1e293b; }
+    /* ── Nav Actions ── */
+    .nav-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 36px;
+      border-top: 1px solid var(--border);
+      padding-top: 22px;
+    }
+    .btn-secondary {
+      background: transparent;
+      color: var(--muted);
+      border: 1px solid var(--border);
+      padding: 11px 24px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      font-family: inherit;
+      font-size: 0.92rem;
+      transition: all 0.2s;
+    }
+    .btn-secondary:hover { background: var(--border); color: var(--text); }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary), #0891b2);
+      color: #fff;
+      border: none;
+      padding: 12px 30px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 0.95rem;
+      font-family: inherit;
+      transition: opacity 0.2s, transform 0.1s;
+      box-shadow: 0 4px 16px rgba(6,182,212,0.3);
+    }
+    .btn-primary:hover { opacity: 0.9; transform: translateY(-1px); }
+    .btn-primary:active { transform: translateY(0); }
+
+    .result-box {
+      margin-top: 32px;
+      padding: 26px;
+      background: var(--bg);
+      border-radius: 12px;
+      border: 1px solid var(--border);
+    }
+    .result-box h3 { color: var(--accent); margin-top: 0; }
+    .result-box pre { color: #a7f3d0; font-size: 0.85rem; overflow-x: auto; }
+
+    @media (max-width: 640px) {
+      .grid-2, .grid-3 { grid-template-columns: 1fr; }
+      .container { padding: 22px 18px; }
+    }
   </style>
 </head>
 <body>
+  <!-- Stack Identity Banner -->
+  <div class="stack-banner">
+    <div class="stack-logo">⚛️</div>
+    <div class="stack-banner-info">
+      <h2>React — Controlled Components</h2>
+      <p>Theme: <strong>Cyan Electric</strong> &nbsp;·&nbsp; CDN Babel / React 18 &nbsp;·&nbsp; useState hooks</p>
+    </div>
+    <span class="stack-share-pill">30% Market Share · Port 3011</span>
+  </div>
+
   <div id="root"></div>
 
   <script type="text/babel">
     const { useState } = React;
 
     const SECTIONS = [
-      { id: 'identity', title: '1. Personal Identity' },
-      { id: 'contact', title: '2. Contact & Address' },
+      { id: 'identity',  title: '1. Personal Identity' },
+      { id: 'contact',   title: '2. Contact & Address' },
       { id: 'documents', title: '3. Identity Documents' },
-      { id: 'banking', title: '4. Banking & Financials' },
-      { id: 'nominee', title: '5. Nominee & Family' },
-      { id: 'uploads', title: '6. Uploads & Verification' }
+      { id: 'banking',   title: '4. Banking & Financials' },
+      { id: 'nominee',   title: '5. Nominee & Family' },
+      { id: 'uploads',   title: '6. Uploads & Verification' }
     ];
 
     function ReactFullKycForm() {
       const [activeTab, setActiveTab] = useState('identity');
       const [formData, setFormData] = useState({
-        full_name: 'Rajesh Kumar Sharma',
-        first_name: 'Rajesh',
-        middle_name: 'Kumar',
-        last_name: 'Sharma',
-        preferred_name: 'Raj',
-        gender: 'Male',
-        dob: '1992-08-15',
-        nationality: 'Indian',
-        marital_status: 'Married',
-        spouse_name: 'Priya Sharma',
+        full_name:              'Rajesh Kumar Sharma',
+        first_name:             'Rajesh',
+        middle_name:            'Kumar',
+        last_name:              'Sharma',
+        preferred_name:         'Raj',
+        gender:                 'Male',
+        dob:                    '1992-08-15',
+        nationality:            'Indian',
+        marital_status:         'Married',
+        spouse_name:            'Priya Sharma',
 
-        mobile_number: '9876543210',
-        alternate_mobile: '9876543211',
-        landline: '02228901234',
-        email: 'rajesh.sharma@example.com',
-        curr_address_line1: 'Flat 402, Sunshine Apartments',
-        curr_address_line2: 'MG Road, Kandivali West',
-        curr_landmark: 'Near Metro Station',
-        curr_city: 'Mumbai',
-        curr_district: 'Mumbai Suburban',
-        curr_state: 'Maharashtra',
-        curr_pincode: '400067',
-        curr_country: 'India',
-        same_as_current: true,
+        mobile_number:          '9876543210',
+        alternate_mobile:       '9876543211',
+        landline:               '02228901234',
+        email:                  'rajesh.sharma@example.com',
+        curr_address_line1:     'Flat 402, Sunshine Apartments',
+        curr_address_line2:     'MG Road, Kandivali West',
+        curr_landmark:          'Near Metro Station',
+        curr_city:              'Mumbai',
+        curr_district:          'Mumbai Suburban',
+        curr_state:             'Maharashtra',
+        curr_pincode:           '400067',
+        curr_country:           'India',
+        same_as_current:        true,
 
-        pan_number: 'ABCDE1234F',
-        aadhaar_number: '123456789012',
-        passport_number: 'Z1234567',
-        driving_licence: 'MH0220190012345',
-        voter_id: 'XYZ9876543',
+        pan_number:             'ABCDE1234F',
+        aadhaar_number:         '123456789012',
+        passport_number:        'Z1234567',
+        driving_licence:        'MH0220190012345',
+        voter_id:               'XYZ9876543',
 
-        bank_name: 'State Bank of India',
-        branch_name: 'Fort Branch, Mumbai',
-        account_number: '100234567890',
-        ifsc_code: 'SBIN0000300',
-        account_type: 'Savings',
-        occupation: 'Software Engineer',
-        employment_type: 'Salaried',
-        employer_name: 'Tech Solutions Pvt Ltd',
-        designation: 'Senior Developer',
-        industry: 'Information Technology',
-        annual_income: '1200000',
-        income_range: '10-25 Lakhs',
-        net_worth: '5000000',
-        is_pep: 'No',
+        bank_name:              'State Bank of India',
+        branch_name:            'Fort Branch, Mumbai',
+        account_number:         '100234567890',
+        ifsc_code:              'SBIN0000300',
+        account_type:           'Savings',
+        occupation:             'Software Engineer',
+        employment_type:        'Salaried',
+        employer_name:          'Tech Solutions Pvt Ltd',
+        designation:            'Senior Developer',
+        industry:               'Information Technology',
+        annual_income:          '1200000',
+        income_range:           '10-25 Lakhs',
+        net_worth:              '5000000',
+        is_pep:                 'No',
 
-        nominee_name: 'Priya Sharma',
-        nominee_relationship: 'Spouse',
-        nominee_dob: '1994-05-20',
-        nominee_share: '100',
-        father_name: 'Ramesh Sharma',
-        mother_name: 'Sunita Sharma',
+        nominee_name:           'Priya Sharma',
+        nominee_relationship:   'Spouse',
+        nominee_dob:            '1994-05-20',
+        nominee_share:          '100',
+        father_name:            'Ramesh Sharma',
+        mother_name:            'Sunita Sharma',
         emergency_contact_name: 'Ramesh Sharma',
-        emergency_contact_phone: '9876500000',
+        emergency_contact_phone:'9876500000',
 
-        mobile_otp: '123456',
-        email_otp: '654321',
-        esign_consent: true,
-        terms_consent: true
+        mobile_otp:             '123456',
+        email_otp:              '654321',
+        esign_consent:          true,
+        terms_consent:          true
       });
 
       const [report, setReport] = useState(null);
 
       const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
-        setFormData(prev => ({
-          ...prev,
-          [name]: type === 'checkbox' ? checked : value
-        }));
+        setFormData(prev => ({ ...prev, [name]: type === 'checkbox' ? checked : value }));
       };
 
       const handleSubmit = async (e) => {
@@ -140,9 +342,15 @@
         setReport(result.report);
       };
 
+      const activeIdx = SECTIONS.findIndex(s => s.id === activeTab);
+      const progress = Math.round(((activeIdx + 1) / SECTIONS.length) * 100);
+
+      const goTo = (idx) => {
+        if (idx >= 0 && idx < SECTIONS.length) setActiveTab(SECTIONS[idx].id);
+      };
+
       return (
         <div className="container">
-          <span className="badge">Stack: React Controlled Components (30% Share)</span>
           <h1>React KYC Benchmark Application</h1>
 
           <div className="tabs-nav">
@@ -156,6 +364,10 @@
                 {s.title}
               </button>
             ))}
+          </div>
+
+          <div className="progress-wrap">
+            <div className="progress-bar" style={{ width: `${progress}%` }} />
           </div>
 
           <form onSubmit={handleSubmit}>
@@ -267,6 +479,8 @@
                       <option value="Maharashtra">Maharashtra</option>
                       <option value="Delhi">Delhi</option>
                       <option value="Karnataka">Karnataka</option>
+                      <option value="Tamil Nadu">Tamil Nadu</option>
+                      <option value="Gujarat">Gujarat</option>
                     </select>
                   </div>
                   <div className="form-group">
@@ -275,8 +489,9 @@
                   </div>
                 </div>
                 <div className="form-group">
-                  <label className="checkbox-group">
-                    <input type="checkbox" id="same_as_current" name="same_as_current" checked={formData.same_as_current} onChange={handleChange} /> Permanent address is same as current address
+                  <label className="checkbox-group" style={{cursor:'pointer'}}>
+                    <input type="checkbox" id="same_as_current" name="same_as_current" checked={formData.same_as_current} onChange={handleChange} />
+                    Permanent address is same as current address
                   </label>
                 </div>
               </div>
@@ -324,6 +539,7 @@
                       <option value="State Bank of India">State Bank of India</option>
                       <option value="HDFC Bank">HDFC Bank</option>
                       <option value="ICICI Bank">ICICI Bank</option>
+                      <option value="Axis Bank">Axis Bank</option>
                     </select>
                   </div>
                   <div className="form-group">
@@ -383,6 +599,8 @@
                       <option value="Spouse">Spouse</option>
                       <option value="Father">Father</option>
                       <option value="Mother">Mother</option>
+                      <option value="Son">Son</option>
+                      <option value="Daughter">Daughter</option>
                     </select>
                   </div>
                 </div>
@@ -428,42 +646,37 @@
                   </div>
                 </div>
                 <div className="form-group">
-                  <label className="checkbox-group">
-                    <input type="checkbox" id="esign_consent" name="esign_consent" checked={formData.esign_consent} onChange={handleChange} required /> Consent to digital Aadhaar eSign verification
+                  <label className="checkbox-group" style={{cursor:'pointer'}}>
+                    <input type="checkbox" id="esign_consent" name="esign_consent" checked={formData.esign_consent} onChange={handleChange} required />
+                    Consent to digital Aadhaar eSign verification
                   </label>
                 </div>
                 <div className="form-group">
-                  <label className="checkbox-group">
-                    <input type="checkbox" id="terms_consent" name="terms_consent" checked={formData.terms_consent} onChange={handleChange} required /> Agree to Terms & Conditions and Privacy Policy
+                  <label className="checkbox-group" style={{cursor:'pointer'}}>
+                    <input type="checkbox" id="terms_consent" name="terms_consent" checked={formData.terms_consent} onChange={handleChange} required />
+                    Agree to Terms & Conditions and Privacy Policy
                   </label>
                 </div>
               </div>
             )}
 
-            {/* Navigation & Submit Controls */}
             <div className="nav-actions">
-              {activeTab !== 'identity' ? (
-                <button type="button" className="btn-secondary" onClick={() => {
-                  const idx = SECTIONS.findIndex(s => s.id === activeTab);
-                  if (idx > 0) setActiveTab(SECTIONS[idx - 1].id);
-                }}>Previous Step</button>
+              {activeIdx > 0 ? (
+                <button type="button" className="btn-secondary" onClick={() => goTo(activeIdx - 1)}>← Previous</button>
               ) : <div />}
 
-              {activeTab !== 'uploads' ? (
-                <button type="button" className="btn-primary" onClick={() => {
-                  const idx = SECTIONS.findIndex(s => s.id === activeTab);
-                  if (idx < SECTIONS.length - 1) setActiveTab(SECTIONS[idx + 1].id);
-                }}>Next Step →</button>
+              {activeIdx < SECTIONS.length - 1 ? (
+                <button type="button" className="btn-primary" onClick={() => goTo(activeIdx + 1)}>Next →</button>
               ) : (
-                <button type="submit" className="btn-primary" id="submitBtn">Submit Complete React KYC</button>
+                <button type="submit" className="btn-primary" id="submitBtn">Submit React KYC →</button>
               )}
             </div>
           </form>
 
           {report && (
             <div className="result-box">
-              <h3 style={{ color: '#38bdf8', marginTop: 0 }}>React Benchmark Evaluation Score: {report.score}/100</h3>
-              <pre style={{ color: '#a7f3d0' }}>{JSON.stringify(report, null, 2)}</pre>
+              <h3>⚛️ React Evaluation Score: {report.score}/100</h3>
+              <pre>{JSON.stringify(report, null, 2)}</pre>
             </div>
           )}
         </div>

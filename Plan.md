@@ -98,5 +98,6 @@ These expose brittle heuristics and reward agents that use robust DOM understand
 
 - Advanced visual stress features (multi-step wizard pages, modal/iframe fields, dynamic IDs in rendered DOM) are declared in scenario metadata but only partially implemented in the rendered HTML. They can be expanded incrementally without changing the API.
 - CAPTCHA detection and rate-limiting placeholders are not implemented.
-- No persistent database: benchmark runs are stored in memory and lost on server restart.
+- Benchmark persistence is a lightweight JSON file; a full database or object-store backend can be added for long-term analytics.
+- Richer agent-performance dashboards (per-field drill-down, trend lines, regression detection) are possible next steps.
 - Runtime verification of the latest profile/harness changes is pending (the environment could not execute Node commands).

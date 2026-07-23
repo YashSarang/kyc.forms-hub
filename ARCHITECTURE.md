@@ -35,9 +35,10 @@
    +---------+ +---------+ +---------+ +---------+ +---------+ +---------+
 ```
 
-- **Central orchestrator** owns canonical schemas, scenario definitions, evaluation, and benchmark reporting.
-- **Stack servers** each host only the variants allocated to them by market share. They render forms dynamically and POST submissions to the central API (`CENTRAL_API_URL`).
+- **Central orchestrator** owns canonical schemas, scenario definitions, evaluation, and benchmark reporting. It is configured via environment variables (see `.env.example` and `server/config.js`).
+- **Stack servers** each host only the variants allocated to them by market share. They render forms dynamically and POST submissions to the central API configured by `CENTRAL_API_URL`.
 - **Consistency core**: variant `v1` of every scenario exists on all 6 stacks so cross-stack behavior can be compared for identical ground truth.
+- **Benchmark storage**: runs are stored in memory by default. Set `BENCHMARK_STORAGE_PATH` to a JSON file for lightweight persistence across restarts.
 
 ---
 
