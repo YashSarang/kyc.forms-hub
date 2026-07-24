@@ -6,32 +6,32 @@ A comprehensive benchmark suite for evaluating autonomous AI form-filling agents
 
 ## Benchmark Highlights
 
-- 📋 **50+ Canonical Fields**: Personal identity, contact, government IDs (Aadhaar, PAN, Passport), banking, employment, uploads, nominees, family, and consents.
-- 💻 **6 Web Tech Stacks**:
+- **50+ Canonical Fields**: Personal identity, contact, government IDs (Aadhaar, PAN, Passport), banking, employment, uploads, nominees, family, and consents.
+- **6 Web Tech Stacks**:
   1. **React / Next.js** (30% share)
   2. **Plain HTML / jQuery** (20% share)
   3. **Angular Reactive Forms** (15% share)
   4. **PHP Server-Rendered Mock** (15% share)
   5. **Vue.js Reactive Stack** (10% share)
   6. **Flask / Python WTForms Mock** (10% share)
-- 🎯 **7 Difficulty Levels**: Basic text → Selection controls → Pickers & Comboboxes → Dynamic conditional fields → Multi-step wizards & Modals → Framework Shadow DOM → Adversarial stress tests.
-- 🐛 **Issue Variants**: Duplicate labels, fake submit buttons, hidden honeypots, dynamic IDs, network latency, and combined adversarial stacks.
-- 📊 **Evaluation & Benchmark API**: Per-scenario ground truth, automated scoring (Accuracy, Completeness, Safety), and aggregate benchmark reporting.
+- **7 Difficulty Levels**: Basic text → Selection controls → Pickers & Comboboxes → Dynamic conditional fields → Multi-step wizards & Modals → Framework Shadow DOM → Adversarial stress tests.
+- **Issue Variants**: Duplicate labels, fake submit buttons, hidden honeypots, dynamic IDs, network latency, and combined adversarial stacks.
+- **Evaluation & Benchmark API**: Per-scenario ground truth, automated scoring (Accuracy, Completeness, Safety), and aggregate benchmark reporting.
 
 ---
 
 ## Documentation Links
 
-- 🏛️ [ARCHITECTURE.md](ARCHITECTURE.md) - System architecture, stack ratios, evaluation formulas.
-- 📋 [SCHEMA_SPECIFICATION.md](SCHEMA_SPECIFICATION.md) - JSON schema format for form scenarios and stress testing.
-- 🗺️ [Plan.md](Plan.md) - Benchmark metrics, difficulties, and stress testing.
-- 🛠️ [Tech-stacks.md](Tech-stacks.md) - Stack breakdown and advanced features.
-- 📄 [Form-Canonical-Fields.md](Form-Canonical-Fields.md) - Full list of canonical KYC fields.
-- 🎛️ [Input-Fields-type.md](Input-Fields-type.md) - Input widgets and dynamic interaction patterns.
-- 📈 [BENCHMARK_REPORT.md](BENCHMARK_REPORT.md) - Benchmark report template and sample output.
-- 🧠 [METHODOLOGY.md](METHODOLOGY.md) - Design methodology and thought process.
-- 🤝 [CONTRIBUTING.md](CONTRIBUTING.md) - Contribution guidelines.
-- 📜 [LICENSE](LICENSE) - MIT license.
+- [ARCHITECTURE.md](ARCHITECTURE.md) - System architecture, stack ratios, evaluation formulas.
+- [SCHEMA_SPECIFICATION.md](SCHEMA_SPECIFICATION.md) - JSON schema format for form scenarios and stress testing.
+- [Plan.md](Plan.md) - Benchmark metrics, difficulties, and stress testing.
+- [Tech-stacks.md](Tech-stacks.md) - Stack breakdown and advanced features.
+- [Form-Canonical-Fields.md](Form-Canonical-Fields.md) - Full list of canonical KYC fields.
+- [Input-Fields-type.md](Input-Fields-type.md) - Input widgets and dynamic interaction patterns.
+- [BENCHMARK_REPORT.md](BENCHMARK_REPORT.md) - Benchmark report template and sample output.
+- [METHODOLOGY.md](METHODOLOGY.md) - Design methodology and thought process.
+- [CONTRIBUTING.md](CONTRIBUTING.md) - Contribution guidelines.
+- [LICENSE](LICENSE) - MIT license.
 
 ---
 
