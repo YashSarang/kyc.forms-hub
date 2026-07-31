@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="kyc-expected-profile" content="A">
+  <title>Level 3a — Date Format Variations — PHP Server-Rendered</title>
+  <style>
+    body { font-family: system-ui, sans-serif; background-color: #111827; color: #f8fafc; padding: 20px; }
+    .container { max-width: 950px; margin: 0 auto; background: #444b5a; padding: 35px; border-radius: 14px; border: 1px solid #4f46e5; }
+    h1 { color: #818cf8; border-bottom: 2px solid #4f46e5; padding-bottom: 12px; margin-top: 0; }
+    .badge { display: inline-block; background: #4f46e5; color: white; padding: 5px 14px; border-radius: 20px; font-size: 0.85rem; font-weight: bold; margin-bottom: 20px; }
+    .desc { color: #94a3b8; margin-bottom: 20px; }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+    .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; }
+    .form-group { margin-bottom: 16px; }
+    label { display: block; margin-bottom: 6px; font-weight: 600; color: #cbd5e1; font-size: 0.9rem; }
+    input, select, textarea { width: 100%; padding: 11px; border-radius: 6px; border: 1px solid #4f46e5; background: #111827; color: white; font-size: 0.95rem; box-sizing: border-box; }
+    input:focus, select:focus { outline: none; border-color: #818cf8; box-shadow: 0 0 0 3px #818cf833; }
+    .radio-group, .checkbox-group { display: flex; gap: 15px; flex-wrap: wrap; margin-top: 5px; }
+    .radio-group label, .checkbox-group label { font-weight: normal; display: flex; align-items: center; gap: 6px; }
+    .btn-submit { background: linear-gradient(135deg, #4f46e5, #818cf8); color: white; border: none; padding: 14px 28px; font-size: 1.1rem; border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%; margin-top: 20px; }
+    .result-box { margin-top: 25px; padding: 20px; background: #00000055; border-radius: 8px; border: 1px solid #4f46e5; display: none; }
+    
+    /* --- Variation widget shared styles --- */
+    .radio-inline .radio-group, .checkbox-inline .checkbox-group { gap: 20px; }
+    .radio-cards .radio-group, .checkbox-cards .checkbox-group { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 12px; }
+    .radio-cards .radio-group label, .checkbox-cards .checkbox-group label { border: 1px solid #475569; border-radius: 8px; padding: 12px; cursor: pointer; transition: all 0.15s; }
+    .radio-cards .radio-group label:has(input:checked), .checkbox-cards .checkbox-group label:has(input:checked) { border-color: #38bdf8; background: #0ea5e933; }
+    .segmented-control { display: flex; border: 1px solid #475569; border-radius: 8px; overflow: hidden; }
+    .segmented-control label { flex: 1; margin: 0; padding: 10px; text-align: center; cursor: pointer; border-right: 1px solid #475569; font-weight: 500; }
+    .segmented-control label:last-child { border-right: none; }
+    .segmented-control input { position: absolute; opacity: 0; }
+    .segmented-control label:has(input:checked) { background: #38bdf8; color: #0f172a; font-weight: bold; }
+    .toggle-switch { display: inline-flex; align-items: center; gap: 10px; cursor: pointer; }
+    .toggle-switch input { opacity: 0; width: 0; height: 0; }
+    .toggle-slider { width: 44px; height: 24px; background: #475569; border-radius: 24px; position: relative; transition: 0.2s; }
+    .toggle-slider::before { content: ''; position: absolute; width: 18px; height: 18px; left: 3px; top: 3px; background: white; border-radius: 50%; transition: 0.2s; }
+    .toggle-switch input:checked + .toggle-slider { background: #38bdf8; }
+    .toggle-switch input:checked + .toggle-slider::before { transform: translateX(20px); }
+    kyc-custom-select { display: block; position: relative; }
+    .kyc-select-trigger { width: 100%; padding: 11px; border-radius: 6px; border: 1px solid #475569; background: #0f172a; color: white; cursor: pointer; text-align: left; display: flex; justify-content: space-between; align-items: center; }
+    .kyc-select-options { position: absolute; top: 100%; left: 0; right: 0; background: #1e293b; border: 1px solid #475569; border-radius: 6px; margin-top: 4px; max-height: 240px; overflow-y: auto; z-index: 100; display: none; }
+    .kyc-select-options.open { display: block; }
+    .kyc-select-option { padding: 10px 12px; cursor: pointer; }
+    .kyc-select-option:hover, .kyc-select-option.active { background: #334155; }
+    .kyc-triple-select { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+    .kyc-calendar-input { width: 100%; padding: 11px; border-radius: 6px; border: 1px solid #475569; background: #0f172a; color: white; cursor: pointer; }
+    .kyc-calendar-popup { position: absolute; top: 100%; left: 0; background: #1e293b; border: 1px solid #475569; border-radius: 8px; padding: 12px; z-index: 100; display: none; min-width: 280px; }
+    .kyc-calendar-popup.open { display: block; }
+    .kyc-calendar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+    .kyc-calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; text-align: center; }
+    .kyc-calendar-day { padding: 6px; border-radius: 4px; cursor: pointer; }
+    .kyc-calendar-day:hover { background: #334155; }
+    .kyc-calendar-day.selected { background: #38bdf8; color: #0f172a; }
+    .kyc-dropzone { border: 2px dashed #475569; border-radius: 8px; padding: 24px; text-align: center; cursor: pointer; transition: 0.2s; }
+    .kyc-dropzone:hover, .kyc-dropzone.dragover { border-color: #38bdf8; background: #0ea5e91a; }
+    .kyc-camera-btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border-radius: 6px; border: 1px solid #475569; background: #0f172a; color: white; cursor: pointer; }
+    .kyc-camera-btn:hover { border-color: #38bdf8; }
+    input[type="file"] { color: #94a3b8; }
+  
+  
+    fieldset { border: 1px solid #4f46e5; border-radius: 6px; padding: 18px; margin-bottom: 20px; }
+    legend { color: #818cf8; font-weight: bold; padding: 0 10px; }
+  </style>
+  <script>
+(function() {
+  if (window.__KYC_WIDGETS_INIT__) return;
+  window.__KYC_WIDGETS_INIT__ = true;
+
+  window.collectWidgetValues = function(root) {
+    const data = {};
+    root.querySelectorAll('kyc-custom-select, kyc-date-triple, kyc-date-calendar, kyc-toggle, kyc-dropzone').forEach(el => {
+      const input = el.querySelector('input[name]');
+      if (input) {
+        if (input.type === 'checkbox') data[input.name] = input.checked;
+        else if (input.type === 'file') data[input.name] = input.files.length ? input.files[0].name : '';
+        else data[input.name] = input.value;
+      }
+    });
+    return data;
+  };
+
+  function dispatchInput(input) {
+    input.dispatchEvent(new Event('input', { bubbles: true }));
+    input.dispatchEvent(new Event('change', { bubbles: true }));
+  }
+
+  class KycCustomSelect extends HTMLElement {
+    connectedCallback() {
+      const name = this.getAttribute('name');
+      this._options = JSON.parse(this.getAttribute('options') || '[]');
+      const placeholder = this.getAttribute('placeholder') || 'Select...';
+      const required = this.hasAttribute('required');
+      const searchable = this.hasAttribute('searchable');
+      this.innerHTML = '<input type="hidden" name="' + name + '"' + (required ? ' required' : '') + '><button type="button" class="kyc-select-trigger"><span class="kyc-select-text">' + placeholder + '</span><span>▼</span></button><div class="kyc-select-options"></div>';
+      const optsEl = this.querySelector('.kyc-select-options');
+      if (searchable) {
+        const searchBox = document.createElement('input');
+        searchBox.className = 'kyc-select-search';
+        searchBox.placeholder = 'Type to filter...';
+        searchBox.style.cssText = 'width:100%;padding:8px;border:none;border-bottom:1px solid #475569;background:#0f172a;color:white;box-sizing:border-box;';
+        searchBox.addEventListener('input', (e) => this.filterOptions(e.target.value));
+        searchBox.addEventListener('click', (e) => e.stopPropagation());
+        optsEl.appendChild(searchBox);
+      }
+      this._options.forEach((opt) => {
+        const div = document.createElement('div');
+        div.className = 'kyc-select-option';
+        div.textContent = opt;
+        div.dataset.value = opt;
+        div.addEventListener('click', () => this.select(opt));
+        optsEl.appendChild(div);
+      });
+      this.querySelector('.kyc-select-trigger').addEventListener('click', (e) => { e.preventDefault(); this.toggle(); });
+      document.addEventListener('click', (e) => { if (!this.contains(e.target)) optsEl.classList.remove('open'); });
+    }
+    filterOptions(query) {
+      const q = (query || '').toLowerCase();
+      this.querySelectorAll('.kyc-select-option').forEach(opt => {
+        opt.style.display = opt.textContent.toLowerCase().includes(q) ? '' : 'none';
+      });
+    }
+    select(value) {
+      const input = this.querySelector('input');
+      input.value = value;
+      this.querySelector('.kyc-select-text').textContent = value;
+      this.querySelector('.kyc-select-options').classList.remove('open');
+      dispatchInput(input);
+    }
+    toggle() {
+      this.querySelector('.kyc-select-options').classList.toggle('open');
+    }
+  }
+
+  class KycDateTriple extends HTMLElement {
+    connectedCallback() {
+      const name = this.getAttribute('name');
+      const required = this.hasAttribute('required');
+      const daySel = '<select class="kyc-day"><option value="">Day</option>' + Array.from({length:31},(_,i)=>'<option value="'+(i+1)+'">'+(i+1)+'</option>').join('') + '</select>';
+      const monthSel = '<select class="kyc-month"><option value="">Month</option>' + Array.from({length:12},(_,i)=>'<option value="'+(i+1)+'">'+(i+1)+'</option>').join('') + '</select>';
+      const yearSel = '<select class="kyc-year"><option value="">Year</option>' + Array.from({length:100},(_,i)=>'<option value="'+(1925+i)+'">'+(1925+i)+'</option>').join('') + '</select>';
+      this.innerHTML = '<input type="hidden" name="' + name + '"' + (required ? ' required' : '') + '><div class="kyc-triple-select">' + daySel + monthSel + yearSel + '</div>';
+      const update = () => {
+        const d = this.querySelector('.kyc-day').value;
+        const m = this.querySelector('.kyc-month').value;
+        const y = this.querySelector('.kyc-year').value;
+        const input = this.querySelector('input');
+        if (d && m && y) {
+          input.value = String(d).padStart(2,'0') + '/' + String(m).padStart(2,'0') + '/' + y;
+        } else input.value = '';
+        dispatchInput(input);
+      };
+      this.querySelectorAll('select').forEach(s => s.addEventListener('change', update));
+    }
+  }
+
+  class KycDateCalendar extends HTMLElement {
+    connectedCallback() {
+      const name = this.getAttribute('name');
+      const required = this.hasAttribute('required');
+      const placeholder = this.getAttribute('placeholder') || 'Pick a date...';
+      this.innerHTML = '<input type="hidden" name="' + name + '"' + (required ? ' required' : '') + '><input type="text" readonly class="kyc-calendar-input" placeholder="' + placeholder + '"><div class="kyc-calendar-popup"></div>';
+      this.viewDate = new Date();
+      this.selectedDate = null;
+      this.input = this.querySelector('input[type="hidden"]');
+      this.display = this.querySelector('.kyc-calendar-input');
+      this.popup = this.querySelector('.kyc-calendar-popup');
+      this.display.addEventListener('click', () => { this.render(); this.popup.classList.toggle('open'); });
+      document.addEventListener('click', (e) => { if (!this.contains(e.target)) this.popup.classList.remove('open'); });
+    }
+    render() {
+      const y = this.viewDate.getFullYear();
+      const m = this.viewDate.getMonth();
+      const firstDay = new Date(y, m, 1).getDay();
+      const daysInMonth = new Date(y, m + 1, 0).getDate();
+      let html = '<div class="kyc-calendar-header"><button type="button" class="kyc-cal-prev">‹</button><span>' + (m+1) + '/' + y + '</span><button type="button" class="kyc-cal-next">›</button></div>';
+      html += '<div class="kyc-calendar-grid">' + ['Su','Mo','Tu','We','Th','Fr','Sa'].map(d => '<div style="font-weight:bold;">' + d + '</div>').join('') + '</div>';
+      const grid = document.createElement('div'); grid.className = 'kyc-calendar-grid';
+      for (let i = 0; i < firstDay; i++) grid.appendChild(document.createElement('div'));
+      for (let d = 1; d <= daysInMonth; d++) {
+        const cell = document.createElement('div');
+        cell.className = 'kyc-calendar-day';
+        cell.textContent = d;
+        if (this.selectedDate && this.selectedDate.getDate() === d && this.selectedDate.getMonth() === m && this.selectedDate.getFullYear() === y) cell.classList.add('selected');
+        cell.addEventListener('click', () => { this.pick(d); });
+        grid.appendChild(cell);
+      }
+      this.popup.innerHTML = html;
+      this.popup.appendChild(grid);
+      this.popup.querySelector('.kyc-cal-prev').addEventListener('click', (e) => { e.stopPropagation(); this.viewDate.setMonth(m - 1); this.render(); });
+      this.popup.querySelector('.kyc-cal-next').addEventListener('click', (e) => { e.stopPropagation(); this.viewDate.setMonth(m + 1); this.render(); });
+    }
+    pick(day) {
+      const y = this.viewDate.getFullYear();
+      const m = this.viewDate.getMonth();
+      this.selectedDate = new Date(y, m, day);
+      this.input.value = String(day).padStart(2,'0') + '/' + String(m+1).padStart(2,'0') + '/' + y;
+      this.display.value = this.input.value;
+      this.popup.classList.remove('open');
+      dispatchInput(this.input);
+    }
+  }
+
+  class KycToggle extends HTMLElement {
+    connectedCallback() {
+      const name = this.getAttribute('name');
+      const label = this.getAttribute('label') || '';
+      const required = this.hasAttribute('required');
+      this.innerHTML = '<label class="toggle-switch"><input type="checkbox" name="' + name + '"' + (required ? ' required' : '') + '><span class="toggle-slider"></span><span>' + label + '</span></label>';
+    }
+  }
+
+  class KycDropzone extends HTMLElement {
+    connectedCallback() {
+      const name = this.getAttribute('name');
+      const accept = this.getAttribute('accept') || '';
+      const label = this.getAttribute('label') || 'Drag & drop files here or click to upload';
+      this.innerHTML = '<input type="file" name="' + name + '" style="display:none;" ' + (accept ? 'accept="' + accept + '"' : '') + '><div class="kyc-dropzone">' + label + '</div>';
+      const input = this.querySelector('input');
+      const zone = this.querySelector('.kyc-dropzone');
+      zone.addEventListener('click', () => input.click());
+      zone.addEventListener('dragover', (e) => { e.preventDefault(); zone.classList.add('dragover'); });
+      zone.addEventListener('dragleave', () => zone.classList.remove('dragover'));
+      zone.addEventListener('drop', (e) => { e.preventDefault(); zone.classList.remove('dragover'); if (e.dataTransfer.files.length) input.files = e.dataTransfer.files; dispatchInput(input); });
+      input.addEventListener('change', () => { zone.textContent = input.files.length ? input.files[0].name : label; dispatchInput(input); });
+    }
+  }
+
+  customElements.define('kyc-custom-select', KycCustomSelect);
+  customElements.define('kyc-date-triple', KycDateTriple);
+  customElements.define('kyc-date-calendar', KycDateCalendar);
+  customElements.define('kyc-toggle', KycToggle);
+  customElements.define('kyc-dropzone', KycDropzone);
+})();
+</script>
+  
+</head>
+<body>
+  <div class="container">
+    <span class="badge">PHP Server-Rendered (15% share)</span>
+    <h1>Level 3a — Date Format Variations</h1>
+    <p class="desc">Tests date entry via different display formats (DD/MM/YYYY, MM/DD/YYYY, YYYY-MM-DD) as plain text inputs.</p>
+    <form id="phpKycForm" data-scenario="level3a-date-format-variations" novalidate>
+      <input type="hidden" name="csrf_token" value="csrf-token-level3a-date-format-variations">
+      <fieldset>
+        <legend>KYC Fields</legend>
+        <div class="grid-2"><div class="form-group " data-field-id="full_name">
+      <label for="full_name">Full Name *</label>
+      <input type="text" id="full_name" name="full_name" value="" placeholder="e.g. Rajesh Kumar Sharma" required />
+    </div>
+        <div class="form-group " data-field-id="dob_dmy_text">
+      <label for="dob_dmy_text">Date of Birth (DD/MM/YYYY) *</label>
+      <input type="text" id="dob_dmy_text" name="dob_dmy_text" value="" placeholder="18/07/1985" required pattern="^[0-9]{1,4}[/-][0-9]{1,4}[/-][0-9]{1,4}$" />
+    </div>
+        <div class="form-group " data-field-id="dob_mdy_text">
+      <label for="dob_mdy_text">Date of Birth (MM/DD/YYYY) *</label>
+      <input type="text" id="dob_mdy_text" name="dob_mdy_text" value="" placeholder="07/18/1985" required pattern="^[0-9]{1,4}[/-][0-9]{1,4}[/-][0-9]{1,4}$" />
+    </div>
+        <div class="form-group " data-field-id="dob_ymd_text">
+      <label for="dob_ymd_text">Date of Birth (YYYY-MM-DD) *</label>
+      <input type="text" id="dob_ymd_text" name="dob_ymd_text" value="" placeholder="1985-07-18" required pattern="^[0-9]{1,4}[/-][0-9]{1,4}[/-][0-9]{1,4}$" />
+    </div>
+        <div class="form-group " data-field-id="nominee_dob_dmy_text">
+      <label for="nominee_dob_dmy_text">Nominee Date of Birth (DD/MM/YYYY) *</label>
+      <input type="text" id="nominee_dob_dmy_text" name="nominee_dob_dmy_text" value="" placeholder="12/04/1987" required pattern="^[0-9]{1,4}[/-][0-9]{1,4}[/-][0-9]{1,4}$" />
+    </div>
+        <div class="form-group " data-field-id="month_year">
+      <label for="month_year">Month / Year</label>
+      <input type="text" id="month_year" name="month_year" value="" placeholder="07/1985" pattern="^[0-9]{1,2}[/-][0-9]{4}$" />
+    </div></div>
+      </fieldset>
+      
+      <button type="submit" class="btn-submit" id="realSubmit">Submit PHP Application</button>
+    </form>
+    <div class="result-box" id="resultBox">
+      <h3 style="color:#818cf8; margin-top:0;">Score: <span id="scoreVal"></span>/100</h3>
+      <pre id="resultJson" style="color:#a7f3d0; white-space:pre-wrap;"></pre>
+    </div>
+  </div>
+  <script>
+    document.getElementById('phpKycForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const fd = new FormData(this);
+      const data = {};
+      fd.forEach((v, k) => data[k] = v);
+      if (document.getElementById('esign_consent')) data.esign_consent = document.getElementById('esign_consent').checked;
+      if (document.getElementById('terms_consent')) data.terms_consent = document.getElementById('terms_consent').checked;
+      if (window.__KYC_DELAY_MS__) await new Promise(r => setTimeout(r, window.__KYC_DELAY_MS__));
+      const res = await fetch('http://localhost:3000/api/verify-submission', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({ scenarioId: 'level3a-date-format-variations', variantId: 'level3a-date-format-variations-v5', data }) });
+      const result = await res.json();
+      document.getElementById('resultBox').style.display = 'block';
+      document.getElementById('scoreVal').textContent = result.report.score;
+      document.getElementById('resultJson').textContent = JSON.stringify(result.report, null, 2);
+      const agentId = new URLSearchParams(window.location.search).get('agentId') || 'anonymous-agent';
+      await fetch('http://localhost:3000/api/benchmark/run', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({ agentId, agentName: agentId, scenarioId: 'level3a-date-format-variations', variantId: 'level3a-date-format-variations-v5', stack: 'php', data, report: result.report, metadata: { source: 'form-submission' } }) });
+    });
+  </script>
+</body>
+</html>

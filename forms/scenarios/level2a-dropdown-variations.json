@@ -1,0 +1,29 @@
+{
+  "id": "level2a-dropdown-variations",
+  "level": 2,
+  "name": "Level 2a — Dropdown & Selector Variations",
+  "description": "Tests native dropdowns, custom dropdowns, searchable combos, segmented controls, and duplicate selector fields.",
+  "stressFlags": {},
+  "fields": [
+    { "id": "full_name", "label": "Full Name", "type": "text", "required": true },
+    { "id": "nationality", "label": "Nationality", "type": "select", "required": true, "options": ["Indian", "American", "British", "Canadian", "Other"] },
+    { "id": "nationality_custom", "label": "Nationality (Custom Dropdown)", "type": "select_custom", "required": true, "options": ["Indian", "American", "British", "Canadian", "Other"] },
+    { "id": "bank_name", "label": "Bank Name", "type": "combobox", "required": true, "options": ["State Bank of India", "HDFC Bank", "ICICI Bank", "Axis Bank", "Kotak Mahindra Bank"] },
+    { "id": "bank_name_custom", "label": "Bank Name (Custom Dropdown)", "type": "select_custom", "required": true, "options": ["State Bank of India", "HDFC Bank", "ICICI Bank", "Axis Bank", "Kotak Mahindra Bank"] },
+    { "id": "income_range", "label": "Income Range", "type": "select", "required": true, "options": ["Below 1 Lakh", "1-5 Lakhs", "5-10 Lakhs", "10-25 Lakhs", "Above 25 Lakhs"] },
+    { "id": "income_range_searchable", "label": "Income Range (Searchable)", "type": "searchable_select", "required": true, "options": ["Below 1 Lakh", "1-5 Lakhs", "5-10 Lakhs", "10-25 Lakhs", "Above 25 Lakhs"], "placeholder": "Search income range..." },
+    { "id": "marital_status", "label": "Marital Status", "type": "select", "required": true, "options": ["Single", "Married", "Divorced", "Widowed"] },
+    { "id": "marital_status_segmented", "label": "Marital Status (Segmented)", "type": "segmented", "required": true, "options": ["Single", "Married", "Divorced", "Widowed"] }
+  ],
+  "groundTruth": {
+    "full_name": "Rajesh Kumar Sharma",
+    "nationality": "Indian",
+    "nationality_custom": "Indian",
+    "bank_name": "State Bank of India",
+    "bank_name_custom": "State Bank of India",
+    "income_range": "10-25 Lakhs",
+    "income_range_searchable": "10-25 Lakhs",
+    "marital_status": "Married",
+    "marital_status_segmented": "Married"
+  }
+}

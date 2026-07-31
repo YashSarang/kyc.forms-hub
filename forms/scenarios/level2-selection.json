@@ -7,11 +7,19 @@
   "fields": [
     { "id": "full_name", "label": "Full Name", "type": "text", "required": true },
     { "id": "gender", "label": "Gender", "type": "radio", "required": true, "options": ["Male", "Female", "Other", "Prefer not to say"] },
+    { "id": "gender_radio_inline", "label": "Gender (Inline)", "type": "radio_inline", "required": true, "options": ["Male", "Female", "Other", "Prefer not to say"] },
+    { "id": "gender_radio_cards", "label": "Gender (Cards)", "type": "radio_cards", "required": true, "options": ["Male", "Female", "Other", "Prefer not to say"] },
     { "id": "nationality", "label": "Nationality", "type": "select", "required": true, "options": ["Indian", "American", "British", "Canadian", "Other"] },
+    { "id": "nationality_custom", "label": "Nationality (Custom Dropdown)", "type": "select_custom", "required": true, "options": ["Indian", "American", "British", "Canadian", "Other"] },
     { "id": "marital_status", "label": "Marital Status", "type": "select", "required": true, "options": ["Single", "Married", "Divorced", "Widowed"] },
+    { "id": "marital_status_segmented", "label": "Marital Status (Segmented)", "type": "segmented", "required": true, "options": ["Single", "Married", "Divorced", "Widowed"] },
     { "id": "account_type", "label": "Account Type", "type": "radio", "required": true, "options": ["Savings", "Current", "Salary"] },
+    { "id": "account_type_segmented", "label": "Account Type (Segmented)", "type": "segmented", "required": true, "options": ["Savings", "Current", "Salary"] },
+    { "id": "account_type_cards", "label": "Account Type (Cards)", "type": "radio_cards", "required": true, "options": ["Savings", "Current", "Salary"] },
     { "id": "esign_consent", "label": "I consent to digital Aadhaar eSign verification", "type": "checkbox", "required": true },
-    { "id": "terms_consent", "label": "I agree to Terms & Conditions and Privacy Policy", "type": "checkbox", "required": true }
+    { "id": "esign_consent_toggle", "label": "I consent to digital Aadhaar eSign verification", "type": "toggle", "required": true },
+    { "id": "terms_consent", "label": "I agree to Terms & Conditions and Privacy Policy", "type": "checkbox", "required": true },
+    { "id": "terms_consent_card", "label": "I agree to Terms & Conditions and Privacy Policy", "type": "checkbox_cards", "required": true }
   ],
   "groundTruth": {
     "full_name": "Rajesh Kumar Sharma",

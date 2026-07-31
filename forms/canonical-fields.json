@@ -1,7 +1,7 @@
 {
   "version": "1.0.0",
   "name": "Full Canonical KYC Field Definitions",
-  "description": "Complete suite of 50+ canonical KYC fields covering Identity, Contact, Documents, Banking, Employment, Financials, Nominee, Family, Uploads, Verification, and Metadata.",
+  "description": "Complete suite of 89 canonical KYC fields (68 core + 21 input-widget variations) covering Identity, Contact, Documents, Banking, Employment, Financials, Nominee, Family, Uploads, Verification, Metadata, and Widget Variations.",
   "categories": [
     {
       "name": "Personal Identity",
@@ -115,6 +115,37 @@
         { "id": "branch_code", "label": "Branch Code", "type": "text", "required": false, "readOnly": true, "value": "BR-MUM-001" },
         { "id": "agent_id", "label": "Agent ID", "type": "text", "required": false, "placeholder": "AGT-4402" },
         { "id": "referral_code", "label": "Referral Code", "type": "text", "required": false, "placeholder": "REF-KYC2026" }
+      ]
+    },
+    {
+      "name": "Input Widget Variations",
+      "description": "Additional canonical fields that exercise different widget implementations for the same logical data. Each field maps back to an existing profile key via profileKey.",
+      "fields": [
+        { "id": "dob_dmy_text", "label": "Date of Birth (DD/MM/YYYY)", "type": "date_dmy_text", "profileKey": "dob", "required": true, "placeholder": "18/07/1985" },
+        { "id": "dob_mdy_text", "label": "Date of Birth (MM/DD/YYYY)", "type": "date_mdy_text", "profileKey": "dob", "required": true, "placeholder": "07/18/1985" },
+        { "id": "dob_ymd_text", "label": "Date of Birth (YYYY-MM-DD)", "type": "date_ymd_text", "profileKey": "dob", "required": true, "placeholder": "1985-07-18" },
+        { "id": "dob_dmy_selects", "label": "Date of Birth (Day / Month / Year)", "type": "date_dmy_selects", "profileKey": "dob", "required": true },
+        { "id": "dob_calendar", "label": "Date of Birth (Calendar)", "type": "date_calendar", "profileKey": "dob", "required": true },
+        { "id": "nominee_dob_dmy_text", "label": "Nominee Date of Birth (DD/MM/YYYY)", "type": "date_dmy_text", "profileKey": "nominee_dob", "required": true, "placeholder": "12/04/1987" },
+        { "id": "month_year", "label": "Month / Year", "type": "month_year", "profileKey": "dob", "required": false, "placeholder": "07/1985" },
+
+        { "id": "nationality_custom", "label": "Nationality (Custom Dropdown)", "type": "select_custom", "profileKey": "nationality", "required": true, "options": ["Indian", "American", "British", "Canadian", "Other"] },
+        { "id": "bank_name_custom", "label": "Bank Name (Custom Dropdown)", "type": "select_custom", "profileKey": "bank_name", "required": true, "options": ["State Bank of India", "HDFC Bank", "ICICI Bank", "Axis Bank", "Kotak Mahindra Bank"] },
+        { "id": "marital_status_segmented", "label": "Marital Status (Segmented)", "type": "segmented", "profileKey": "marital_status", "required": true, "options": ["Single", "Married", "Divorced", "Widowed"] },
+        { "id": "income_range_searchable", "label": "Income Range (Searchable)", "type": "searchable_select", "profileKey": "income_range", "required": true, "options": ["Below 1 Lakh", "1-5 Lakhs", "5-10 Lakhs", "10-25 Lakhs", "Above 25 Lakhs"], "placeholder": "Search income range..." },
+
+        { "id": "gender_radio_inline", "label": "Gender (Inline Radio)", "type": "radio_inline", "profileKey": "gender", "required": true, "options": ["Male", "Female", "Other", "Prefer not to say"] },
+        { "id": "gender_radio_cards", "label": "Gender (Card Selection)", "type": "radio_cards", "profileKey": "gender", "required": true, "options": ["Male", "Female", "Other", "Prefer not to say"] },
+        { "id": "account_type_segmented", "label": "Account Type (Segmented)", "type": "segmented", "profileKey": "account_type", "required": true, "options": ["Savings", "Current", "Salary"] },
+        { "id": "account_type_cards", "label": "Account Type (Cards)", "type": "radio_cards", "profileKey": "account_type", "required": true, "options": ["Savings", "Current", "Salary"] },
+
+        { "id": "esign_consent_toggle", "label": "I consent to digital Aadhaar eSign verification", "type": "toggle", "profileKey": "esign_consent", "required": true },
+        { "id": "terms_consent_card", "label": "I agree to Terms & Conditions and Privacy Policy", "type": "checkbox_cards", "profileKey": "terms_consent", "required": true },
+        { "id": "same_as_current_toggle", "label": "Permanent address same as current address", "type": "toggle", "profileKey": "same_as_current", "required": false },
+
+        { "id": "upload_pan_dropzone", "label": "PAN Card Document (Dropzone)", "type": "file_dropzone", "profileKey": "upload_pan", "required": false, "accept": ".jpg,.png,.pdf" },
+        { "id": "upload_aadhaar_multiple", "label": "Aadhaar Documents (Multiple)", "type": "file_multiple", "profileKey": "upload_aadhaar_front", "required": false, "accept": ".jpg,.png,.pdf" },
+        { "id": "upload_photo_camera", "label": "Applicant Photo (Camera)", "type": "file_camera", "profileKey": "upload_photo", "required": false, "accept": ".jpg,.png" }
       ]
     }
   ]

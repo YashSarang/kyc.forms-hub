@@ -1,4 +1,5 @@
 const scenarios = require('./scenarios');
+const { getVariation, formatValue } = require('./field-formatters');
 
 function escapeHtml(str) {
   return String(str)
@@ -63,27 +64,59 @@ function fieldInputHtml(field, scenario, attrs = {}) {
     return `<input type="text" id="${id}" name="${name}" value="" style="position:absolute;left:-9999px;" tabindex="-1" autocomplete="off" />`;
   }
 
+  const radioGroup = (cssClass) => `<div class="${cssClass}"><div class="radio-group">${options.map(opt => {
+    const optVal = escapeHtml(opt);
+    const checked = value === optVal ? ' checked' : '';
+    return `<label><input type="radio" name="${name}" value="${optVal}"${checked}${required}> ${optVal}</label>`;
+  }).join('')}</div></div>`;
+
+  const checkboxGroup = (cssClass) => `<div class="${cssClass}"><div class="checkbox-group"><label><input type="checkbox" id="${id}" name="${name}"${required}> ${escapeHtml(field.label)}</label></div></div>`;
+
   switch (field.type) {
     case 'radio':
-      return `<div class="radio-group">${options.map(opt => {
-        const optVal = escapeHtml(opt);
-        const checked = value === optVal ? ' checked' : '';
-        return `<label><input type="radio" name="${name}" value="${optVal}"${checked}${required}> ${optVal}</label>`;
-      }).join('')}</div>`;
+      return radioGroup('');
+    case 'radio_inline':
+      return radioGroup('radio-inline');
+    case 'radio_cards':
+      return radioGroup('radio-cards');
     case 'checkbox':
-      const checked = (field.readOnly && scenario.groundTruth[field.id] === true) ? ' checked' : '';
-      return `<label><input type="checkbox" id="${id}" name="${name}"${checked}${required}> ${escapeHtml(field.label)}</label>`;
+      return checkboxGroup('');
+    case 'checkbox_inline':
+      return checkboxGroup('checkbox-inline');
+    case 'checkbox_cards':
+      return checkboxGroup('checkbox-cards');
+    case 'toggle':
+      return `<kyc-toggle name="${name}" label="${escapeHtml(field.label)}"${required}></kyc-toggle>`;
     case 'select':
     case 'combobox':
-    case 'searchable_select':
       const placeholderOption = `<option value="" disabled ${value === '' ? 'selected' : ''}>${escapeHtml(field.placeholder || 'Select...')}</option>`;
       return `<select id="${id}" name="${name}"${required}>${placeholderOption}${options.map(opt => {
         const optVal = escapeHtml(opt);
         const selected = value === optVal ? ' selected' : '';
         return `<option value="${optVal}"${selected}>${optVal}</option>`;
       }).join('')}</select>`;
+    case 'select_custom':
+      return `<kyc-custom-select name="${name}" options="${escapeHtml(JSON.stringify(options))}" placeholder="${escapeHtml(field.placeholder || 'Select...')}"${required}></kyc-custom-select>`;
+    case 'searchable_select':
+      return `<kyc-custom-select searchable name="${name}" options="${escapeHtml(JSON.stringify(options))}" placeholder="${escapeHtml(field.placeholder || 'Search...')}"${required}></kyc-custom-select>`;
+    case 'segmented':
+      return `<div class="segmented-control">${options.map(opt => {
+        const optVal = escapeHtml(opt);
+        const checked = value === optVal ? ' checked' : '';
+        return `<label><input type="radio" name="${name}" value="${optVal}"${checked}${required}> ${optVal}</label>`;
+      }).join('')}</div>`;
     case 'date':
       return `<input type="date" id="${id}" name="${name}" value="${value}"${required} />`;
+    case 'date_dmy_text':
+    case 'date_mdy_text':
+    case 'date_ymd_text':
+      return `<input type="text" id="${id}" name="${name}" value="${value}"${placeholder}${required} pattern="^[0-9]{1,4}[\/-][0-9]{1,4}[\/-][0-9]{1,4}$" />`;
+    case 'date_dmy_selects':
+      return `<kyc-date-triple name="${name}"${required}></kyc-date-triple>`;
+    case 'month_year':
+      return `<input type="text" id="${id}" name="${name}" value="${value}"${placeholder}${required} pattern="^[0-9]{1,2}[\/-][0-9]{4}$" />`;
+    case 'date_calendar':
+      return `<kyc-date-calendar name="${name}" placeholder="${escapeHtml(field.placeholder || 'Pick a date...')}"${required}></kyc-date-calendar>`;
     case 'number':
       return `<input type="number" id="${id}" name="${name}" value="${value}"${required} />`;
     case 'email':
@@ -92,6 +125,12 @@ function fieldInputHtml(field, scenario, attrs = {}) {
       return `<input type="tel" id="${id}" name="${name}" value="${value}"${required} />`;
     case 'file':
       return `<input type="file" id="${id}" name="${name}"${required} />`;
+    case 'file_dropzone':
+      return `<kyc-dropzone name="${name}" accept="${escapeHtml(field.accept || '')}" label="Drag & drop ${escapeHtml(field.label)} here or click to upload"${required}></kyc-dropzone>`;
+    case 'file_multiple':
+      return `<input type="file" id="${id}" name="${name}" multiple${field.accept ? ` accept="${escapeHtml(field.accept)}"` : ''}${required} />`;
+    case 'file_camera':
+      return `<label class="kyc-camera-btn"><input type="file" id="${id}" name="${name}" accept="image/*" capture="user" style="display:none;"${required}>📷 ${escapeHtml(field.label)}</label>`;
     case 'textarea':
       return `<textarea id="${id}" name="${name}"${required}>${value}</textarea>`;
     default:
@@ -124,7 +163,223 @@ function commonStyles(meta) {
     .radio-group label, .checkbox-group label { font-weight: normal; display: flex; align-items: center; gap: 6px; }
     .btn-submit { background: linear-gradient(135deg, ${meta.accent}, ${meta.color}); color: white; border: none; padding: 14px 28px; font-size: 1.1rem; border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%; margin-top: 20px; }
     .result-box { margin-top: 25px; padding: 20px; background: #00000055; border-radius: 8px; border: 1px solid ${meta.accent}; display: none; }
+    ${widgetStyles()}
   `;
+}
+
+function widgetStyles() {
+  return `
+    /* --- Variation widget shared styles --- */
+    .radio-inline .radio-group, .checkbox-inline .checkbox-group { gap: 20px; }
+    .radio-cards .radio-group, .checkbox-cards .checkbox-group { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 12px; }
+    .radio-cards .radio-group label, .checkbox-cards .checkbox-group label { border: 1px solid #475569; border-radius: 8px; padding: 12px; cursor: pointer; transition: all 0.15s; }
+    .radio-cards .radio-group label:has(input:checked), .checkbox-cards .checkbox-group label:has(input:checked) { border-color: #38bdf8; background: #0ea5e933; }
+    .segmented-control { display: flex; border: 1px solid #475569; border-radius: 8px; overflow: hidden; }
+    .segmented-control label { flex: 1; margin: 0; padding: 10px; text-align: center; cursor: pointer; border-right: 1px solid #475569; font-weight: 500; }
+    .segmented-control label:last-child { border-right: none; }
+    .segmented-control input { position: absolute; opacity: 0; }
+    .segmented-control label:has(input:checked) { background: #38bdf8; color: #0f172a; font-weight: bold; }
+    .toggle-switch { display: inline-flex; align-items: center; gap: 10px; cursor: pointer; }
+    .toggle-switch input { opacity: 0; width: 0; height: 0; }
+    .toggle-slider { width: 44px; height: 24px; background: #475569; border-radius: 24px; position: relative; transition: 0.2s; }
+    .toggle-slider::before { content: ''; position: absolute; width: 18px; height: 18px; left: 3px; top: 3px; background: white; border-radius: 50%; transition: 0.2s; }
+    .toggle-switch input:checked + .toggle-slider { background: #38bdf8; }
+    .toggle-switch input:checked + .toggle-slider::before { transform: translateX(20px); }
+    kyc-custom-select { display: block; position: relative; }
+    .kyc-select-trigger { width: 100%; padding: 11px; border-radius: 6px; border: 1px solid #475569; background: #0f172a; color: white; cursor: pointer; text-align: left; display: flex; justify-content: space-between; align-items: center; }
+    .kyc-select-options { position: absolute; top: 100%; left: 0; right: 0; background: #1e293b; border: 1px solid #475569; border-radius: 6px; margin-top: 4px; max-height: 240px; overflow-y: auto; z-index: 100; display: none; }
+    .kyc-select-options.open { display: block; }
+    .kyc-select-option { padding: 10px 12px; cursor: pointer; }
+    .kyc-select-option:hover, .kyc-select-option.active { background: #334155; }
+    .kyc-triple-select { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+    .kyc-calendar-input { width: 100%; padding: 11px; border-radius: 6px; border: 1px solid #475569; background: #0f172a; color: white; cursor: pointer; }
+    .kyc-calendar-popup { position: absolute; top: 100%; left: 0; background: #1e293b; border: 1px solid #475569; border-radius: 8px; padding: 12px; z-index: 100; display: none; min-width: 280px; }
+    .kyc-calendar-popup.open { display: block; }
+    .kyc-calendar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+    .kyc-calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; text-align: center; }
+    .kyc-calendar-day { padding: 6px; border-radius: 4px; cursor: pointer; }
+    .kyc-calendar-day:hover { background: #334155; }
+    .kyc-calendar-day.selected { background: #38bdf8; color: #0f172a; }
+    .kyc-dropzone { border: 2px dashed #475569; border-radius: 8px; padding: 24px; text-align: center; cursor: pointer; transition: 0.2s; }
+    .kyc-dropzone:hover, .kyc-dropzone.dragover { border-color: #38bdf8; background: #0ea5e91a; }
+    .kyc-camera-btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border-radius: 6px; border: 1px solid #475569; background: #0f172a; color: white; cursor: pointer; }
+    .kyc-camera-btn:hover { border-color: #38bdf8; }
+    input[type="file"] { color: #94a3b8; }
+  `;
+}
+
+function sharedWidgetScripts() {
+  return `<script>
+(function() {
+  if (window.__KYC_WIDGETS_INIT__) return;
+  window.__KYC_WIDGETS_INIT__ = true;
+
+  window.collectWidgetValues = function(root) {
+    const data = {};
+    root.querySelectorAll('kyc-custom-select, kyc-date-triple, kyc-date-calendar, kyc-toggle, kyc-dropzone').forEach(el => {
+      const input = el.querySelector('input[name]');
+      if (input) {
+        if (input.type === 'checkbox') data[input.name] = input.checked;
+        else if (input.type === 'file') data[input.name] = input.files.length ? input.files[0].name : '';
+        else data[input.name] = input.value;
+      }
+    });
+    return data;
+  };
+
+  function dispatchInput(input) {
+    input.dispatchEvent(new Event('input', { bubbles: true }));
+    input.dispatchEvent(new Event('change', { bubbles: true }));
+  }
+
+  class KycCustomSelect extends HTMLElement {
+    connectedCallback() {
+      const name = this.getAttribute('name');
+      this._options = JSON.parse(this.getAttribute('options') || '[]');
+      const placeholder = this.getAttribute('placeholder') || 'Select...';
+      const required = this.hasAttribute('required');
+      const searchable = this.hasAttribute('searchable');
+      this.innerHTML = '<input type="hidden" name="' + name + '"' + (required ? ' required' : '') + '><button type="button" class="kyc-select-trigger"><span class="kyc-select-text">' + placeholder + '</span><span>▼</span></button><div class="kyc-select-options"></div>';
+      const optsEl = this.querySelector('.kyc-select-options');
+      if (searchable) {
+        const searchBox = document.createElement('input');
+        searchBox.className = 'kyc-select-search';
+        searchBox.placeholder = 'Type to filter...';
+        searchBox.style.cssText = 'width:100%;padding:8px;border:none;border-bottom:1px solid #475569;background:#0f172a;color:white;box-sizing:border-box;';
+        searchBox.addEventListener('input', (e) => this.filterOptions(e.target.value));
+        searchBox.addEventListener('click', (e) => e.stopPropagation());
+        optsEl.appendChild(searchBox);
+      }
+      this._options.forEach((opt) => {
+        const div = document.createElement('div');
+        div.className = 'kyc-select-option';
+        div.textContent = opt;
+        div.dataset.value = opt;
+        div.addEventListener('click', () => this.select(opt));
+        optsEl.appendChild(div);
+      });
+      this.querySelector('.kyc-select-trigger').addEventListener('click', (e) => { e.preventDefault(); this.toggle(); });
+      document.addEventListener('click', (e) => { if (!this.contains(e.target)) optsEl.classList.remove('open'); });
+    }
+    filterOptions(query) {
+      const q = (query || '').toLowerCase();
+      this.querySelectorAll('.kyc-select-option').forEach(opt => {
+        opt.style.display = opt.textContent.toLowerCase().includes(q) ? '' : 'none';
+      });
+    }
+    select(value) {
+      const input = this.querySelector('input');
+      input.value = value;
+      this.querySelector('.kyc-select-text').textContent = value;
+      this.querySelector('.kyc-select-options').classList.remove('open');
+      dispatchInput(input);
+    }
+    toggle() {
+      this.querySelector('.kyc-select-options').classList.toggle('open');
+    }
+  }
+
+  class KycDateTriple extends HTMLElement {
+    connectedCallback() {
+      const name = this.getAttribute('name');
+      const required = this.hasAttribute('required');
+      const daySel = '<select class="kyc-day"><option value="">Day</option>' + Array.from({length:31},(_,i)=>'<option value="'+(i+1)+'">'+(i+1)+'</option>').join('') + '</select>';
+      const monthSel = '<select class="kyc-month"><option value="">Month</option>' + Array.from({length:12},(_,i)=>'<option value="'+(i+1)+'">'+(i+1)+'</option>').join('') + '</select>';
+      const yearSel = '<select class="kyc-year"><option value="">Year</option>' + Array.from({length:100},(_,i)=>'<option value="'+(1925+i)+'">'+(1925+i)+'</option>').join('') + '</select>';
+      this.innerHTML = '<input type="hidden" name="' + name + '"' + (required ? ' required' : '') + '><div class="kyc-triple-select">' + daySel + monthSel + yearSel + '</div>';
+      const update = () => {
+        const d = this.querySelector('.kyc-day').value;
+        const m = this.querySelector('.kyc-month').value;
+        const y = this.querySelector('.kyc-year').value;
+        const input = this.querySelector('input');
+        if (d && m && y) {
+          input.value = String(d).padStart(2,'0') + '/' + String(m).padStart(2,'0') + '/' + y;
+        } else input.value = '';
+        dispatchInput(input);
+      };
+      this.querySelectorAll('select').forEach(s => s.addEventListener('change', update));
+    }
+  }
+
+  class KycDateCalendar extends HTMLElement {
+    connectedCallback() {
+      const name = this.getAttribute('name');
+      const required = this.hasAttribute('required');
+      const placeholder = this.getAttribute('placeholder') || 'Pick a date...';
+      this.innerHTML = '<input type="hidden" name="' + name + '"' + (required ? ' required' : '') + '><input type="text" readonly class="kyc-calendar-input" placeholder="' + placeholder + '"><div class="kyc-calendar-popup"></div>';
+      this.viewDate = new Date();
+      this.selectedDate = null;
+      this.input = this.querySelector('input[type="hidden"]');
+      this.display = this.querySelector('.kyc-calendar-input');
+      this.popup = this.querySelector('.kyc-calendar-popup');
+      this.display.addEventListener('click', () => { this.render(); this.popup.classList.toggle('open'); });
+      document.addEventListener('click', (e) => { if (!this.contains(e.target)) this.popup.classList.remove('open'); });
+    }
+    render() {
+      const y = this.viewDate.getFullYear();
+      const m = this.viewDate.getMonth();
+      const firstDay = new Date(y, m, 1).getDay();
+      const daysInMonth = new Date(y, m + 1, 0).getDate();
+      let html = '<div class="kyc-calendar-header"><button type="button" class="kyc-cal-prev">‹</button><span>' + (m+1) + '/' + y + '</span><button type="button" class="kyc-cal-next">›</button></div>';
+      html += '<div class="kyc-calendar-grid">' + ['Su','Mo','Tu','We','Th','Fr','Sa'].map(d => '<div style="font-weight:bold;">' + d + '</div>').join('') + '</div>';
+      const grid = document.createElement('div'); grid.className = 'kyc-calendar-grid';
+      for (let i = 0; i < firstDay; i++) grid.appendChild(document.createElement('div'));
+      for (let d = 1; d <= daysInMonth; d++) {
+        const cell = document.createElement('div');
+        cell.className = 'kyc-calendar-day';
+        cell.textContent = d;
+        if (this.selectedDate && this.selectedDate.getDate() === d && this.selectedDate.getMonth() === m && this.selectedDate.getFullYear() === y) cell.classList.add('selected');
+        cell.addEventListener('click', () => { this.pick(d); });
+        grid.appendChild(cell);
+      }
+      this.popup.innerHTML = html;
+      this.popup.appendChild(grid);
+      this.popup.querySelector('.kyc-cal-prev').addEventListener('click', (e) => { e.stopPropagation(); this.viewDate.setMonth(m - 1); this.render(); });
+      this.popup.querySelector('.kyc-cal-next').addEventListener('click', (e) => { e.stopPropagation(); this.viewDate.setMonth(m + 1); this.render(); });
+    }
+    pick(day) {
+      const y = this.viewDate.getFullYear();
+      const m = this.viewDate.getMonth();
+      this.selectedDate = new Date(y, m, day);
+      this.input.value = String(day).padStart(2,'0') + '/' + String(m+1).padStart(2,'0') + '/' + y;
+      this.display.value = this.input.value;
+      this.popup.classList.remove('open');
+      dispatchInput(this.input);
+    }
+  }
+
+  class KycToggle extends HTMLElement {
+    connectedCallback() {
+      const name = this.getAttribute('name');
+      const label = this.getAttribute('label') || '';
+      const required = this.hasAttribute('required');
+      this.innerHTML = '<label class="toggle-switch"><input type="checkbox" name="' + name + '"' + (required ? ' required' : '') + '><span class="toggle-slider"></span><span>' + label + '</span></label>';
+    }
+  }
+
+  class KycDropzone extends HTMLElement {
+    connectedCallback() {
+      const name = this.getAttribute('name');
+      const accept = this.getAttribute('accept') || '';
+      const label = this.getAttribute('label') || 'Drag & drop files here or click to upload';
+      this.innerHTML = '<input type="file" name="' + name + '" style="display:none;" ' + (accept ? 'accept="' + accept + '"' : '') + '><div class="kyc-dropzone">' + label + '</div>';
+      const input = this.querySelector('input');
+      const zone = this.querySelector('.kyc-dropzone');
+      zone.addEventListener('click', () => input.click());
+      zone.addEventListener('dragover', (e) => { e.preventDefault(); zone.classList.add('dragover'); });
+      zone.addEventListener('dragleave', () => zone.classList.remove('dragover'));
+      zone.addEventListener('drop', (e) => { e.preventDefault(); zone.classList.remove('dragover'); if (e.dataTransfer.files.length) input.files = e.dataTransfer.files; dispatchInput(input); });
+      input.addEventListener('change', () => { zone.textContent = input.files.length ? input.files[0].name : label; dispatchInput(input); });
+    }
+  }
+
+  customElements.define('kyc-custom-select', KycCustomSelect);
+  customElements.define('kyc-date-triple', KycDateTriple);
+  customElements.define('kyc-date-calendar', KycDateCalendar);
+  customElements.define('kyc-toggle', KycToggle);
+  customElements.define('kyc-dropzone', KycDropzone);
+})();
+</script>`;
 }
 
 function commonFakeButtons(flags) {
@@ -185,6 +440,7 @@ function renderHtmlStack(scenario, stack = 'html', apiBaseUrl = '') {
   <title>${scenarioName} — ${escapeHtml(meta.name)}</title>
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
   <style>${commonStyles(meta)}</style>
+  ${sharedWidgetScripts()}
   ${commonDelayScript(flags)}
 </head>
 <body>
@@ -264,6 +520,7 @@ function renderPhpStack(scenario, stack = 'php', apiBaseUrl = '') {
     fieldset { border: 1px solid ${meta.accent}; border-radius: 6px; padding: 18px; margin-bottom: 20px; }
     legend { color: ${meta.color}; font-weight: bold; padding: 0 10px; }
   </style>
+  ${sharedWidgetScripts()}
   ${commonDelayScript(flags)}
 </head>
 <body>
@@ -325,6 +582,7 @@ function renderFlaskStack(scenario, stack = 'flask', apiBaseUrl = '') {
     .card-block { background: ${adjustColor(meta.bg, -10)}; border: 1px solid ${meta.accent}; border-radius: 10px; padding: 20px; margin-bottom: 20px; }
     .card-heading { color: ${meta.color}; font-size: 1.1rem; border-bottom: 1px solid ${meta.accent}; padding-bottom: 8px; margin-top: 0; margin-bottom: 18px; }
   </style>
+  ${sharedWidgetScripts()}
   ${commonDelayScript(flags)}
 </head>
 <body>
@@ -393,11 +651,18 @@ function renderReactStack(scenario, stack = 'react', apiBaseUrl = '') {
       ).join('')}</div>`;
     } else if (f.type === 'checkbox') {
       el = `<label><input type="checkbox" name="${f.id}" checked={formData.${f.id}} onChange={handleChange} ${f.required ? 'required' : ''} /> ${label}</label>`;
-    } else if (['select', 'combobox', 'searchable_select'].includes(f.type)) {
+    } else if (['select', 'combobox'].includes(f.type)) {
       el = `<select name="${f.id}" value={formData.${f.id}} onChange={handleChange} ${f.required ? 'required' : ''}><option value="" disabled>${f.placeholder || 'Select...'}</option>${(f.options || []).map(opt => `<option value="${opt}">${opt}</option>`).join('')}</select>`;
-    } else {
+    } else if (['date', 'number', 'email', 'tel', 'text'].includes(f.type)) {
       const type = f.type === 'date' ? 'date' : f.type === 'number' ? 'number' : f.type === 'email' ? 'email' : f.type === 'tel' ? 'tel' : 'text';
       el = `<input type="${type}" name="${f.id}" value={formData.${f.id}} onChange={handleChange} ${f.placeholder ? `placeholder="${f.placeholder}"` : ''} ${f.required ? 'required' : ''} />`;
+    } else if (f.type === 'textarea') {
+      el = `<textarea name="${f.id}" value={formData.${f.id}} onChange={handleChange} ${f.required ? 'required' : ''} />`;
+    } else if (f.type === 'file') {
+      el = `<input type="file" name="${f.id}" onChange={handleChange} ${f.required ? 'required' : ''} />`;
+    } else {
+      // Variation types: render as framework-agnostic custom elements; submit handler merges their values.
+      el = fieldInputHtml(f, scenario).replace(/class="/g, 'className="');
     }
     return `      <div className="form-group" data-field-id="${f.id}">
         <label>${label}${req}</label>
@@ -417,6 +682,7 @@ function renderReactStack(scenario, stack = 'react', apiBaseUrl = '') {
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   <style>${commonStyles(meta)}</style>
+  ${sharedWidgetScripts()}
   ${commonDelayScript(flags)}
 </head>
 <body>
@@ -448,10 +714,12 @@ function renderReactStack(scenario, stack = 'react', apiBaseUrl = '') {
 
       const handleSubmit = async (e) => {
         e.preventDefault();
+        const widgetValues = window.collectWidgetValues ? window.collectWidgetValues(e.target) : {};
+        const payload = { ...formData, ...widgetValues };
         const res = await fetch('${apiBaseUrl}/api/verify-submission', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ scenarioId: '${escapeHtml(scenario.id)}', variantId: '${escapeHtml(scenario.variantId || '')}', data: formData })
+          body: JSON.stringify({ scenarioId: '${escapeHtml(scenario.id)}', variantId: '${escapeHtml(scenario.variantId || '')}', data: payload })
         });
         const result = await res.json();
         setReport(result.report);
@@ -459,7 +727,7 @@ function renderReactStack(scenario, stack = 'react', apiBaseUrl = '') {
         await fetch('${apiBaseUrl}/api/benchmark/run', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ agentId, agentName: agentId, scenarioId: '${escapeHtml(scenario.id)}', variantId: '${escapeHtml(scenario.variantId || '')}', stack: '${stack}', data: formData, report: result.report, metadata: { source: 'form-submission' } })
+          body: JSON.stringify({ agentId, agentName: agentId, scenarioId: '${escapeHtml(scenario.id)}', variantId: '${escapeHtml(scenario.variantId || '')}', stack: '${stack}', data: payload, report: result.report, metadata: { source: 'form-submission' } })
         });
       };
 
@@ -516,11 +784,18 @@ function renderAngularStack(scenario, stack = 'angular', apiBaseUrl = '') {
       ).join('')}</div>`;
     } else if (f.type === 'checkbox') {
       el = `<label><input type="checkbox" id="${f.id}" ng-model="form.${f.id}" ${f.required ? 'required' : ''}> ${label}</label>`;
-    } else if (['select', 'combobox', 'searchable_select'].includes(f.type)) {
+    } else if (['select', 'combobox'].includes(f.type)) {
       el = `<select id="${f.id}" ng-model="form.${f.id}" ${f.required ? 'required' : ''}><option value="" disabled selected>${f.placeholder || 'Select...'}</option>${(f.options || []).map(opt => `<option value="${opt}">${opt}</option>`).join('')}</select>`;
-    } else {
+    } else if (['date', 'number', 'email', 'tel', 'text'].includes(f.type)) {
       const type = f.type === 'date' ? 'date' : f.type === 'number' ? 'number' : f.type === 'email' ? 'email' : f.type === 'tel' ? 'tel' : 'text';
       el = `<input type="${type}" id="${f.id}" ng-model="form.${f.id}" ${f.placeholder ? `placeholder="${f.placeholder}"` : ''} ${f.required ? 'required' : ''} />`;
+    } else if (f.type === 'textarea') {
+      el = `<textarea id="${f.id}" ng-model="form.${f.id}" ${f.required ? 'required' : ''}></textarea>`;
+    } else if (f.type === 'file') {
+      el = `<input type="file" id="${f.id}" ng-model="form.${f.id}" ${f.required ? 'required' : ''} />`;
+    } else {
+      // Variation types: render as framework-agnostic custom elements; submit handler merges their values.
+      el = fieldInputHtml(f, scenario);
     }
     return `      <div class="form-group" data-field-id="${f.id}">
         <label for="${f.id}">${label}${req}</label>
@@ -536,6 +811,7 @@ function renderAngularStack(scenario, stack = 'angular', apiBaseUrl = '') {
   <title>${scenarioName} — ${escapeHtml(meta.name)}</title>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
   <style>${commonStyles(meta)}</style>
+  ${sharedWidgetScripts()}
   ${commonDelayScript(flags)}
 </head>
 <body ng-app="kycApp" ng-controller="KycController">
@@ -561,7 +837,8 @@ ${inputs}
         $scope.form = ${safeString(initialState)};
         $scope.submitForm = function() {
           const submit = () => {
-            const payload = Object.assign({}, $scope.form);
+            const widgetValues = window.collectWidgetValues ? window.collectWidgetValues(document.querySelector('form')) : {};
+            const payload = Object.assign({}, $scope.form, widgetValues);
             if (payload.dob instanceof Date) payload.dob = payload.dob.toISOString().split('T')[0];
             const agentId = new URLSearchParams(window.location.search).get('agentId') || 'anonymous-agent';
             $http.post('${apiBaseUrl}/api/verify-submission', { scenarioId: '${escapeHtml(scenario.id)}', variantId: '${escapeHtml(scenario.variantId || '')}', data: payload })
@@ -604,11 +881,18 @@ function renderVueStack(scenario, stack = 'vue', apiBaseUrl = '') {
       ).join('')}</div>`;
     } else if (f.type === 'checkbox') {
       el = `<label><input type="checkbox" id="${f.id}" v-model="form.${f.id}" ${f.required ? 'required' : ''}> ${label}</label>`;
-    } else if (['select', 'combobox', 'searchable_select'].includes(f.type)) {
+    } else if (['select', 'combobox'].includes(f.type)) {
       el = `<select id="${f.id}" v-model="form.${f.id}" ${f.required ? 'required' : ''}><option value="" disabled>${f.placeholder || 'Select...'}</option>${(f.options || []).map(opt => `<option value="${opt}">${opt}</option>`).join('')}</select>`;
-    } else {
+    } else if (['date', 'number', 'email', 'tel', 'text'].includes(f.type)) {
       const type = f.type === 'date' ? 'date' : f.type === 'number' ? 'number' : f.type === 'email' ? 'email' : f.type === 'tel' ? 'tel' : 'text';
       el = `<input type="${type}" id="${f.id}" v-model="form.${f.id}" ${f.placeholder ? `placeholder="${f.placeholder}"` : ''} ${f.required ? 'required' : ''} />`;
+    } else if (f.type === 'textarea') {
+      el = `<textarea id="${f.id}" v-model="form.${f.id}" ${f.required ? 'required' : ''}></textarea>`;
+    } else if (f.type === 'file') {
+      el = `<input type="file" id="${f.id}" v-model="form.${f.id}" ${f.required ? 'required' : ''} />`;
+    } else {
+      // Variation types: render as framework-agnostic custom elements; submit handler merges their values.
+      el = fieldInputHtml(f, scenario);
     }
     return `      <div class="form-group" data-field-id="${f.id}">
         <label for="${f.id}">${label}${req}</label>
@@ -624,6 +908,7 @@ function renderVueStack(scenario, stack = 'vue', apiBaseUrl = '') {
   <title>${scenarioName} — ${escapeHtml(meta.name)}</title>
   <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
   <style>${commonStyles(meta)}</style>
+  ${sharedWidgetScripts()}
   ${commonDelayScript(flags)}
 </head>
 <body>
@@ -652,10 +937,13 @@ ${inputs}
         const disabled = ref(!!window.__KYC_DELAY_MS__);
         if (window.__KYC_DELAY_MS__) setTimeout(() => disabled.value = false, window.__KYC_DELAY_MS__);
         const submitForm = async () => {
+          const formEl = document.getElementById('app').querySelector('form');
+          const widgetValues = window.collectWidgetValues ? window.collectWidgetValues(formEl) : {};
+          const payload = { ...form.value, ...widgetValues };
           const res = await fetch('${apiBaseUrl}/api/verify-submission', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ scenarioId: '${escapeHtml(scenario.id)}', variantId: '${escapeHtml(scenario.variantId || '')}', data: form.value })
+            body: JSON.stringify({ scenarioId: '${escapeHtml(scenario.id)}', variantId: '${escapeHtml(scenario.variantId || '')}', data: payload })
           });
           const data = await res.json();
           report.value = data.report;
@@ -663,7 +951,7 @@ ${inputs}
           await fetch('${apiBaseUrl}/api/benchmark/run', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ agentId, agentName: agentId, scenarioId: '${escapeHtml(scenario.id)}', variantId: '${escapeHtml(scenario.variantId || '')}', stack: '${stack}', data: form.value, report: data.report, metadata: { source: 'form-submission' } })
+            body: JSON.stringify({ agentId, agentName: agentId, scenarioId: '${escapeHtml(scenario.id)}', variantId: '${escapeHtml(scenario.variantId || '')}', stack: '${stack}', data: payload, report: data.report, metadata: { source: 'form-submission' } })
           });
         };
         return { form, report, submitForm, disabled };

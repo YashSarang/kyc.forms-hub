@@ -1,0 +1,23 @@
+{
+  "id": "level3a-date-format-variations",
+  "level": 3,
+  "name": "Level 3a — Date Format Variations",
+  "description": "Tests date entry via different display formats (DD/MM/YYYY, MM/DD/YYYY, YYYY-MM-DD) as plain text inputs.",
+  "stressFlags": {},
+  "fields": [
+    { "id": "full_name", "label": "Full Name", "type": "text", "required": true },
+    { "id": "dob_dmy_text", "label": "Date of Birth (DD/MM/YYYY)", "type": "date_dmy_text", "required": true, "placeholder": "18/07/1985" },
+    { "id": "dob_mdy_text", "label": "Date of Birth (MM/DD/YYYY)", "type": "date_mdy_text", "required": true, "placeholder": "07/18/1985" },
+    { "id": "dob_ymd_text", "label": "Date of Birth (YYYY-MM-DD)", "type": "date_ymd_text", "required": true, "placeholder": "1985-07-18" },
+    { "id": "nominee_dob_dmy_text", "label": "Nominee Date of Birth (DD/MM/YYYY)", "type": "date_dmy_text", "required": true, "placeholder": "12/04/1987" },
+    { "id": "month_year", "label": "Month / Year", "type": "month_year", "required": false, "placeholder": "07/1985" }
+  ],
+  "groundTruth": {
+    "full_name": "Rajesh Kumar Sharma",
+    "dob_dmy_text": "18/07/1985",
+    "dob_mdy_text": "07/18/1985",
+    "dob_ymd_text": "1985-07-18",
+    "nominee_dob_dmy_text": "12/04/1987",
+    "month_year": "07/1985"
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "id": "level2c-checkbox-variations",
+  "level": 2,
+  "name": "Level 2c — Checkbox & Toggle Variations",
+  "description": "Tests standard checkboxes, inline checkbox cards, toggle switches, and duplicate consent fields.",
+  "stressFlags": {},
+  "fields": [
+    { "id": "full_name", "label": "Full Name", "type": "text", "required": true },
+    { "id": "esign_consent", "label": "I consent to digital Aadhaar eSign verification", "type": "checkbox", "required": true },
+    { "id": "esign_consent_toggle", "label": "I consent to digital Aadhaar eSign verification", "type": "toggle", "required": true },
+    { "id": "terms_consent", "label": "I agree to Terms & Conditions and Privacy Policy", "type": "checkbox", "required": true },
+    { "id": "terms_consent_card", "label": "I agree to Terms & Conditions and Privacy Policy", "type": "checkbox_cards", "required": true },
+    { "id": "same_as_current", "label": "Permanent address same as current address", "type": "checkbox", "required": false },
+    { "id": "same_as_current_toggle", "label": "Permanent address same as current address", "type": "toggle", "required": false }
+  ],
+  "groundTruth": {
+    "full_name": "Rajesh Kumar Sharma",
+    "esign_consent": true,
+    "esign_consent_toggle": true,
+    "terms_consent": true,
+    "terms_consent_card": true,
+    "same_as_current": true,
+    "same_as_current_toggle": true
+  }
+}

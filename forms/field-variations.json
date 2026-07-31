@@ -1,0 +1,124 @@
+{
+  "version": "1.2.0",
+  "description": "Registry of concrete input-widget variations used to expand the KYC benchmark. Each entry describes the widget style, expected submission format, and default profile-key mapping for a given field type.",
+  "variations": {
+    "date": {
+      "date": {
+        "label": "Native Date Picker",
+        "widget": "native_date",
+        "format": "iso",
+        "profileKey": "dob"
+      },
+      "date_dmy_text": {
+        "label": "Date (DD/MM/YYYY)",
+        "widget": "text",
+        "format": "dd/MM/yyyy",
+        "separator": "/",
+        "profileKey": "dob"
+      },
+      "date_mdy_text": {
+        "label": "Date (MM/DD/YYYY)",
+        "widget": "text",
+        "format": "MM/dd/yyyy",
+        "separator": "/",
+        "profileKey": "dob"
+      },
+      "date_ymd_text": {
+        "label": "Date (YYYY-MM-DD)",
+        "widget": "text",
+        "format": "yyyy-MM-dd",
+        "separator": "-",
+        "profileKey": "dob"
+      },
+      "date_dmy_selects": {
+        "label": "Date (Day / Month / Year)",
+        "widget": "triple_select",
+        "format": "dd/MM/yyyy",
+        "separator": "/",
+        "profileKey": "dob"
+      },
+      "month_year": {
+        "label": "Month / Year",
+        "widget": "month_input",
+        "format": "MM/yyyy",
+        "separator": "/",
+        "profileKey": "dob"
+      },
+      "date_calendar": {
+        "label": "Calendar Date Picker",
+        "widget": "calendar_popup",
+        "format": "dd/MM/yyyy",
+        "separator": "/",
+        "profileKey": "dob"
+      }
+    },
+    "select": {
+      "select": {
+        "label": "Native Dropdown",
+        "widget": "native_select"
+      },
+      "select_custom": {
+        "label": "Custom Dropdown",
+        "widget": "custom_select"
+      },
+      "searchable_select": {
+        "label": "Searchable Dropdown",
+        "widget": "searchable_select"
+      },
+      "segmented": {
+        "label": "Segmented Control",
+        "widget": "segmented_buttons"
+      }
+    },
+    "radio": {
+      "radio": {
+        "label": "Radio Buttons",
+        "widget": "radio_default"
+      },
+      "radio_inline": {
+        "label": "Radio Buttons (Inline)",
+        "widget": "radio_inline"
+      },
+      "radio_cards": {
+        "label": "Selectable Cards",
+        "widget": "radio_cards"
+      }
+    },
+    "checkbox": {
+      "checkbox": {
+        "label": "Checkbox",
+        "widget": "checkbox_default"
+      },
+      "checkbox_inline": {
+        "label": "Checkbox Group (Inline)",
+        "widget": "checkbox_inline"
+      },
+      "checkbox_cards": {
+        "label": "Checkbox Cards",
+        "widget": "checkbox_cards"
+      },
+      "toggle": {
+        "label": "Toggle Switch",
+        "widget": "toggle_switch"
+      }
+    },
+    "file": {
+      "file": {
+        "label": "File Upload",
+        "widget": "native_file"
+      },
+      "file_dropzone": {
+        "label": "Drag & Drop Upload",
+        "widget": "dropzone"
+      },
+      "file_multiple": {
+        "label": "Multiple File Upload",
+        "widget": "multiple_file"
+      },
+      "file_camera": {
+        "label": "Camera Capture",
+        "widget": "camera_capture"
+      }
+    }
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "id": "level3d-combined-input-variations",
+  "level": 3,
+  "name": "Level 3d — Combined Input Variations",
+  "description": "Mixes date formats, selectors, radios, checkboxes, toggles, and uploads in one form with duplicate same-type fields to test disambiguation.",
+  "stressFlags": {},
+  "fields": [
+    { "id": "full_name", "label": "Full Name", "type": "text", "required": true },
+    { "id": "dob_dmy_text", "label": "Date of Birth (DD/MM/YYYY)", "type": "date_dmy_text", "required": true, "placeholder": "18/07/1985" },
+    { "id": "nominee_dob_dmy_text", "label": "Nominee Date of Birth (DD/MM/YYYY)", "type": "date_dmy_text", "required": true, "placeholder": "12/04/1987" },
+    { "id": "dob_calendar", "label": "Date of Birth (Calendar Picker)", "type": "date_calendar", "required": true },
+    { "id": "nationality_custom", "label": "Nationality (Custom Dropdown)", "type": "select_custom", "required": true, "options": ["Indian", "American", "British", "Canadian", "Other"] },
+    { "id": "bank_name_custom", "label": "Bank Name (Custom Dropdown)", "type": "select_custom", "required": true, "options": ["State Bank of India", "HDFC Bank", "ICICI Bank", "Axis Bank", "Kotak Mahindra Bank"] },
+    { "id": "marital_status_segmented", "label": "Marital Status (Segmented)", "type": "segmented", "required": true, "options": ["Single", "Married", "Divorced", "Widowed"] },
+    { "id": "gender_radio_cards", "label": "Gender (Card Selection)", "type": "radio_cards", "required": true, "options": ["Male", "Female", "Other", "Prefer not to say"] },
+    { "id": "account_type_segmented", "label": "Account Type (Segmented)", "type": "segmented", "required": true, "options": ["Savings", "Current", "Salary"] },
+    { "id": "esign_consent_toggle", "label": "I consent to digital Aadhaar eSign verification", "type": "toggle", "required": true },
+    { "id": "terms_consent_card", "label": "I agree to Terms & Conditions and Privacy Policy", "type": "checkbox_cards", "required": true },
+    { "id": "same_as_current_toggle", "label": "Permanent address same as current address", "type": "toggle", "required": false },
+    { "id": "upload_pan_dropzone", "label": "PAN Card Document (Dropzone)", "type": "file_dropzone", "required": false, "accept": ".jpg,.png,.pdf" },
+    { "id": "upload_photo_camera", "label": "Applicant Photo (Camera)", "type": "file_camera", "required": false, "accept": ".jpg,.png" }
+  ],
+  "groundTruth": {
+    "full_name": "Rajesh Kumar Sharma",
+    "dob_dmy_text": "18/07/1985",
+    "nominee_dob_dmy_text": "12/04/1987",
+    "dob_calendar": "18/07/1985",
+    "nationality_custom": "Indian",
+    "bank_name_custom": "State Bank of India",
+    "marital_status_segmented": "Married",
+    "gender_radio_cards": "Male",
+    "account_type_segmented": "Savings",
+    "esign_consent_toggle": true,
+    "terms_consent_card": true,
+    "same_as_current_toggle": true,
+    "upload_pan_dropzone": null,
+    "upload_photo_camera": null
+  }
+}

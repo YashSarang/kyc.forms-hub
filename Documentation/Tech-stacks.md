@@ -28,11 +28,16 @@ Forms can be rendered on-demand at `/form/{stack}/{scenarioId}` (central orchest
 
 | Feature                     | Difficulty  | Scenario IDs |
 | --------------------------- | ----------- | ------------ |
-| Custom dropdowns            | Medium      | level2-selection |
+| Native & custom dropdowns   | Medium      | level2-selection, level2a-dropdown-variations |
+| Searchable comboboxes       | Medium–High | level3-pickers, level2a-dropdown-variations |
+| Segmented controls          | Medium      | level2-selection, level2a-dropdown-variations, level2b-radio-variations |
+| Radio button variations     | Medium      | level2-selection, level2b-radio-variations |
+| Checkbox / toggle variations| Medium      | level2-selection, level2c-checkbox-variations |
 | React controlled components | Medium      | react stack on all scenarios |
-| Searchable comboboxes       | Medium–High | level3-pickers |
-| Date pickers                | High        | level3-pickers, level4-dynamic |
-| File uploads                | High        | level3-pickers, baseline |
+| Date formats (text)         | Medium–High | level3a-date-format-variations, level3d-combined-input-variations |
+| Date pickers                | High        | level3-pickers, level3b-date-picker-variations, level4-dynamic |
+| File uploads                | High        | level3-pickers, level3c-upload-variations, baseline |
+| Duplicate same-type fields  | High        | level2a/2b/2c-variations, level3d-combined-input-variations |
 | Dynamic conditional fields  | High        | level4-dynamic |
 | Shadow DOM                  | High        | level6-frameworks, issue-shadow-dom |
 | Nested iframes              | High        | level5-complex |

@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="kyc-expected-profile" content="A">
   <title>Full Canonical KYC Baseline — PHP Server-Rendered</title>
   <style>
     body { font-family: system-ui, sans-serif; background-color: #111827; color: #f8fafc; padding: 20px; }
@@ -19,10 +20,219 @@
     .radio-group label, .checkbox-group label { font-weight: normal; display: flex; align-items: center; gap: 6px; }
     .btn-submit { background: linear-gradient(135deg, #4f46e5, #818cf8); color: white; border: none; padding: 14px 28px; font-size: 1.1rem; border-radius: 8px; cursor: pointer; font-weight: bold; width: 100%; margin-top: 20px; }
     .result-box { margin-top: 25px; padding: 20px; background: #00000055; border-radius: 8px; border: 1px solid #4f46e5; display: none; }
+    
+    /* --- Variation widget shared styles --- */
+    .radio-inline .radio-group, .checkbox-inline .checkbox-group { gap: 20px; }
+    .radio-cards .radio-group, .checkbox-cards .checkbox-group { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 12px; }
+    .radio-cards .radio-group label, .checkbox-cards .checkbox-group label { border: 1px solid #475569; border-radius: 8px; padding: 12px; cursor: pointer; transition: all 0.15s; }
+    .radio-cards .radio-group label:has(input:checked), .checkbox-cards .checkbox-group label:has(input:checked) { border-color: #38bdf8; background: #0ea5e933; }
+    .segmented-control { display: flex; border: 1px solid #475569; border-radius: 8px; overflow: hidden; }
+    .segmented-control label { flex: 1; margin: 0; padding: 10px; text-align: center; cursor: pointer; border-right: 1px solid #475569; font-weight: 500; }
+    .segmented-control label:last-child { border-right: none; }
+    .segmented-control input { position: absolute; opacity: 0; }
+    .segmented-control label:has(input:checked) { background: #38bdf8; color: #0f172a; font-weight: bold; }
+    .toggle-switch { display: inline-flex; align-items: center; gap: 10px; cursor: pointer; }
+    .toggle-switch input { opacity: 0; width: 0; height: 0; }
+    .toggle-slider { width: 44px; height: 24px; background: #475569; border-radius: 24px; position: relative; transition: 0.2s; }
+    .toggle-slider::before { content: ''; position: absolute; width: 18px; height: 18px; left: 3px; top: 3px; background: white; border-radius: 50%; transition: 0.2s; }
+    .toggle-switch input:checked + .toggle-slider { background: #38bdf8; }
+    .toggle-switch input:checked + .toggle-slider::before { transform: translateX(20px); }
+    kyc-custom-select { display: block; position: relative; }
+    .kyc-select-trigger { width: 100%; padding: 11px; border-radius: 6px; border: 1px solid #475569; background: #0f172a; color: white; cursor: pointer; text-align: left; display: flex; justify-content: space-between; align-items: center; }
+    .kyc-select-options { position: absolute; top: 100%; left: 0; right: 0; background: #1e293b; border: 1px solid #475569; border-radius: 6px; margin-top: 4px; max-height: 240px; overflow-y: auto; z-index: 100; display: none; }
+    .kyc-select-options.open { display: block; }
+    .kyc-select-option { padding: 10px 12px; cursor: pointer; }
+    .kyc-select-option:hover, .kyc-select-option.active { background: #334155; }
+    .kyc-triple-select { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+    .kyc-calendar-input { width: 100%; padding: 11px; border-radius: 6px; border: 1px solid #475569; background: #0f172a; color: white; cursor: pointer; }
+    .kyc-calendar-popup { position: absolute; top: 100%; left: 0; background: #1e293b; border: 1px solid #475569; border-radius: 8px; padding: 12px; z-index: 100; display: none; min-width: 280px; }
+    .kyc-calendar-popup.open { display: block; }
+    .kyc-calendar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+    .kyc-calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; text-align: center; }
+    .kyc-calendar-day { padding: 6px; border-radius: 4px; cursor: pointer; }
+    .kyc-calendar-day:hover { background: #334155; }
+    .kyc-calendar-day.selected { background: #38bdf8; color: #0f172a; }
+    .kyc-dropzone { border: 2px dashed #475569; border-radius: 8px; padding: 24px; text-align: center; cursor: pointer; transition: 0.2s; }
+    .kyc-dropzone:hover, .kyc-dropzone.dragover { border-color: #38bdf8; background: #0ea5e91a; }
+    .kyc-camera-btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border-radius: 6px; border: 1px solid #475569; background: #0f172a; color: white; cursor: pointer; }
+    .kyc-camera-btn:hover { border-color: #38bdf8; }
+    input[type="file"] { color: #94a3b8; }
+  
   
     fieldset { border: 1px solid #4f46e5; border-radius: 6px; padding: 18px; margin-bottom: 20px; }
     legend { color: #818cf8; font-weight: bold; padding: 0 10px; }
   </style>
+  <script>
+(function() {
+  if (window.__KYC_WIDGETS_INIT__) return;
+  window.__KYC_WIDGETS_INIT__ = true;
+
+  window.collectWidgetValues = function(root) {
+    const data = {};
+    root.querySelectorAll('kyc-custom-select, kyc-date-triple, kyc-date-calendar, kyc-toggle, kyc-dropzone').forEach(el => {
+      const input = el.querySelector('input[name]');
+      if (input) {
+        if (input.type === 'checkbox') data[input.name] = input.checked;
+        else if (input.type === 'file') data[input.name] = input.files.length ? input.files[0].name : '';
+        else data[input.name] = input.value;
+      }
+    });
+    return data;
+  };
+
+  function dispatchInput(input) {
+    input.dispatchEvent(new Event('input', { bubbles: true }));
+    input.dispatchEvent(new Event('change', { bubbles: true }));
+  }
+
+  class KycCustomSelect extends HTMLElement {
+    connectedCallback() {
+      const name = this.getAttribute('name');
+      this._options = JSON.parse(this.getAttribute('options') || '[]');
+      const placeholder = this.getAttribute('placeholder') || 'Select...';
+      const required = this.hasAttribute('required');
+      const searchable = this.hasAttribute('searchable');
+      this.innerHTML = '<input type="hidden" name="' + name + '"' + (required ? ' required' : '') + '><button type="button" class="kyc-select-trigger"><span class="kyc-select-text">' + placeholder + '</span><span>▼</span></button><div class="kyc-select-options"></div>';
+      const optsEl = this.querySelector('.kyc-select-options');
+      if (searchable) {
+        const searchBox = document.createElement('input');
+        searchBox.className = 'kyc-select-search';
+        searchBox.placeholder = 'Type to filter...';
+        searchBox.style.cssText = 'width:100%;padding:8px;border:none;border-bottom:1px solid #475569;background:#0f172a;color:white;box-sizing:border-box;';
+        searchBox.addEventListener('input', (e) => this.filterOptions(e.target.value));
+        searchBox.addEventListener('click', (e) => e.stopPropagation());
+        optsEl.appendChild(searchBox);
+      }
+      this._options.forEach((opt) => {
+        const div = document.createElement('div');
+        div.className = 'kyc-select-option';
+        div.textContent = opt;
+        div.dataset.value = opt;
+        div.addEventListener('click', () => this.select(opt));
+        optsEl.appendChild(div);
+      });
+      this.querySelector('.kyc-select-trigger').addEventListener('click', (e) => { e.preventDefault(); this.toggle(); });
+      document.addEventListener('click', (e) => { if (!this.contains(e.target)) optsEl.classList.remove('open'); });
+    }
+    filterOptions(query) {
+      const q = (query || '').toLowerCase();
+      this.querySelectorAll('.kyc-select-option').forEach(opt => {
+        opt.style.display = opt.textContent.toLowerCase().includes(q) ? '' : 'none';
+      });
+    }
+    select(value) {
+      const input = this.querySelector('input');
+      input.value = value;
+      this.querySelector('.kyc-select-text').textContent = value;
+      this.querySelector('.kyc-select-options').classList.remove('open');
+      dispatchInput(input);
+    }
+    toggle() {
+      this.querySelector('.kyc-select-options').classList.toggle('open');
+    }
+  }
+
+  class KycDateTriple extends HTMLElement {
+    connectedCallback() {
+      const name = this.getAttribute('name');
+      const required = this.hasAttribute('required');
+      const daySel = '<select class="kyc-day"><option value="">Day</option>' + Array.from({length:31},(_,i)=>'<option value="'+(i+1)+'">'+(i+1)+'</option>').join('') + '</select>';
+      const monthSel = '<select class="kyc-month"><option value="">Month</option>' + Array.from({length:12},(_,i)=>'<option value="'+(i+1)+'">'+(i+1)+'</option>').join('') + '</select>';
+      const yearSel = '<select class="kyc-year"><option value="">Year</option>' + Array.from({length:100},(_,i)=>'<option value="'+(1925+i)+'">'+(1925+i)+'</option>').join('') + '</select>';
+      this.innerHTML = '<input type="hidden" name="' + name + '"' + (required ? ' required' : '') + '><div class="kyc-triple-select">' + daySel + monthSel + yearSel + '</div>';
+      const update = () => {
+        const d = this.querySelector('.kyc-day').value;
+        const m = this.querySelector('.kyc-month').value;
+        const y = this.querySelector('.kyc-year').value;
+        const input = this.querySelector('input');
+        if (d && m && y) {
+          input.value = String(d).padStart(2,'0') + '/' + String(m).padStart(2,'0') + '/' + y;
+        } else input.value = '';
+        dispatchInput(input);
+      };
+      this.querySelectorAll('select').forEach(s => s.addEventListener('change', update));
+    }
+  }
+
+  class KycDateCalendar extends HTMLElement {
+    connectedCallback() {
+      const name = this.getAttribute('name');
+      const required = this.hasAttribute('required');
+      const placeholder = this.getAttribute('placeholder') || 'Pick a date...';
+      this.innerHTML = '<input type="hidden" name="' + name + '"' + (required ? ' required' : '') + '><input type="text" readonly class="kyc-calendar-input" placeholder="' + placeholder + '"><div class="kyc-calendar-popup"></div>';
+      this.viewDate = new Date();
+      this.selectedDate = null;
+      this.input = this.querySelector('input[type="hidden"]');
+      this.display = this.querySelector('.kyc-calendar-input');
+      this.popup = this.querySelector('.kyc-calendar-popup');
+      this.display.addEventListener('click', () => { this.render(); this.popup.classList.toggle('open'); });
+      document.addEventListener('click', (e) => { if (!this.contains(e.target)) this.popup.classList.remove('open'); });
+    }
+    render() {
+      const y = this.viewDate.getFullYear();
+      const m = this.viewDate.getMonth();
+      const firstDay = new Date(y, m, 1).getDay();
+      const daysInMonth = new Date(y, m + 1, 0).getDate();
+      let html = '<div class="kyc-calendar-header"><button type="button" class="kyc-cal-prev">‹</button><span>' + (m+1) + '/' + y + '</span><button type="button" class="kyc-cal-next">›</button></div>';
+      html += '<div class="kyc-calendar-grid">' + ['Su','Mo','Tu','We','Th','Fr','Sa'].map(d => '<div style="font-weight:bold;">' + d + '</div>').join('') + '</div>';
+      const grid = document.createElement('div'); grid.className = 'kyc-calendar-grid';
+      for (let i = 0; i < firstDay; i++) grid.appendChild(document.createElement('div'));
+      for (let d = 1; d <= daysInMonth; d++) {
+        const cell = document.createElement('div');
+        cell.className = 'kyc-calendar-day';
+        cell.textContent = d;
+        if (this.selectedDate && this.selectedDate.getDate() === d && this.selectedDate.getMonth() === m && this.selectedDate.getFullYear() === y) cell.classList.add('selected');
+        cell.addEventListener('click', () => { this.pick(d); });
+        grid.appendChild(cell);
+      }
+      this.popup.innerHTML = html;
+      this.popup.appendChild(grid);
+      this.popup.querySelector('.kyc-cal-prev').addEventListener('click', (e) => { e.stopPropagation(); this.viewDate.setMonth(m - 1); this.render(); });
+      this.popup.querySelector('.kyc-cal-next').addEventListener('click', (e) => { e.stopPropagation(); this.viewDate.setMonth(m + 1); this.render(); });
+    }
+    pick(day) {
+      const y = this.viewDate.getFullYear();
+      const m = this.viewDate.getMonth();
+      this.selectedDate = new Date(y, m, day);
+      this.input.value = String(day).padStart(2,'0') + '/' + String(m+1).padStart(2,'0') + '/' + y;
+      this.display.value = this.input.value;
+      this.popup.classList.remove('open');
+      dispatchInput(this.input);
+    }
+  }
+
+  class KycToggle extends HTMLElement {
+    connectedCallback() {
+      const name = this.getAttribute('name');
+      const label = this.getAttribute('label') || '';
+      const required = this.hasAttribute('required');
+      this.innerHTML = '<label class="toggle-switch"><input type="checkbox" name="' + name + '"' + (required ? ' required' : '') + '><span class="toggle-slider"></span><span>' + label + '</span></label>';
+    }
+  }
+
+  class KycDropzone extends HTMLElement {
+    connectedCallback() {
+      const name = this.getAttribute('name');
+      const accept = this.getAttribute('accept') || '';
+      const label = this.getAttribute('label') || 'Drag & drop files here or click to upload';
+      this.innerHTML = '<input type="file" name="' + name + '" style="display:none;" ' + (accept ? 'accept="' + accept + '"' : '') + '><div class="kyc-dropzone">' + label + '</div>';
+      const input = this.querySelector('input');
+      const zone = this.querySelector('.kyc-dropzone');
+      zone.addEventListener('click', () => input.click());
+      zone.addEventListener('dragover', (e) => { e.preventDefault(); zone.classList.add('dragover'); });
+      zone.addEventListener('dragleave', () => zone.classList.remove('dragover'));
+      zone.addEventListener('drop', (e) => { e.preventDefault(); zone.classList.remove('dragover'); if (e.dataTransfer.files.length) input.files = e.dataTransfer.files; dispatchInput(input); });
+      input.addEventListener('change', () => { zone.textContent = input.files.length ? input.files[0].name : label; dispatchInput(input); });
+    }
+  }
+
+  customElements.define('kyc-custom-select', KycCustomSelect);
+  customElements.define('kyc-date-triple', KycDateTriple);
+  customElements.define('kyc-date-calendar', KycDateCalendar);
+  customElements.define('kyc-toggle', KycToggle);
+  customElements.define('kyc-dropzone', KycDropzone);
+})();
+</script>
   
 </head>
 <body>
@@ -30,265 +240,265 @@
     <span class="badge">PHP Server-Rendered (15% share)</span>
     <h1>Full Canonical KYC Baseline</h1>
     <p class="desc">Complete 50+ field KYC form across all categories. Used as the repeatable baseline for cross-stack comparison.</p>
-    <form id="phpKycForm" data-scenario="baseline">
+    <form id="phpKycForm" data-scenario="baseline" novalidate>
       <input type="hidden" name="csrf_token" value="csrf-token-baseline">
       <fieldset>
         <legend>KYC Fields</legend>
         <div class="grid-2"><div class="form-group " data-field-id="full_name">
       <label for="full_name">Full Name *</label>
-      <input type="text" id="full_name" name="full_name" value="Rajesh Kumar Sharma" placeholder="e.g. Rajesh Kumar Sharma" required />
+      <input type="text" id="full_name" name="full_name" value="" placeholder="e.g. Rajesh Kumar Sharma" required />
     </div>
         <div class="form-group " data-field-id="first_name">
       <label for="first_name">First Name *</label>
-      <input type="text" id="first_name" name="first_name" value="Rajesh" placeholder="Rajesh" required />
+      <input type="text" id="first_name" name="first_name" value="" placeholder="Rajesh" required />
     </div>
         <div class="form-group " data-field-id="middle_name">
       <label for="middle_name">Middle Name</label>
-      <input type="text" id="middle_name" name="middle_name" value="Kumar" placeholder="Kumar" />
+      <input type="text" id="middle_name" name="middle_name" value="" placeholder="Kumar" />
     </div>
         <div class="form-group " data-field-id="last_name">
       <label for="last_name">Last Name *</label>
-      <input type="text" id="last_name" name="last_name" value="Sharma" placeholder="Sharma" required />
+      <input type="text" id="last_name" name="last_name" value="" placeholder="Sharma" required />
     </div>
         <div class="form-group " data-field-id="preferred_name">
       <label for="preferred_name">Preferred Name</label>
-      <input type="text" id="preferred_name" name="preferred_name" value="Raj" placeholder="Raj" />
+      <input type="text" id="preferred_name" name="preferred_name" value="" placeholder="Raj" />
     </div>
         <div class="form-group " data-field-id="gender">
       <label for="gender">Gender *</label>
-      <div class="radio-group"><label><input type="radio" name="gender" value="Male" checked required> Male</label><label><input type="radio" name="gender" value="Female" required> Female</label><label><input type="radio" name="gender" value="Other" required> Other</label><label><input type="radio" name="gender" value="Prefer not to say" required> Prefer not to say</label></div>
+      <div class=""><div class="radio-group"><label><input type="radio" name="gender" value="Male" required> Male</label><label><input type="radio" name="gender" value="Female" required> Female</label><label><input type="radio" name="gender" value="Other" required> Other</label><label><input type="radio" name="gender" value="Prefer not to say" required> Prefer not to say</label></div></div>
     </div>
         <div class="form-group " data-field-id="dob">
       <label for="dob">Date of Birth *</label>
-      <input type="date" id="dob" name="dob" value="1992-08-15" required />
+      <input type="date" id="dob" name="dob" value="" required />
     </div>
         <div class="form-group " data-field-id="age">
       <label for="age">Age</label>
-      <input type="number" id="age" name="age" value="33" />
+      <input type="number" id="age" name="age" value="41" />
     </div>
         <div class="form-group " data-field-id="nationality">
       <label for="nationality">Nationality *</label>
-      <select id="nationality" name="nationality" required><option value="Indian" selected>Indian</option><option value="American">American</option><option value="British">British</option><option value="Canadian">Canadian</option><option value="Other">Other</option></select>
+      <select id="nationality" name="nationality" required><option value="" disabled selected>Select...</option><option value="Indian">Indian</option><option value="American">American</option><option value="British">British</option><option value="Canadian">Canadian</option><option value="Other">Other</option></select>
     </div>
         <div class="form-group " data-field-id="marital_status">
       <label for="marital_status">Marital Status *</label>
-      <select id="marital_status" name="marital_status" required><option value="Single">Single</option><option value="Married" selected>Married</option><option value="Divorced">Divorced</option><option value="Widowed">Widowed</option></select>
+      <select id="marital_status" name="marital_status" required><option value="" disabled selected>Select...</option><option value="Single">Single</option><option value="Married">Married</option><option value="Divorced">Divorced</option><option value="Widowed">Widowed</option></select>
     </div>
         <div class="form-group " data-field-id="mobile_number">
       <label for="mobile_number">Mobile Number *</label>
-      <input type="tel" id="mobile_number" name="mobile_number" value="9876543210" required />
+      <input type="tel" id="mobile_number" name="mobile_number" value="" required />
     </div>
         <div class="form-group " data-field-id="alternate_mobile">
       <label for="alternate_mobile">Alternate Mobile</label>
-      <input type="tel" id="alternate_mobile" name="alternate_mobile" value="9876543211" />
+      <input type="tel" id="alternate_mobile" name="alternate_mobile" value="" />
     </div>
         <div class="form-group " data-field-id="landline">
       <label for="landline">Landline Number</label>
-      <input type="tel" id="landline" name="landline" value="02228901234" />
+      <input type="tel" id="landline" name="landline" value="" />
     </div>
         <div class="form-group " data-field-id="email">
       <label for="email">Email Address *</label>
-      <input type="email" id="email" name="email" value="rajesh.sharma@example.com" required />
+      <input type="email" id="email" name="email" value="" required />
     </div>
         <div class="form-group " data-field-id="curr_address_line1">
       <label for="curr_address_line1">Current Address Line 1 *</label>
-      <input type="text" id="curr_address_line1" name="curr_address_line1" value="Flat 402, Sunshine Apartments" placeholder="Flat 402, Sunshine Apartments" required />
+      <input type="text" id="curr_address_line1" name="curr_address_line1" value="" placeholder="Flat 402, Sunshine Apartments" required />
     </div>
         <div class="form-group " data-field-id="curr_address_line2">
       <label for="curr_address_line2">Current Address Line 2</label>
-      <input type="text" id="curr_address_line2" name="curr_address_line2" value="MG Road, Kandivali West" placeholder="MG Road, Kandivali West" />
+      <input type="text" id="curr_address_line2" name="curr_address_line2" value="" placeholder="MG Road, Kandivali West" />
     </div>
         <div class="form-group " data-field-id="curr_landmark">
       <label for="curr_landmark">Landmark</label>
-      <input type="text" id="curr_landmark" name="curr_landmark" value="Near Metro Station" placeholder="Near Metro Station" />
+      <input type="text" id="curr_landmark" name="curr_landmark" value="" placeholder="Near Metro Station" />
     </div>
         <div class="form-group " data-field-id="curr_city">
       <label for="curr_city">City *</label>
-      <input type="text" id="curr_city" name="curr_city" value="Mumbai" placeholder="Mumbai" required />
+      <input type="text" id="curr_city" name="curr_city" value="" placeholder="Mumbai" required />
     </div>
         <div class="form-group " data-field-id="curr_district">
       <label for="curr_district">District *</label>
-      <input type="text" id="curr_district" name="curr_district" value="Mumbai Suburban" placeholder="Mumbai Suburban" required />
+      <input type="text" id="curr_district" name="curr_district" value="" placeholder="Mumbai Suburban" required />
     </div>
         <div class="form-group " data-field-id="curr_state">
       <label for="curr_state">State *</label>
-      <select id="curr_state" name="curr_state" required><option value="Maharashtra" selected>Maharashtra</option><option value="Delhi">Delhi</option><option value="Karnataka">Karnataka</option><option value="Tamil Nadu">Tamil Nadu</option><option value="Telangana">Telangana</option><option value="Gujarat">Gujarat</option></select>
+      <select id="curr_state" name="curr_state" required><option value="" disabled selected>Select...</option><option value="Maharashtra">Maharashtra</option><option value="Delhi">Delhi</option><option value="Karnataka">Karnataka</option><option value="Tamil Nadu">Tamil Nadu</option><option value="Telangana">Telangana</option><option value="Gujarat">Gujarat</option></select>
     </div>
         <div class="form-group " data-field-id="curr_pincode">
       <label for="curr_pincode">PIN Code *</label>
-      <input type="text" id="curr_pincode" name="curr_pincode" value="400067" placeholder="400067" required />
+      <input type="text" id="curr_pincode" name="curr_pincode" value="" placeholder="400067" required />
     </div>
         <div class="form-group " data-field-id="curr_country">
       <label for="curr_country">Country *</label>
-      <select id="curr_country" name="curr_country" required><option value="India" selected>India</option><option value="United States">United States</option><option value="United Kingdom">United Kingdom</option></select>
+      <select id="curr_country" name="curr_country" required><option value="" disabled selected>Select...</option><option value="India">India</option><option value="United States">United States</option><option value="United Kingdom">United Kingdom</option></select>
     </div>
         <div class="form-group " data-field-id="same_as_current">
       <label for="same_as_current">Permanent address same as current address</label>
-      <label><input type="checkbox" id="same_as_current" name="same_as_current" checked> Permanent address same as current address</label>
+      <div class=""><div class="checkbox-group"><label><input type="checkbox" id="same_as_current" name="same_as_current"> Permanent address same as current address</label></div></div>
     </div>
         <div class="form-group " data-field-id="perm_address_line1">
       <label for="perm_address_line1">Permanent Address Line 1</label>
-      <input type="text" id="perm_address_line1" name="perm_address_line1" value="Flat 402, Sunshine Apartments" />
+      <input type="text" id="perm_address_line1" name="perm_address_line1" value="" />
     </div>
         <div class="form-group " data-field-id="perm_city">
       <label for="perm_city">Permanent City</label>
-      <input type="text" id="perm_city" name="perm_city" value="Mumbai" />
+      <input type="text" id="perm_city" name="perm_city" value="" />
     </div>
         <div class="form-group " data-field-id="perm_state">
       <label for="perm_state">Permanent State</label>
-      <select id="perm_state" name="perm_state"><option value="Maharashtra" selected>Maharashtra</option><option value="Delhi">Delhi</option><option value="Karnataka">Karnataka</option><option value="Tamil Nadu">Tamil Nadu</option><option value="Telangana">Telangana</option><option value="Gujarat">Gujarat</option></select>
+      <select id="perm_state" name="perm_state"><option value="" disabled selected>Select...</option><option value="Maharashtra">Maharashtra</option><option value="Delhi">Delhi</option><option value="Karnataka">Karnataka</option><option value="Tamil Nadu">Tamil Nadu</option><option value="Telangana">Telangana</option><option value="Gujarat">Gujarat</option></select>
     </div>
         <div class="form-group " data-field-id="perm_pincode">
       <label for="perm_pincode">Permanent PIN Code</label>
-      <input type="text" id="perm_pincode" name="perm_pincode" value="400067" />
+      <input type="text" id="perm_pincode" name="perm_pincode" value="" />
     </div>
         <div class="form-group " data-field-id="aadhaar_number">
       <label for="aadhaar_number">Aadhaar Number *</label>
-      <input type="text" id="aadhaar_number" name="aadhaar_number" value="123456789012" placeholder="1234 5678 9012" required />
+      <input type="text" id="aadhaar_number" name="aadhaar_number" value="" placeholder="1234 5678 9012" required />
     </div>
         <div class="form-group " data-field-id="pan_number">
       <label for="pan_number">PAN Number *</label>
-      <input type="text" id="pan_number" name="pan_number" value="ABCDE1234F" placeholder="ABCDE1234F" required />
+      <input type="text" id="pan_number" name="pan_number" value="" placeholder="ABCDE1234F" required />
     </div>
         <div class="form-group " data-field-id="passport_number">
       <label for="passport_number">Passport Number</label>
-      <input type="text" id="passport_number" name="passport_number" value="Z1234567" placeholder="Z1234567" />
+      <input type="text" id="passport_number" name="passport_number" value="" placeholder="Z1234567" />
     </div>
         <div class="form-group " data-field-id="driving_licence">
       <label for="driving_licence">Driving Licence Number</label>
-      <input type="text" id="driving_licence" name="driving_licence" value="MH0220190012345" placeholder="MH0220190012345" />
+      <input type="text" id="driving_licence" name="driving_licence" value="" placeholder="MH0220190012345" />
     </div>
         <div class="form-group " data-field-id="voter_id">
       <label for="voter_id">Voter ID</label>
-      <input type="text" id="voter_id" name="voter_id" value="XYZ9876543" placeholder="XYZ9876543" />
+      <input type="text" id="voter_id" name="voter_id" value="" placeholder="XYZ9876543" />
     </div>
         <div class="form-group " data-field-id="bank_name">
       <label for="bank_name">Bank Name *</label>
-      <select id="bank_name" name="bank_name" required><option value="State Bank of India" selected>State Bank of India</option><option value="HDFC Bank">HDFC Bank</option><option value="ICICI Bank">ICICI Bank</option><option value="Axis Bank">Axis Bank</option><option value="Kotak Mahindra Bank">Kotak Mahindra Bank</option></select>
+      <select id="bank_name" name="bank_name" required><option value="" disabled selected>Select...</option><option value="State Bank of India">State Bank of India</option><option value="HDFC Bank">HDFC Bank</option><option value="ICICI Bank">ICICI Bank</option><option value="Axis Bank">Axis Bank</option><option value="Kotak Mahindra Bank">Kotak Mahindra Bank</option></select>
     </div>
         <div class="form-group " data-field-id="branch_name">
       <label for="branch_name">Branch Name *</label>
-      <input type="text" id="branch_name" name="branch_name" value="Fort Branch, Mumbai" placeholder="Fort Branch, Mumbai" required />
+      <input type="text" id="branch_name" name="branch_name" value="" placeholder="Fort Branch, Mumbai" required />
     </div>
         <div class="form-group " data-field-id="account_number">
       <label for="account_number">Account Number *</label>
-      <input type="text" id="account_number" name="account_number" value="100234567890" placeholder="100234567890" required />
+      <input type="text" id="account_number" name="account_number" value="" placeholder="100234567890" required />
     </div>
         <div class="form-group " data-field-id="ifsc_code">
       <label for="ifsc_code">IFSC Code *</label>
-      <input type="text" id="ifsc_code" name="ifsc_code" value="SBIN0000300" placeholder="SBIN0000300" required />
+      <input type="text" id="ifsc_code" name="ifsc_code" value="" placeholder="SBIN0000300" required />
     </div>
         <div class="form-group " data-field-id="account_type">
       <label for="account_type">Account Type *</label>
-      <div class="radio-group"><label><input type="radio" name="account_type" value="Savings" checked required> Savings</label><label><input type="radio" name="account_type" value="Current" required> Current</label><label><input type="radio" name="account_type" value="Salary" required> Salary</label></div>
+      <div class=""><div class="radio-group"><label><input type="radio" name="account_type" value="Savings" required> Savings</label><label><input type="radio" name="account_type" value="Current" required> Current</label><label><input type="radio" name="account_type" value="Salary" required> Salary</label></div></div>
     </div>
         <div class="form-group " data-field-id="occupation">
       <label for="occupation">Occupation *</label>
-      <input type="text" id="occupation" name="occupation" value="Software Engineer" placeholder="Software Engineer" required />
+      <input type="text" id="occupation" name="occupation" value="" placeholder="Software Engineer" required />
     </div>
         <div class="form-group " data-field-id="employment_type">
       <label for="employment_type">Employment Type *</label>
-      <select id="employment_type" name="employment_type" required><option value="Salaried" selected>Salaried</option><option value="Self-Employed">Self-Employed</option><option value="Business Owner">Business Owner</option><option value="Student">Student</option><option value="Retired">Retired</option></select>
+      <select id="employment_type" name="employment_type" required><option value="" disabled selected>Select...</option><option value="Salaried">Salaried</option><option value="Self-Employed">Self-Employed</option><option value="Business Owner">Business Owner</option><option value="Student">Student</option><option value="Retired">Retired</option></select>
     </div>
         <div class="form-group " data-field-id="employer_name">
       <label for="employer_name">Employer Name</label>
-      <input type="text" id="employer_name" name="employer_name" value="Tech Solutions Pvt Ltd" placeholder="Tech Solutions Pvt Ltd" />
+      <input type="text" id="employer_name" name="employer_name" value="" placeholder="Tech Solutions Pvt Ltd" />
     </div>
         <div class="form-group " data-field-id="designation">
       <label for="designation">Designation</label>
-      <input type="text" id="designation" name="designation" value="Senior Developer" placeholder="Senior Developer" />
+      <input type="text" id="designation" name="designation" value="" placeholder="Senior Developer" />
     </div>
         <div class="form-group " data-field-id="industry">
       <label for="industry">Industry</label>
-      <input type="text" id="industry" name="industry" value="Information Technology" placeholder="Information Technology" />
+      <input type="text" id="industry" name="industry" value="" placeholder="Information Technology" />
     </div>
         <div class="form-group " data-field-id="annual_income">
       <label for="annual_income">Annual Income (INR) *</label>
-      <input type="number" id="annual_income" name="annual_income" value="1200000" required />
+      <input type="number" id="annual_income" name="annual_income" value="" required />
     </div>
         <div class="form-group " data-field-id="income_range">
       <label for="income_range">Income Range *</label>
-      <select id="income_range" name="income_range" required><option value="Below 1 Lakh">Below 1 Lakh</option><option value="1-5 Lakhs">1-5 Lakhs</option><option value="5-10 Lakhs">5-10 Lakhs</option><option value="10-25 Lakhs" selected>10-25 Lakhs</option><option value="Above 25 Lakhs">Above 25 Lakhs</option></select>
+      <select id="income_range" name="income_range" required><option value="" disabled selected>Select...</option><option value="Below 1 Lakh">Below 1 Lakh</option><option value="1-5 Lakhs">1-5 Lakhs</option><option value="5-10 Lakhs">5-10 Lakhs</option><option value="10-25 Lakhs">10-25 Lakhs</option><option value="Above 25 Lakhs">Above 25 Lakhs</option></select>
     </div>
         <div class="form-group " data-field-id="net_worth">
       <label for="net_worth">Net Worth (INR)</label>
-      <input type="number" id="net_worth" name="net_worth" value="5000000" />
+      <input type="number" id="net_worth" name="net_worth" value="" />
     </div>
         <div class="form-group " data-field-id="is_pep">
       <label for="is_pep">Politically Exposed Person (PEP) *</label>
-      <div class="radio-group"><label><input type="radio" name="is_pep" value="No" checked required> No</label><label><input type="radio" name="is_pep" value="Yes" required> Yes</label></div>
+      <div class=""><div class="radio-group"><label><input type="radio" name="is_pep" value="No" required> No</label><label><input type="radio" name="is_pep" value="Yes" required> Yes</label></div></div>
     </div>
         <div class="form-group " data-field-id="nominee_name">
       <label for="nominee_name">Nominee Name *</label>
-      <input type="text" id="nominee_name" name="nominee_name" value="Priya Sharma" placeholder="Priya Sharma" required />
+      <input type="text" id="nominee_name" name="nominee_name" value="" placeholder="Priya Sharma" required />
     </div>
         <div class="form-group " data-field-id="nominee_relationship">
       <label for="nominee_relationship">Nominee Relationship *</label>
-      <select id="nominee_relationship" name="nominee_relationship" required><option value="Spouse" selected>Spouse</option><option value="Father">Father</option><option value="Mother">Mother</option><option value="Son">Son</option><option value="Daughter">Daughter</option><option value="Brother">Brother</option><option value="Sister">Sister</option></select>
+      <select id="nominee_relationship" name="nominee_relationship" required><option value="" disabled selected>Select...</option><option value="Spouse">Spouse</option><option value="Father">Father</option><option value="Mother">Mother</option><option value="Son">Son</option><option value="Daughter">Daughter</option><option value="Brother">Brother</option><option value="Sister">Sister</option></select>
     </div>
         <div class="form-group " data-field-id="nominee_dob">
       <label for="nominee_dob">Nominee Date of Birth *</label>
-      <input type="date" id="nominee_dob" name="nominee_dob" value="1994-05-20" required />
+      <input type="date" id="nominee_dob" name="nominee_dob" value="" required />
     </div>
         <div class="form-group " data-field-id="nominee_share">
       <label for="nominee_share">Nominee Share (%) *</label>
-      <input type="number" id="nominee_share" name="nominee_share" value="100" required />
+      <input type="number" id="nominee_share" name="nominee_share" value="" required />
     </div>
         <div class="form-group " data-field-id="father_name">
-      <label for="father_name">Father's Name *</label>
-      <input type="text" id="father_name" name="father_name" value="Ramesh Sharma" placeholder="Ramesh Sharma" required />
+      <label for="father_name">Father&#39;s Name *</label>
+      <input type="text" id="father_name" name="father_name" value="" placeholder="Ramesh Sharma" required />
     </div>
         <div class="form-group " data-field-id="mother_name">
-      <label for="mother_name">Mother's Name *</label>
-      <input type="text" id="mother_name" name="mother_name" value="Sunita Sharma" placeholder="Sunita Sharma" required />
+      <label for="mother_name">Mother&#39;s Name *</label>
+      <input type="text" id="mother_name" name="mother_name" value="" placeholder="Sunita Sharma" required />
     </div>
         <div class="form-group " data-field-id="spouse_name">
       <label for="spouse_name">Spouse Name</label>
-      <input type="text" id="spouse_name" name="spouse_name" value="Priya Sharma" placeholder="Priya Sharma" />
+      <input type="text" id="spouse_name" name="spouse_name" value="" placeholder="Priya Sharma" />
     </div>
         <div class="form-group " data-field-id="emergency_contact_name">
       <label for="emergency_contact_name">Emergency Contact Name *</label>
-      <input type="text" id="emergency_contact_name" name="emergency_contact_name" value="Ramesh Sharma" placeholder="Ramesh Sharma" required />
+      <input type="text" id="emergency_contact_name" name="emergency_contact_name" value="" placeholder="Ramesh Sharma" required />
     </div>
         <div class="form-group " data-field-id="emergency_contact_phone">
       <label for="emergency_contact_phone">Emergency Contact Phone *</label>
-      <input type="tel" id="emergency_contact_phone" name="emergency_contact_phone" value="9876500000" required />
+      <input type="tel" id="emergency_contact_phone" name="emergency_contact_phone" value="" required />
     </div>
         <div class="form-group " data-field-id="upload_pan">
-      <label for="upload_pan">PAN Card Document *</label>
-      <input type="file" id="upload_pan" name="upload_pan" required />
+      <label for="upload_pan">PAN Card Document</label>
+      <input type="file" id="upload_pan" name="upload_pan" />
     </div>
         <div class="form-group " data-field-id="upload_aadhaar_front">
-      <label for="upload_aadhaar_front">Aadhaar Front *</label>
-      <input type="file" id="upload_aadhaar_front" name="upload_aadhaar_front" required />
+      <label for="upload_aadhaar_front">Aadhaar Front</label>
+      <input type="file" id="upload_aadhaar_front" name="upload_aadhaar_front" />
     </div>
         <div class="form-group " data-field-id="upload_aadhaar_back">
-      <label for="upload_aadhaar_back">Aadhaar Back *</label>
-      <input type="file" id="upload_aadhaar_back" name="upload_aadhaar_back" required />
+      <label for="upload_aadhaar_back">Aadhaar Back</label>
+      <input type="file" id="upload_aadhaar_back" name="upload_aadhaar_back" />
     </div>
         <div class="form-group " data-field-id="upload_photo">
-      <label for="upload_photo">Applicant Photo / Selfie *</label>
-      <input type="file" id="upload_photo" name="upload_photo" required />
+      <label for="upload_photo">Applicant Photo / Selfie</label>
+      <input type="file" id="upload_photo" name="upload_photo" />
     </div>
         <div class="form-group " data-field-id="upload_signature">
-      <label for="upload_signature">Applicant Specimen Signature *</label>
-      <input type="file" id="upload_signature" name="upload_signature" required />
+      <label for="upload_signature">Applicant Specimen Signature</label>
+      <input type="file" id="upload_signature" name="upload_signature" />
     </div>
         <div class="form-group " data-field-id="mobile_otp">
       <label for="mobile_otp">Mobile OTP Code *</label>
-      <input type="text" id="mobile_otp" name="mobile_otp" value="123456" placeholder="123456" required />
+      <input type="text" id="mobile_otp" name="mobile_otp" value="" placeholder="123456" required />
     </div>
         <div class="form-group " data-field-id="email_otp">
       <label for="email_otp">Email OTP Code *</label>
-      <input type="text" id="email_otp" name="email_otp" value="654321" placeholder="654321" required />
+      <input type="text" id="email_otp" name="email_otp" value="" placeholder="654321" required />
     </div>
         <div class="form-group " data-field-id="esign_consent">
       <label for="esign_consent">I consent to digital Aadhaar eSign verification *</label>
-      <label><input type="checkbox" id="esign_consent" name="esign_consent" checked required> I consent to digital Aadhaar eSign verification</label>
+      <div class=""><div class="checkbox-group"><label><input type="checkbox" id="esign_consent" name="esign_consent" required> I consent to digital Aadhaar eSign verification</label></div></div>
     </div>
         <div class="form-group " data-field-id="terms_consent">
-      <label for="terms_consent">I agree to Terms & Conditions and Privacy Policy *</label>
-      <label><input type="checkbox" id="terms_consent" name="terms_consent" checked required> I agree to Terms & Conditions and Privacy Policy</label>
+      <label for="terms_consent">I agree to Terms &amp; Conditions and Privacy Policy *</label>
+      <div class=""><div class="checkbox-group"><label><input type="checkbox" id="terms_consent" name="terms_consent" required> I agree to Terms &amp; Conditions and Privacy Policy</label></div></div>
     </div>
         <div class="form-group " data-field-id="customer_id">
       <label for="customer_id">Customer ID</label>
@@ -300,11 +510,95 @@
     </div>
         <div class="form-group " data-field-id="agent_id">
       <label for="agent_id">Agent ID</label>
-      <input type="text" id="agent_id" name="agent_id" value="AGT-4402" placeholder="AGT-4402" />
+      <input type="text" id="agent_id" name="agent_id" value="" placeholder="AGT-4402" />
     </div>
         <div class="form-group " data-field-id="referral_code">
       <label for="referral_code">Referral Code</label>
-      <input type="text" id="referral_code" name="referral_code" value="REF-KYC2026" placeholder="REF-KYC2026" />
+      <input type="text" id="referral_code" name="referral_code" value="" placeholder="REF-KYC2026" />
+    </div>
+        <div class="form-group " data-field-id="dob_dmy_text">
+      <label for="dob_dmy_text">Date of Birth (DD/MM/YYYY) *</label>
+      <input type="text" id="dob_dmy_text" name="dob_dmy_text" value="" placeholder="18/07/1985" required pattern="^[0-9]{1,4}[/-][0-9]{1,4}[/-][0-9]{1,4}$" />
+    </div>
+        <div class="form-group " data-field-id="dob_mdy_text">
+      <label for="dob_mdy_text">Date of Birth (MM/DD/YYYY) *</label>
+      <input type="text" id="dob_mdy_text" name="dob_mdy_text" value="" placeholder="07/18/1985" required pattern="^[0-9]{1,4}[/-][0-9]{1,4}[/-][0-9]{1,4}$" />
+    </div>
+        <div class="form-group " data-field-id="dob_ymd_text">
+      <label for="dob_ymd_text">Date of Birth (YYYY-MM-DD) *</label>
+      <input type="text" id="dob_ymd_text" name="dob_ymd_text" value="" placeholder="1985-07-18" required pattern="^[0-9]{1,4}[/-][0-9]{1,4}[/-][0-9]{1,4}$" />
+    </div>
+        <div class="form-group " data-field-id="dob_dmy_selects">
+      <label for="dob_dmy_selects">Date of Birth (Day / Month / Year) *</label>
+      <kyc-date-triple name="dob_dmy_selects" required></kyc-date-triple>
+    </div>
+        <div class="form-group " data-field-id="dob_calendar">
+      <label for="dob_calendar">Date of Birth (Calendar) *</label>
+      <kyc-date-calendar name="dob_calendar" placeholder="Pick a date..." required></kyc-date-calendar>
+    </div>
+        <div class="form-group " data-field-id="nominee_dob_dmy_text">
+      <label for="nominee_dob_dmy_text">Nominee Date of Birth (DD/MM/YYYY) *</label>
+      <input type="text" id="nominee_dob_dmy_text" name="nominee_dob_dmy_text" value="" placeholder="12/04/1987" required pattern="^[0-9]{1,4}[/-][0-9]{1,4}[/-][0-9]{1,4}$" />
+    </div>
+        <div class="form-group " data-field-id="month_year">
+      <label for="month_year">Month / Year</label>
+      <input type="text" id="month_year" name="month_year" value="" placeholder="07/1985" pattern="^[0-9]{1,2}[/-][0-9]{4}$" />
+    </div>
+        <div class="form-group " data-field-id="nationality_custom">
+      <label for="nationality_custom">Nationality (Custom Dropdown) *</label>
+      <kyc-custom-select name="nationality_custom" options="[&quot;Indian&quot;,&quot;American&quot;,&quot;British&quot;,&quot;Canadian&quot;,&quot;Other&quot;]" placeholder="Select..." required></kyc-custom-select>
+    </div>
+        <div class="form-group " data-field-id="bank_name_custom">
+      <label for="bank_name_custom">Bank Name (Custom Dropdown) *</label>
+      <kyc-custom-select name="bank_name_custom" options="[&quot;State Bank of India&quot;,&quot;HDFC Bank&quot;,&quot;ICICI Bank&quot;,&quot;Axis Bank&quot;,&quot;Kotak Mahindra Bank&quot;]" placeholder="Select..." required></kyc-custom-select>
+    </div>
+        <div class="form-group " data-field-id="marital_status_segmented">
+      <label for="marital_status_segmented">Marital Status (Segmented) *</label>
+      <div class="segmented-control"><label><input type="radio" name="marital_status_segmented" value="Single" required> Single</label><label><input type="radio" name="marital_status_segmented" value="Married" required> Married</label><label><input type="radio" name="marital_status_segmented" value="Divorced" required> Divorced</label><label><input type="radio" name="marital_status_segmented" value="Widowed" required> Widowed</label></div>
+    </div>
+        <div class="form-group " data-field-id="income_range_searchable">
+      <label for="income_range_searchable">Income Range (Searchable) *</label>
+      <kyc-custom-select searchable name="income_range_searchable" options="[&quot;Below 1 Lakh&quot;,&quot;1-5 Lakhs&quot;,&quot;5-10 Lakhs&quot;,&quot;10-25 Lakhs&quot;,&quot;Above 25 Lakhs&quot;]" placeholder="Search income range..." required></kyc-custom-select>
+    </div>
+        <div class="form-group " data-field-id="gender_radio_inline">
+      <label for="gender_radio_inline">Gender (Inline Radio) *</label>
+      <div class="radio-inline"><div class="radio-group"><label><input type="radio" name="gender_radio_inline" value="Male" required> Male</label><label><input type="radio" name="gender_radio_inline" value="Female" required> Female</label><label><input type="radio" name="gender_radio_inline" value="Other" required> Other</label><label><input type="radio" name="gender_radio_inline" value="Prefer not to say" required> Prefer not to say</label></div></div>
+    </div>
+        <div class="form-group " data-field-id="gender_radio_cards">
+      <label for="gender_radio_cards">Gender (Card Selection) *</label>
+      <div class="radio-cards"><div class="radio-group"><label><input type="radio" name="gender_radio_cards" value="Male" required> Male</label><label><input type="radio" name="gender_radio_cards" value="Female" required> Female</label><label><input type="radio" name="gender_radio_cards" value="Other" required> Other</label><label><input type="radio" name="gender_radio_cards" value="Prefer not to say" required> Prefer not to say</label></div></div>
+    </div>
+        <div class="form-group " data-field-id="account_type_segmented">
+      <label for="account_type_segmented">Account Type (Segmented) *</label>
+      <div class="segmented-control"><label><input type="radio" name="account_type_segmented" value="Savings" required> Savings</label><label><input type="radio" name="account_type_segmented" value="Current" required> Current</label><label><input type="radio" name="account_type_segmented" value="Salary" required> Salary</label></div>
+    </div>
+        <div class="form-group " data-field-id="account_type_cards">
+      <label for="account_type_cards">Account Type (Cards) *</label>
+      <div class="radio-cards"><div class="radio-group"><label><input type="radio" name="account_type_cards" value="Savings" required> Savings</label><label><input type="radio" name="account_type_cards" value="Current" required> Current</label><label><input type="radio" name="account_type_cards" value="Salary" required> Salary</label></div></div>
+    </div>
+        <div class="form-group " data-field-id="esign_consent_toggle">
+      <label for="esign_consent_toggle">I consent to digital Aadhaar eSign verification *</label>
+      <kyc-toggle name="esign_consent_toggle" label="I consent to digital Aadhaar eSign verification" required></kyc-toggle>
+    </div>
+        <div class="form-group " data-field-id="terms_consent_card">
+      <label for="terms_consent_card">I agree to Terms &amp; Conditions and Privacy Policy *</label>
+      <div class="checkbox-cards"><div class="checkbox-group"><label><input type="checkbox" id="terms_consent_card" name="terms_consent_card" required> I agree to Terms &amp; Conditions and Privacy Policy</label></div></div>
+    </div>
+        <div class="form-group " data-field-id="same_as_current_toggle">
+      <label for="same_as_current_toggle">Permanent address same as current address</label>
+      <kyc-toggle name="same_as_current_toggle" label="Permanent address same as current address"></kyc-toggle>
+    </div>
+        <div class="form-group " data-field-id="upload_pan_dropzone">
+      <label for="upload_pan_dropzone">PAN Card Document (Dropzone)</label>
+      <kyc-dropzone name="upload_pan_dropzone" accept=".jpg,.png,.pdf" label="Drag & drop PAN Card Document (Dropzone) here or click to upload"></kyc-dropzone>
+    </div>
+        <div class="form-group " data-field-id="upload_aadhaar_multiple">
+      <label for="upload_aadhaar_multiple">Aadhaar Documents (Multiple)</label>
+      <input type="file" id="upload_aadhaar_multiple" name="upload_aadhaar_multiple" multiple accept=".jpg,.png,.pdf" />
+    </div>
+        <div class="form-group " data-field-id="upload_photo_camera">
+      <label for="upload_photo_camera">Applicant Photo (Camera)</label>
+      <label class="kyc-camera-btn"><input type="file" id="upload_photo_camera" name="upload_photo_camera" accept="image/*" capture="user" style="display:none;">📷 Applicant Photo (Camera)</label>
     </div></div>
       </fieldset>
       
@@ -324,11 +618,13 @@
       if (document.getElementById('esign_consent')) data.esign_consent = document.getElementById('esign_consent').checked;
       if (document.getElementById('terms_consent')) data.terms_consent = document.getElementById('terms_consent').checked;
       if (window.__KYC_DELAY_MS__) await new Promise(r => setTimeout(r, window.__KYC_DELAY_MS__));
-      const res = await fetch('/api/verify-submission', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({ scenarioId: 'baseline', variantId: 'baseline-v1', data }) });
+      const res = await fetch('http://localhost:3000/api/verify-submission', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({ scenarioId: 'baseline', variantId: 'baseline-v1', data }) });
       const result = await res.json();
       document.getElementById('resultBox').style.display = 'block';
       document.getElementById('scoreVal').textContent = result.report.score;
       document.getElementById('resultJson').textContent = JSON.stringify(result.report, null, 2);
+      const agentId = new URLSearchParams(window.location.search).get('agentId') || 'anonymous-agent';
+      await fetch('http://localhost:3000/api/benchmark/run', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({ agentId, agentName: agentId, scenarioId: 'baseline', variantId: 'baseline-v1', stack: 'php', data, report: result.report, metadata: { source: 'form-submission' } }) });
     });
   </script>
 </body>

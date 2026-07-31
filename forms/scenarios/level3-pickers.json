@@ -7,13 +7,22 @@
   "fields": [
     { "id": "full_name", "label": "Full Name", "type": "text", "required": true },
     { "id": "dob", "label": "Date of Birth", "type": "date", "required": true },
+    { "id": "dob_dmy_text", "label": "Date of Birth (DD/MM/YYYY)", "type": "date_dmy_text", "required": true, "placeholder": "DD/MM/YYYY" },
+    { "id": "dob_dmy_selects", "label": "Date of Birth (Day / Month / Year)", "type": "date_dmy_selects", "required": true },
     { "id": "nominee_dob", "label": "Nominee Date of Birth", "type": "date", "required": true },
+    { "id": "nominee_dob_dmy_text", "label": "Nominee Date of Birth (DD/MM/YYYY)", "type": "date_dmy_text", "required": true, "placeholder": "DD/MM/YYYY" },
+    { "id": "month_year", "label": "Month / Year", "type": "month_year", "required": false, "placeholder": "MM/YYYY" },
     { "id": "bank_name", "label": "Bank Name", "type": "combobox", "required": true, "options": ["State Bank of India", "HDFC Bank", "ICICI Bank", "Axis Bank", "Kotak Mahindra Bank"], "placeholder": "Search bank..." },
+    { "id": "bank_name_custom", "label": "Bank Name (Custom Dropdown)", "type": "select_custom", "required": true, "options": ["State Bank of India", "HDFC Bank", "ICICI Bank", "Axis Bank", "Kotak Mahindra Bank"] },
     { "id": "income_range", "label": "Income Range", "type": "select", "required": true, "options": ["Below 1 Lakh", "1-5 Lakhs", "5-10 Lakhs", "10-25 Lakhs", "Above 25 Lakhs"] },
+    { "id": "income_range_searchable", "label": "Income Range (Searchable)", "type": "searchable_select", "required": true, "options": ["Below 1 Lakh", "1-5 Lakhs", "5-10 Lakhs", "10-25 Lakhs", "Above 25 Lakhs"], "placeholder": "Search income range..." },
     { "id": "pan_number", "label": "PAN Number", "type": "masked_input", "required": true, "validation": { "pattern": "^[A-Z]{5}[0-9]{4}[A-Z]{1}$", "errorMessage": "Enter a valid PAN (e.g. ABCDE1234F)" } },
     { "id": "aadhaar_number", "label": "Aadhaar Number", "type": "masked_input", "required": true, "validation": { "pattern": "^[0-9]{12}$", "errorMessage": "Enter a 12-digit Aadhaar number" } },
     { "id": "upload_pan", "label": "PAN Card Document", "type": "file", "required": true, "accept": ".jpg,.png,.pdf" },
-    { "id": "upload_aadhaar_front", "label": "Aadhaar Front", "type": "file", "required": true, "accept": ".jpg,.png,.pdf" }
+    { "id": "upload_pan_dropzone", "label": "PAN Card Document (Dropzone)", "type": "file_dropzone", "required": false, "accept": ".jpg,.png,.pdf" },
+    { "id": "upload_aadhaar_front", "label": "Aadhaar Front", "type": "file", "required": true, "accept": ".jpg,.png,.pdf" },
+    { "id": "upload_aadhaar_multiple", "label": "Aadhaar Documents (Multiple)", "type": "file_multiple", "required": false, "accept": ".jpg,.png,.pdf" },
+    { "id": "upload_photo_camera", "label": "Applicant Photo (Camera)", "type": "file_camera", "required": false, "accept": ".jpg,.png" }
   ],
   "groundTruth": {
     "full_name": "Rajesh Kumar Sharma",

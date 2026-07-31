@@ -24,7 +24,11 @@ Each field in `forms/canonical-fields.json` follows this structure:
 }
 ```
 
-Supported types: `text`, `email`, `tel`, `date`, `number`, `textarea`, `select`, `radio`, `checkbox`, `combobox`, `searchable_select`, `masked_input`, `file`.
+Supported base types: `text`, `email`, `tel`, `date`, `number`, `textarea`, `select`, `radio`, `checkbox`, `combobox`, `masked_input`, `file`.
+
+Supported variation types (see `forms/field-variations.json`): `date_dmy_text`, `date_mdy_text`, `date_ymd_text`, `date_dmy_selects`, `month_year`, `date_calendar`, `select_custom`, `searchable_select`, `segmented`, `radio_inline`, `radio_cards`, `checkbox_inline`, `checkbox_cards`, `toggle`, `file_dropzone`, `file_multiple`, `file_camera`.
+
+Fields may declare a `profileKey` to map a variation field to a different canonical profile value (e.g. `"profileKey": "dob"` tells the benchmark to use the profile's `dob` value as the source of truth for this field).
 
 ---
 
@@ -119,7 +123,9 @@ Retrieve a variant via:
 
 `GET /api/distribution`
 
-Returns the market-share allocation of all 225 forms across the 6 stack servers.
+Returns the market-share allocation of all 330 served forms across the 6 stack servers
+(22 scenarios × 10 variants, with `v1` mirrored on every stack and `v2`–`v10` allocated
+by market share).
 
 ## Verification API
 

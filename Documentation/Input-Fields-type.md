@@ -18,6 +18,54 @@
 
 ---
 
+# Implemented Widget Variations
+
+The benchmark now systematically exercises the following concrete widget types, defined in `forms/field-variations.json` and rendered across all 6 tech stacks.
+
+## Date inputs
+
+| Field type | Widget | Expected format |
+|---|---|---|
+| `date` | Native HTML5 date picker | `YYYY-MM-DD` |
+| `date_dmy_text` | Plain text input | `DD/MM/YYYY` |
+| `date_mdy_text` | Plain text input | `MM/DD/YYYY` |
+| `date_ymd_text` | Plain text input | `YYYY-MM-DD` |
+| `date_dmy_selects` | Three cascading `<select>` controls | `DD/MM/YYYY` |
+| `month_year` | Plain text input | `MM/YYYY` |
+| `date_calendar` | Popup calendar grid | `DD/MM/YYYY` |
+
+Evaluation accepts common date separators (`/`, `-`, `.`) and optional leading zeros for the text-based formats.
+
+## Selectors
+
+| Field type | Widget |
+|---|---|
+| `select` / `combobox` | Native `<select>` dropdown |
+| `select_custom` | Fully interactive custom dropdown web component |
+| `searchable_select` | Filter-as-you-type custom dropdown |
+| `segmented` | Horizontal segmented button group |
+
+## Radio & checkbox controls
+
+| Field type | Widget |
+|---|---|
+| `radio` | Standard vertical radio group |
+| `radio_inline` | Inline radio group |
+| `radio_cards` | Card-style selectable options |
+| `checkbox` | Standard checkbox |
+| `checkbox_inline` | Inline checkbox group |
+| `checkbox_cards` | Card-style checkbox |
+| `toggle` | Toggle switch |
+
+## File uploads
+
+| Field type | Widget |
+|---|---|
+| `file` | Native file input |
+| `file_dropzone` | Drag-and-drop zone |
+| `file_multiple` | Multiple-file native input |
+| `file_camera` | Camera-capture input button |
+
 # Dynamic interactions
 
 These are often where agents struggle.

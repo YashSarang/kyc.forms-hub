@@ -1,6 +1,6 @@
 # KYC Form Hub — Complete Form Links
 
-> **Generated:** 2026-07-23T17:03:15.295Z
+> **Generated:** 2026-07-31T18:12:12.488Z
 > **Purpose:** This file lists every form URL in the KYC Form Hub for consumption by form-filling agents.
 > **Base URL:** `http://localhost:3000` (central orchestrator)
 
@@ -48,7 +48,14 @@ Each stack's `index.html` serves the full canonical KYC form in that stack's vis
 | **baseline** | L0 | [v1·A](http://localhost:3000/form/html/baseline/v1) | [v2·B](http://localhost:3000/form/html/baseline/v2) | [v3·A](http://localhost:3000/form/html/baseline/v3) | [v4·B](http://localhost:3000/form/html/baseline/v4) | [v5·A](http://localhost:3000/form/html/baseline/v5) | [v6·B](http://localhost:3000/form/html/baseline/v6) | [v7·A](http://localhost:3000/form/html/baseline/v7) | [v8·B](http://localhost:3000/form/html/baseline/v8) | [v9·A](http://localhost:3000/form/html/baseline/v9) | [v10·B](http://localhost:3000/form/html/baseline/v10) |
 | **level1-basic** | L1 | [v1·A](http://localhost:3000/form/html/level1-basic/v1) | [v2·B](http://localhost:3000/form/html/level1-basic/v2) | [v3·A](http://localhost:3000/form/html/level1-basic/v3) | [v4·B](http://localhost:3000/form/html/level1-basic/v4) | [v5·A](http://localhost:3000/form/html/level1-basic/v5) | [v6·B](http://localhost:3000/form/html/level1-basic/v6) | [v7·A](http://localhost:3000/form/html/level1-basic/v7) | [v8·B](http://localhost:3000/form/html/level1-basic/v8) | [v9·A](http://localhost:3000/form/html/level1-basic/v9) | [v10·B](http://localhost:3000/form/html/level1-basic/v10) |
 | **level2-selection** | L2 | [v1·A](http://localhost:3000/form/html/level2-selection/v1) | [v2·B](http://localhost:3000/form/html/level2-selection/v2) | [v3·A](http://localhost:3000/form/html/level2-selection/v3) | [v4·B](http://localhost:3000/form/html/level2-selection/v4) | [v5·A](http://localhost:3000/form/html/level2-selection/v5) | [v6·B](http://localhost:3000/form/html/level2-selection/v6) | [v7·A](http://localhost:3000/form/html/level2-selection/v7) | [v8·B](http://localhost:3000/form/html/level2-selection/v8) | [v9·A](http://localhost:3000/form/html/level2-selection/v9) | [v10·B](http://localhost:3000/form/html/level2-selection/v10) |
+| **level2a-dropdown-variations** | L2 | [v1·A](http://localhost:3000/form/html/level2a-dropdown-variations/v1) | [v2·B](http://localhost:3000/form/html/level2a-dropdown-variations/v2) | [v3·A](http://localhost:3000/form/html/level2a-dropdown-variations/v3) | [v4·B](http://localhost:3000/form/html/level2a-dropdown-variations/v4) | [v5·A](http://localhost:3000/form/html/level2a-dropdown-variations/v5) | [v6·B](http://localhost:3000/form/html/level2a-dropdown-variations/v6) | [v7·A](http://localhost:3000/form/html/level2a-dropdown-variations/v7) | [v8·B](http://localhost:3000/form/html/level2a-dropdown-variations/v8) | [v9·A](http://localhost:3000/form/html/level2a-dropdown-variations/v9) | [v10·B](http://localhost:3000/form/html/level2a-dropdown-variations/v10) |
+| **level2b-radio-variations** | L2 | [v1·A](http://localhost:3000/form/html/level2b-radio-variations/v1) | [v2·B](http://localhost:3000/form/html/level2b-radio-variations/v2) | [v3·A](http://localhost:3000/form/html/level2b-radio-variations/v3) | [v4·B](http://localhost:3000/form/html/level2b-radio-variations/v4) | [v5·A](http://localhost:3000/form/html/level2b-radio-variations/v5) | [v6·B](http://localhost:3000/form/html/level2b-radio-variations/v6) | [v7·A](http://localhost:3000/form/html/level2b-radio-variations/v7) | [v8·B](http://localhost:3000/form/html/level2b-radio-variations/v8) | [v9·A](http://localhost:3000/form/html/level2b-radio-variations/v9) | [v10·B](http://localhost:3000/form/html/level2b-radio-variations/v10) |
+| **level2c-checkbox-variations** | L2 | [v1·A](http://localhost:3000/form/html/level2c-checkbox-variations/v1) | [v2·B](http://localhost:3000/form/html/level2c-checkbox-variations/v2) | [v3·A](http://localhost:3000/form/html/level2c-checkbox-variations/v3) | [v4·B](http://localhost:3000/form/html/level2c-checkbox-variations/v4) | [v5·A](http://localhost:3000/form/html/level2c-checkbox-variations/v5) | [v6·B](http://localhost:3000/form/html/level2c-checkbox-variations/v6) | [v7·A](http://localhost:3000/form/html/level2c-checkbox-variations/v7) | [v8·B](http://localhost:3000/form/html/level2c-checkbox-variations/v8) | [v9·A](http://localhost:3000/form/html/level2c-checkbox-variations/v9) | [v10·B](http://localhost:3000/form/html/level2c-checkbox-variations/v10) |
 | **level3-pickers** | L3 | [v1·A](http://localhost:3000/form/html/level3-pickers/v1) | [v2·B](http://localhost:3000/form/html/level3-pickers/v2) | [v3·A](http://localhost:3000/form/html/level3-pickers/v3) | [v4·B](http://localhost:3000/form/html/level3-pickers/v4) | [v5·A](http://localhost:3000/form/html/level3-pickers/v5) | [v6·B](http://localhost:3000/form/html/level3-pickers/v6) | [v7·A](http://localhost:3000/form/html/level3-pickers/v7) | [v8·B](http://localhost:3000/form/html/level3-pickers/v8) | [v9·A](http://localhost:3000/form/html/level3-pickers/v9) | [v10·B](http://localhost:3000/form/html/level3-pickers/v10) |
+| **level3a-date-format-variations** | L3 | [v1·A](http://localhost:3000/form/html/level3a-date-format-variations/v1) | [v2·B](http://localhost:3000/form/html/level3a-date-format-variations/v2) | [v3·A](http://localhost:3000/form/html/level3a-date-format-variations/v3) | [v4·B](http://localhost:3000/form/html/level3a-date-format-variations/v4) | [v5·A](http://localhost:3000/form/html/level3a-date-format-variations/v5) | [v6·B](http://localhost:3000/form/html/level3a-date-format-variations/v6) | [v7·A](http://localhost:3000/form/html/level3a-date-format-variations/v7) | [v8·B](http://localhost:3000/form/html/level3a-date-format-variations/v8) | [v9·A](http://localhost:3000/form/html/level3a-date-format-variations/v9) | [v10·B](http://localhost:3000/form/html/level3a-date-format-variations/v10) |
+| **level3b-date-picker-variations** | L3 | [v1·A](http://localhost:3000/form/html/level3b-date-picker-variations/v1) | [v2·B](http://localhost:3000/form/html/level3b-date-picker-variations/v2) | [v3·A](http://localhost:3000/form/html/level3b-date-picker-variations/v3) | [v4·B](http://localhost:3000/form/html/level3b-date-picker-variations/v4) | [v5·A](http://localhost:3000/form/html/level3b-date-picker-variations/v5) | [v6·B](http://localhost:3000/form/html/level3b-date-picker-variations/v6) | [v7·A](http://localhost:3000/form/html/level3b-date-picker-variations/v7) | [v8·B](http://localhost:3000/form/html/level3b-date-picker-variations/v8) | [v9·A](http://localhost:3000/form/html/level3b-date-picker-variations/v9) | [v10·B](http://localhost:3000/form/html/level3b-date-picker-variations/v10) |
+| **level3c-upload-variations** | L3 | [v1·A](http://localhost:3000/form/html/level3c-upload-variations/v1) | [v2·B](http://localhost:3000/form/html/level3c-upload-variations/v2) | [v3·A](http://localhost:3000/form/html/level3c-upload-variations/v3) | [v4·B](http://localhost:3000/form/html/level3c-upload-variations/v4) | [v5·A](http://localhost:3000/form/html/level3c-upload-variations/v5) | [v6·B](http://localhost:3000/form/html/level3c-upload-variations/v6) | [v7·A](http://localhost:3000/form/html/level3c-upload-variations/v7) | [v8·B](http://localhost:3000/form/html/level3c-upload-variations/v8) | [v9·A](http://localhost:3000/form/html/level3c-upload-variations/v9) | [v10·B](http://localhost:3000/form/html/level3c-upload-variations/v10) |
+| **level3d-combined-input-variations** | L3 | [v1·A](http://localhost:3000/form/html/level3d-combined-input-variations/v1) | [v2·B](http://localhost:3000/form/html/level3d-combined-input-variations/v2) | [v3·A](http://localhost:3000/form/html/level3d-combined-input-variations/v3) | [v4·B](http://localhost:3000/form/html/level3d-combined-input-variations/v4) | [v5·A](http://localhost:3000/form/html/level3d-combined-input-variations/v5) | [v6·B](http://localhost:3000/form/html/level3d-combined-input-variations/v6) | [v7·A](http://localhost:3000/form/html/level3d-combined-input-variations/v7) | [v8·B](http://localhost:3000/form/html/level3d-combined-input-variations/v8) | [v9·A](http://localhost:3000/form/html/level3d-combined-input-variations/v9) | [v10·B](http://localhost:3000/form/html/level3d-combined-input-variations/v10) |
 | **level4-dynamic** | L4 | [v1·A](http://localhost:3000/form/html/level4-dynamic/v1) | [v2·B](http://localhost:3000/form/html/level4-dynamic/v2) | [v3·A](http://localhost:3000/form/html/level4-dynamic/v3) | [v4·B](http://localhost:3000/form/html/level4-dynamic/v4) | [v5·A](http://localhost:3000/form/html/level4-dynamic/v5) | [v6·B](http://localhost:3000/form/html/level4-dynamic/v6) | [v7·A](http://localhost:3000/form/html/level4-dynamic/v7) | [v8·B](http://localhost:3000/form/html/level4-dynamic/v8) | [v9·A](http://localhost:3000/form/html/level4-dynamic/v9) | [v10·B](http://localhost:3000/form/html/level4-dynamic/v10) |
 | **level5-complex** | L5 | [v1·A](http://localhost:3000/form/html/level5-complex/v1) | [v2·B](http://localhost:3000/form/html/level5-complex/v2) | [v3·A](http://localhost:3000/form/html/level5-complex/v3) | [v4·B](http://localhost:3000/form/html/level5-complex/v4) | [v5·A](http://localhost:3000/form/html/level5-complex/v5) | [v6·B](http://localhost:3000/form/html/level5-complex/v6) | [v7·A](http://localhost:3000/form/html/level5-complex/v7) | [v8·B](http://localhost:3000/form/html/level5-complex/v8) | [v9·A](http://localhost:3000/form/html/level5-complex/v9) | [v10·B](http://localhost:3000/form/html/level5-complex/v10) |
 | **level6-frameworks** | L6 | [v1·A](http://localhost:3000/form/html/level6-frameworks/v1) | [v2·B](http://localhost:3000/form/html/level6-frameworks/v2) | [v3·A](http://localhost:3000/form/html/level6-frameworks/v3) | [v4·B](http://localhost:3000/form/html/level6-frameworks/v4) | [v5·A](http://localhost:3000/form/html/level6-frameworks/v5) | [v6·B](http://localhost:3000/form/html/level6-frameworks/v6) | [v7·A](http://localhost:3000/form/html/level6-frameworks/v7) | [v8·B](http://localhost:3000/form/html/level6-frameworks/v8) | [v9·A](http://localhost:3000/form/html/level6-frameworks/v9) | [v10·B](http://localhost:3000/form/html/level6-frameworks/v10) |
@@ -70,7 +77,14 @@ Each stack's `index.html` serves the full canonical KYC form in that stack's vis
 | **baseline** | L0 | [v1·A](http://localhost:3000/form/react/baseline/v1) | [v2·B](http://localhost:3000/form/react/baseline/v2) | [v3·A](http://localhost:3000/form/react/baseline/v3) | [v4·B](http://localhost:3000/form/react/baseline/v4) | [v5·A](http://localhost:3000/form/react/baseline/v5) | [v6·B](http://localhost:3000/form/react/baseline/v6) | [v7·A](http://localhost:3000/form/react/baseline/v7) | [v8·B](http://localhost:3000/form/react/baseline/v8) | [v9·A](http://localhost:3000/form/react/baseline/v9) | [v10·B](http://localhost:3000/form/react/baseline/v10) |
 | **level1-basic** | L1 | [v1·A](http://localhost:3000/form/react/level1-basic/v1) | [v2·B](http://localhost:3000/form/react/level1-basic/v2) | [v3·A](http://localhost:3000/form/react/level1-basic/v3) | [v4·B](http://localhost:3000/form/react/level1-basic/v4) | [v5·A](http://localhost:3000/form/react/level1-basic/v5) | [v6·B](http://localhost:3000/form/react/level1-basic/v6) | [v7·A](http://localhost:3000/form/react/level1-basic/v7) | [v8·B](http://localhost:3000/form/react/level1-basic/v8) | [v9·A](http://localhost:3000/form/react/level1-basic/v9) | [v10·B](http://localhost:3000/form/react/level1-basic/v10) |
 | **level2-selection** | L2 | [v1·A](http://localhost:3000/form/react/level2-selection/v1) | [v2·B](http://localhost:3000/form/react/level2-selection/v2) | [v3·A](http://localhost:3000/form/react/level2-selection/v3) | [v4·B](http://localhost:3000/form/react/level2-selection/v4) | [v5·A](http://localhost:3000/form/react/level2-selection/v5) | [v6·B](http://localhost:3000/form/react/level2-selection/v6) | [v7·A](http://localhost:3000/form/react/level2-selection/v7) | [v8·B](http://localhost:3000/form/react/level2-selection/v8) | [v9·A](http://localhost:3000/form/react/level2-selection/v9) | [v10·B](http://localhost:3000/form/react/level2-selection/v10) |
+| **level2a-dropdown-variations** | L2 | [v1·A](http://localhost:3000/form/react/level2a-dropdown-variations/v1) | [v2·B](http://localhost:3000/form/react/level2a-dropdown-variations/v2) | [v3·A](http://localhost:3000/form/react/level2a-dropdown-variations/v3) | [v4·B](http://localhost:3000/form/react/level2a-dropdown-variations/v4) | [v5·A](http://localhost:3000/form/react/level2a-dropdown-variations/v5) | [v6·B](http://localhost:3000/form/react/level2a-dropdown-variations/v6) | [v7·A](http://localhost:3000/form/react/level2a-dropdown-variations/v7) | [v8·B](http://localhost:3000/form/react/level2a-dropdown-variations/v8) | [v9·A](http://localhost:3000/form/react/level2a-dropdown-variations/v9) | [v10·B](http://localhost:3000/form/react/level2a-dropdown-variations/v10) |
+| **level2b-radio-variations** | L2 | [v1·A](http://localhost:3000/form/react/level2b-radio-variations/v1) | [v2·B](http://localhost:3000/form/react/level2b-radio-variations/v2) | [v3·A](http://localhost:3000/form/react/level2b-radio-variations/v3) | [v4·B](http://localhost:3000/form/react/level2b-radio-variations/v4) | [v5·A](http://localhost:3000/form/react/level2b-radio-variations/v5) | [v6·B](http://localhost:3000/form/react/level2b-radio-variations/v6) | [v7·A](http://localhost:3000/form/react/level2b-radio-variations/v7) | [v8·B](http://localhost:3000/form/react/level2b-radio-variations/v8) | [v9·A](http://localhost:3000/form/react/level2b-radio-variations/v9) | [v10·B](http://localhost:3000/form/react/level2b-radio-variations/v10) |
+| **level2c-checkbox-variations** | L2 | [v1·A](http://localhost:3000/form/react/level2c-checkbox-variations/v1) | [v2·B](http://localhost:3000/form/react/level2c-checkbox-variations/v2) | [v3·A](http://localhost:3000/form/react/level2c-checkbox-variations/v3) | [v4·B](http://localhost:3000/form/react/level2c-checkbox-variations/v4) | [v5·A](http://localhost:3000/form/react/level2c-checkbox-variations/v5) | [v6·B](http://localhost:3000/form/react/level2c-checkbox-variations/v6) | [v7·A](http://localhost:3000/form/react/level2c-checkbox-variations/v7) | [v8·B](http://localhost:3000/form/react/level2c-checkbox-variations/v8) | [v9·A](http://localhost:3000/form/react/level2c-checkbox-variations/v9) | [v10·B](http://localhost:3000/form/react/level2c-checkbox-variations/v10) |
 | **level3-pickers** | L3 | [v1·A](http://localhost:3000/form/react/level3-pickers/v1) | [v2·B](http://localhost:3000/form/react/level3-pickers/v2) | [v3·A](http://localhost:3000/form/react/level3-pickers/v3) | [v4·B](http://localhost:3000/form/react/level3-pickers/v4) | [v5·A](http://localhost:3000/form/react/level3-pickers/v5) | [v6·B](http://localhost:3000/form/react/level3-pickers/v6) | [v7·A](http://localhost:3000/form/react/level3-pickers/v7) | [v8·B](http://localhost:3000/form/react/level3-pickers/v8) | [v9·A](http://localhost:3000/form/react/level3-pickers/v9) | [v10·B](http://localhost:3000/form/react/level3-pickers/v10) |
+| **level3a-date-format-variations** | L3 | [v1·A](http://localhost:3000/form/react/level3a-date-format-variations/v1) | [v2·B](http://localhost:3000/form/react/level3a-date-format-variations/v2) | [v3·A](http://localhost:3000/form/react/level3a-date-format-variations/v3) | [v4·B](http://localhost:3000/form/react/level3a-date-format-variations/v4) | [v5·A](http://localhost:3000/form/react/level3a-date-format-variations/v5) | [v6·B](http://localhost:3000/form/react/level3a-date-format-variations/v6) | [v7·A](http://localhost:3000/form/react/level3a-date-format-variations/v7) | [v8·B](http://localhost:3000/form/react/level3a-date-format-variations/v8) | [v9·A](http://localhost:3000/form/react/level3a-date-format-variations/v9) | [v10·B](http://localhost:3000/form/react/level3a-date-format-variations/v10) |
+| **level3b-date-picker-variations** | L3 | [v1·A](http://localhost:3000/form/react/level3b-date-picker-variations/v1) | [v2·B](http://localhost:3000/form/react/level3b-date-picker-variations/v2) | [v3·A](http://localhost:3000/form/react/level3b-date-picker-variations/v3) | [v4·B](http://localhost:3000/form/react/level3b-date-picker-variations/v4) | [v5·A](http://localhost:3000/form/react/level3b-date-picker-variations/v5) | [v6·B](http://localhost:3000/form/react/level3b-date-picker-variations/v6) | [v7·A](http://localhost:3000/form/react/level3b-date-picker-variations/v7) | [v8·B](http://localhost:3000/form/react/level3b-date-picker-variations/v8) | [v9·A](http://localhost:3000/form/react/level3b-date-picker-variations/v9) | [v10·B](http://localhost:3000/form/react/level3b-date-picker-variations/v10) |
+| **level3c-upload-variations** | L3 | [v1·A](http://localhost:3000/form/react/level3c-upload-variations/v1) | [v2·B](http://localhost:3000/form/react/level3c-upload-variations/v2) | [v3·A](http://localhost:3000/form/react/level3c-upload-variations/v3) | [v4·B](http://localhost:3000/form/react/level3c-upload-variations/v4) | [v5·A](http://localhost:3000/form/react/level3c-upload-variations/v5) | [v6·B](http://localhost:3000/form/react/level3c-upload-variations/v6) | [v7·A](http://localhost:3000/form/react/level3c-upload-variations/v7) | [v8·B](http://localhost:3000/form/react/level3c-upload-variations/v8) | [v9·A](http://localhost:3000/form/react/level3c-upload-variations/v9) | [v10·B](http://localhost:3000/form/react/level3c-upload-variations/v10) |
+| **level3d-combined-input-variations** | L3 | [v1·A](http://localhost:3000/form/react/level3d-combined-input-variations/v1) | [v2·B](http://localhost:3000/form/react/level3d-combined-input-variations/v2) | [v3·A](http://localhost:3000/form/react/level3d-combined-input-variations/v3) | [v4·B](http://localhost:3000/form/react/level3d-combined-input-variations/v4) | [v5·A](http://localhost:3000/form/react/level3d-combined-input-variations/v5) | [v6·B](http://localhost:3000/form/react/level3d-combined-input-variations/v6) | [v7·A](http://localhost:3000/form/react/level3d-combined-input-variations/v7) | [v8·B](http://localhost:3000/form/react/level3d-combined-input-variations/v8) | [v9·A](http://localhost:3000/form/react/level3d-combined-input-variations/v9) | [v10·B](http://localhost:3000/form/react/level3d-combined-input-variations/v10) |
 | **level4-dynamic** | L4 | [v1·A](http://localhost:3000/form/react/level4-dynamic/v1) | [v2·B](http://localhost:3000/form/react/level4-dynamic/v2) | [v3·A](http://localhost:3000/form/react/level4-dynamic/v3) | [v4·B](http://localhost:3000/form/react/level4-dynamic/v4) | [v5·A](http://localhost:3000/form/react/level4-dynamic/v5) | [v6·B](http://localhost:3000/form/react/level4-dynamic/v6) | [v7·A](http://localhost:3000/form/react/level4-dynamic/v7) | [v8·B](http://localhost:3000/form/react/level4-dynamic/v8) | [v9·A](http://localhost:3000/form/react/level4-dynamic/v9) | [v10·B](http://localhost:3000/form/react/level4-dynamic/v10) |
 | **level5-complex** | L5 | [v1·A](http://localhost:3000/form/react/level5-complex/v1) | [v2·B](http://localhost:3000/form/react/level5-complex/v2) | [v3·A](http://localhost:3000/form/react/level5-complex/v3) | [v4·B](http://localhost:3000/form/react/level5-complex/v4) | [v5·A](http://localhost:3000/form/react/level5-complex/v5) | [v6·B](http://localhost:3000/form/react/level5-complex/v6) | [v7·A](http://localhost:3000/form/react/level5-complex/v7) | [v8·B](http://localhost:3000/form/react/level5-complex/v8) | [v9·A](http://localhost:3000/form/react/level5-complex/v9) | [v10·B](http://localhost:3000/form/react/level5-complex/v10) |
 | **level6-frameworks** | L6 | [v1·A](http://localhost:3000/form/react/level6-frameworks/v1) | [v2·B](http://localhost:3000/form/react/level6-frameworks/v2) | [v3·A](http://localhost:3000/form/react/level6-frameworks/v3) | [v4·B](http://localhost:3000/form/react/level6-frameworks/v4) | [v5·A](http://localhost:3000/form/react/level6-frameworks/v5) | [v6·B](http://localhost:3000/form/react/level6-frameworks/v6) | [v7·A](http://localhost:3000/form/react/level6-frameworks/v7) | [v8·B](http://localhost:3000/form/react/level6-frameworks/v8) | [v9·A](http://localhost:3000/form/react/level6-frameworks/v9) | [v10·B](http://localhost:3000/form/react/level6-frameworks/v10) |
@@ -92,7 +106,14 @@ Each stack's `index.html` serves the full canonical KYC form in that stack's vis
 | **baseline** | L0 | [v1·A](http://localhost:3000/form/angular/baseline/v1) | [v2·B](http://localhost:3000/form/angular/baseline/v2) | [v3·A](http://localhost:3000/form/angular/baseline/v3) | [v4·B](http://localhost:3000/form/angular/baseline/v4) | [v5·A](http://localhost:3000/form/angular/baseline/v5) | [v6·B](http://localhost:3000/form/angular/baseline/v6) | [v7·A](http://localhost:3000/form/angular/baseline/v7) | [v8·B](http://localhost:3000/form/angular/baseline/v8) | [v9·A](http://localhost:3000/form/angular/baseline/v9) | [v10·B](http://localhost:3000/form/angular/baseline/v10) |
 | **level1-basic** | L1 | [v1·A](http://localhost:3000/form/angular/level1-basic/v1) | [v2·B](http://localhost:3000/form/angular/level1-basic/v2) | [v3·A](http://localhost:3000/form/angular/level1-basic/v3) | [v4·B](http://localhost:3000/form/angular/level1-basic/v4) | [v5·A](http://localhost:3000/form/angular/level1-basic/v5) | [v6·B](http://localhost:3000/form/angular/level1-basic/v6) | [v7·A](http://localhost:3000/form/angular/level1-basic/v7) | [v8·B](http://localhost:3000/form/angular/level1-basic/v8) | [v9·A](http://localhost:3000/form/angular/level1-basic/v9) | [v10·B](http://localhost:3000/form/angular/level1-basic/v10) |
 | **level2-selection** | L2 | [v1·A](http://localhost:3000/form/angular/level2-selection/v1) | [v2·B](http://localhost:3000/form/angular/level2-selection/v2) | [v3·A](http://localhost:3000/form/angular/level2-selection/v3) | [v4·B](http://localhost:3000/form/angular/level2-selection/v4) | [v5·A](http://localhost:3000/form/angular/level2-selection/v5) | [v6·B](http://localhost:3000/form/angular/level2-selection/v6) | [v7·A](http://localhost:3000/form/angular/level2-selection/v7) | [v8·B](http://localhost:3000/form/angular/level2-selection/v8) | [v9·A](http://localhost:3000/form/angular/level2-selection/v9) | [v10·B](http://localhost:3000/form/angular/level2-selection/v10) |
+| **level2a-dropdown-variations** | L2 | [v1·A](http://localhost:3000/form/angular/level2a-dropdown-variations/v1) | [v2·B](http://localhost:3000/form/angular/level2a-dropdown-variations/v2) | [v3·A](http://localhost:3000/form/angular/level2a-dropdown-variations/v3) | [v4·B](http://localhost:3000/form/angular/level2a-dropdown-variations/v4) | [v5·A](http://localhost:3000/form/angular/level2a-dropdown-variations/v5) | [v6·B](http://localhost:3000/form/angular/level2a-dropdown-variations/v6) | [v7·A](http://localhost:3000/form/angular/level2a-dropdown-variations/v7) | [v8·B](http://localhost:3000/form/angular/level2a-dropdown-variations/v8) | [v9·A](http://localhost:3000/form/angular/level2a-dropdown-variations/v9) | [v10·B](http://localhost:3000/form/angular/level2a-dropdown-variations/v10) |
+| **level2b-radio-variations** | L2 | [v1·A](http://localhost:3000/form/angular/level2b-radio-variations/v1) | [v2·B](http://localhost:3000/form/angular/level2b-radio-variations/v2) | [v3·A](http://localhost:3000/form/angular/level2b-radio-variations/v3) | [v4·B](http://localhost:3000/form/angular/level2b-radio-variations/v4) | [v5·A](http://localhost:3000/form/angular/level2b-radio-variations/v5) | [v6·B](http://localhost:3000/form/angular/level2b-radio-variations/v6) | [v7·A](http://localhost:3000/form/angular/level2b-radio-variations/v7) | [v8·B](http://localhost:3000/form/angular/level2b-radio-variations/v8) | [v9·A](http://localhost:3000/form/angular/level2b-radio-variations/v9) | [v10·B](http://localhost:3000/form/angular/level2b-radio-variations/v10) |
+| **level2c-checkbox-variations** | L2 | [v1·A](http://localhost:3000/form/angular/level2c-checkbox-variations/v1) | [v2·B](http://localhost:3000/form/angular/level2c-checkbox-variations/v2) | [v3·A](http://localhost:3000/form/angular/level2c-checkbox-variations/v3) | [v4·B](http://localhost:3000/form/angular/level2c-checkbox-variations/v4) | [v5·A](http://localhost:3000/form/angular/level2c-checkbox-variations/v5) | [v6·B](http://localhost:3000/form/angular/level2c-checkbox-variations/v6) | [v7·A](http://localhost:3000/form/angular/level2c-checkbox-variations/v7) | [v8·B](http://localhost:3000/form/angular/level2c-checkbox-variations/v8) | [v9·A](http://localhost:3000/form/angular/level2c-checkbox-variations/v9) | [v10·B](http://localhost:3000/form/angular/level2c-checkbox-variations/v10) |
 | **level3-pickers** | L3 | [v1·A](http://localhost:3000/form/angular/level3-pickers/v1) | [v2·B](http://localhost:3000/form/angular/level3-pickers/v2) | [v3·A](http://localhost:3000/form/angular/level3-pickers/v3) | [v4·B](http://localhost:3000/form/angular/level3-pickers/v4) | [v5·A](http://localhost:3000/form/angular/level3-pickers/v5) | [v6·B](http://localhost:3000/form/angular/level3-pickers/v6) | [v7·A](http://localhost:3000/form/angular/level3-pickers/v7) | [v8·B](http://localhost:3000/form/angular/level3-pickers/v8) | [v9·A](http://localhost:3000/form/angular/level3-pickers/v9) | [v10·B](http://localhost:3000/form/angular/level3-pickers/v10) |
+| **level3a-date-format-variations** | L3 | [v1·A](http://localhost:3000/form/angular/level3a-date-format-variations/v1) | [v2·B](http://localhost:3000/form/angular/level3a-date-format-variations/v2) | [v3·A](http://localhost:3000/form/angular/level3a-date-format-variations/v3) | [v4·B](http://localhost:3000/form/angular/level3a-date-format-variations/v4) | [v5·A](http://localhost:3000/form/angular/level3a-date-format-variations/v5) | [v6·B](http://localhost:3000/form/angular/level3a-date-format-variations/v6) | [v7·A](http://localhost:3000/form/angular/level3a-date-format-variations/v7) | [v8·B](http://localhost:3000/form/angular/level3a-date-format-variations/v8) | [v9·A](http://localhost:3000/form/angular/level3a-date-format-variations/v9) | [v10·B](http://localhost:3000/form/angular/level3a-date-format-variations/v10) |
+| **level3b-date-picker-variations** | L3 | [v1·A](http://localhost:3000/form/angular/level3b-date-picker-variations/v1) | [v2·B](http://localhost:3000/form/angular/level3b-date-picker-variations/v2) | [v3·A](http://localhost:3000/form/angular/level3b-date-picker-variations/v3) | [v4·B](http://localhost:3000/form/angular/level3b-date-picker-variations/v4) | [v5·A](http://localhost:3000/form/angular/level3b-date-picker-variations/v5) | [v6·B](http://localhost:3000/form/angular/level3b-date-picker-variations/v6) | [v7·A](http://localhost:3000/form/angular/level3b-date-picker-variations/v7) | [v8·B](http://localhost:3000/form/angular/level3b-date-picker-variations/v8) | [v9·A](http://localhost:3000/form/angular/level3b-date-picker-variations/v9) | [v10·B](http://localhost:3000/form/angular/level3b-date-picker-variations/v10) |
+| **level3c-upload-variations** | L3 | [v1·A](http://localhost:3000/form/angular/level3c-upload-variations/v1) | [v2·B](http://localhost:3000/form/angular/level3c-upload-variations/v2) | [v3·A](http://localhost:3000/form/angular/level3c-upload-variations/v3) | [v4·B](http://localhost:3000/form/angular/level3c-upload-variations/v4) | [v5·A](http://localhost:3000/form/angular/level3c-upload-variations/v5) | [v6·B](http://localhost:3000/form/angular/level3c-upload-variations/v6) | [v7·A](http://localhost:3000/form/angular/level3c-upload-variations/v7) | [v8·B](http://localhost:3000/form/angular/level3c-upload-variations/v8) | [v9·A](http://localhost:3000/form/angular/level3c-upload-variations/v9) | [v10·B](http://localhost:3000/form/angular/level3c-upload-variations/v10) |
+| **level3d-combined-input-variations** | L3 | [v1·A](http://localhost:3000/form/angular/level3d-combined-input-variations/v1) | [v2·B](http://localhost:3000/form/angular/level3d-combined-input-variations/v2) | [v3·A](http://localhost:3000/form/angular/level3d-combined-input-variations/v3) | [v4·B](http://localhost:3000/form/angular/level3d-combined-input-variations/v4) | [v5·A](http://localhost:3000/form/angular/level3d-combined-input-variations/v5) | [v6·B](http://localhost:3000/form/angular/level3d-combined-input-variations/v6) | [v7·A](http://localhost:3000/form/angular/level3d-combined-input-variations/v7) | [v8·B](http://localhost:3000/form/angular/level3d-combined-input-variations/v8) | [v9·A](http://localhost:3000/form/angular/level3d-combined-input-variations/v9) | [v10·B](http://localhost:3000/form/angular/level3d-combined-input-variations/v10) |
 | **level4-dynamic** | L4 | [v1·A](http://localhost:3000/form/angular/level4-dynamic/v1) | [v2·B](http://localhost:3000/form/angular/level4-dynamic/v2) | [v3·A](http://localhost:3000/form/angular/level4-dynamic/v3) | [v4·B](http://localhost:3000/form/angular/level4-dynamic/v4) | [v5·A](http://localhost:3000/form/angular/level4-dynamic/v5) | [v6·B](http://localhost:3000/form/angular/level4-dynamic/v6) | [v7·A](http://localhost:3000/form/angular/level4-dynamic/v7) | [v8·B](http://localhost:3000/form/angular/level4-dynamic/v8) | [v9·A](http://localhost:3000/form/angular/level4-dynamic/v9) | [v10·B](http://localhost:3000/form/angular/level4-dynamic/v10) |
 | **level5-complex** | L5 | [v1·A](http://localhost:3000/form/angular/level5-complex/v1) | [v2·B](http://localhost:3000/form/angular/level5-complex/v2) | [v3·A](http://localhost:3000/form/angular/level5-complex/v3) | [v4·B](http://localhost:3000/form/angular/level5-complex/v4) | [v5·A](http://localhost:3000/form/angular/level5-complex/v5) | [v6·B](http://localhost:3000/form/angular/level5-complex/v6) | [v7·A](http://localhost:3000/form/angular/level5-complex/v7) | [v8·B](http://localhost:3000/form/angular/level5-complex/v8) | [v9·A](http://localhost:3000/form/angular/level5-complex/v9) | [v10·B](http://localhost:3000/form/angular/level5-complex/v10) |
 | **level6-frameworks** | L6 | [v1·A](http://localhost:3000/form/angular/level6-frameworks/v1) | [v2·B](http://localhost:3000/form/angular/level6-frameworks/v2) | [v3·A](http://localhost:3000/form/angular/level6-frameworks/v3) | [v4·B](http://localhost:3000/form/angular/level6-frameworks/v4) | [v5·A](http://localhost:3000/form/angular/level6-frameworks/v5) | [v6·B](http://localhost:3000/form/angular/level6-frameworks/v6) | [v7·A](http://localhost:3000/form/angular/level6-frameworks/v7) | [v8·B](http://localhost:3000/form/angular/level6-frameworks/v8) | [v9·A](http://localhost:3000/form/angular/level6-frameworks/v9) | [v10·B](http://localhost:3000/form/angular/level6-frameworks/v10) |
@@ -114,7 +135,14 @@ Each stack's `index.html` serves the full canonical KYC form in that stack's vis
 | **baseline** | L0 | [v1·A](http://localhost:3000/form/vue/baseline/v1) | [v2·B](http://localhost:3000/form/vue/baseline/v2) | [v3·A](http://localhost:3000/form/vue/baseline/v3) | [v4·B](http://localhost:3000/form/vue/baseline/v4) | [v5·A](http://localhost:3000/form/vue/baseline/v5) | [v6·B](http://localhost:3000/form/vue/baseline/v6) | [v7·A](http://localhost:3000/form/vue/baseline/v7) | [v8·B](http://localhost:3000/form/vue/baseline/v8) | [v9·A](http://localhost:3000/form/vue/baseline/v9) | [v10·B](http://localhost:3000/form/vue/baseline/v10) |
 | **level1-basic** | L1 | [v1·A](http://localhost:3000/form/vue/level1-basic/v1) | [v2·B](http://localhost:3000/form/vue/level1-basic/v2) | [v3·A](http://localhost:3000/form/vue/level1-basic/v3) | [v4·B](http://localhost:3000/form/vue/level1-basic/v4) | [v5·A](http://localhost:3000/form/vue/level1-basic/v5) | [v6·B](http://localhost:3000/form/vue/level1-basic/v6) | [v7·A](http://localhost:3000/form/vue/level1-basic/v7) | [v8·B](http://localhost:3000/form/vue/level1-basic/v8) | [v9·A](http://localhost:3000/form/vue/level1-basic/v9) | [v10·B](http://localhost:3000/form/vue/level1-basic/v10) |
 | **level2-selection** | L2 | [v1·A](http://localhost:3000/form/vue/level2-selection/v1) | [v2·B](http://localhost:3000/form/vue/level2-selection/v2) | [v3·A](http://localhost:3000/form/vue/level2-selection/v3) | [v4·B](http://localhost:3000/form/vue/level2-selection/v4) | [v5·A](http://localhost:3000/form/vue/level2-selection/v5) | [v6·B](http://localhost:3000/form/vue/level2-selection/v6) | [v7·A](http://localhost:3000/form/vue/level2-selection/v7) | [v8·B](http://localhost:3000/form/vue/level2-selection/v8) | [v9·A](http://localhost:3000/form/vue/level2-selection/v9) | [v10·B](http://localhost:3000/form/vue/level2-selection/v10) |
+| **level2a-dropdown-variations** | L2 | [v1·A](http://localhost:3000/form/vue/level2a-dropdown-variations/v1) | [v2·B](http://localhost:3000/form/vue/level2a-dropdown-variations/v2) | [v3·A](http://localhost:3000/form/vue/level2a-dropdown-variations/v3) | [v4·B](http://localhost:3000/form/vue/level2a-dropdown-variations/v4) | [v5·A](http://localhost:3000/form/vue/level2a-dropdown-variations/v5) | [v6·B](http://localhost:3000/form/vue/level2a-dropdown-variations/v6) | [v7·A](http://localhost:3000/form/vue/level2a-dropdown-variations/v7) | [v8·B](http://localhost:3000/form/vue/level2a-dropdown-variations/v8) | [v9·A](http://localhost:3000/form/vue/level2a-dropdown-variations/v9) | [v10·B](http://localhost:3000/form/vue/level2a-dropdown-variations/v10) |
+| **level2b-radio-variations** | L2 | [v1·A](http://localhost:3000/form/vue/level2b-radio-variations/v1) | [v2·B](http://localhost:3000/form/vue/level2b-radio-variations/v2) | [v3·A](http://localhost:3000/form/vue/level2b-radio-variations/v3) | [v4·B](http://localhost:3000/form/vue/level2b-radio-variations/v4) | [v5·A](http://localhost:3000/form/vue/level2b-radio-variations/v5) | [v6·B](http://localhost:3000/form/vue/level2b-radio-variations/v6) | [v7·A](http://localhost:3000/form/vue/level2b-radio-variations/v7) | [v8·B](http://localhost:3000/form/vue/level2b-radio-variations/v8) | [v9·A](http://localhost:3000/form/vue/level2b-radio-variations/v9) | [v10·B](http://localhost:3000/form/vue/level2b-radio-variations/v10) |
+| **level2c-checkbox-variations** | L2 | [v1·A](http://localhost:3000/form/vue/level2c-checkbox-variations/v1) | [v2·B](http://localhost:3000/form/vue/level2c-checkbox-variations/v2) | [v3·A](http://localhost:3000/form/vue/level2c-checkbox-variations/v3) | [v4·B](http://localhost:3000/form/vue/level2c-checkbox-variations/v4) | [v5·A](http://localhost:3000/form/vue/level2c-checkbox-variations/v5) | [v6·B](http://localhost:3000/form/vue/level2c-checkbox-variations/v6) | [v7·A](http://localhost:3000/form/vue/level2c-checkbox-variations/v7) | [v8·B](http://localhost:3000/form/vue/level2c-checkbox-variations/v8) | [v9·A](http://localhost:3000/form/vue/level2c-checkbox-variations/v9) | [v10·B](http://localhost:3000/form/vue/level2c-checkbox-variations/v10) |
 | **level3-pickers** | L3 | [v1·A](http://localhost:3000/form/vue/level3-pickers/v1) | [v2·B](http://localhost:3000/form/vue/level3-pickers/v2) | [v3·A](http://localhost:3000/form/vue/level3-pickers/v3) | [v4·B](http://localhost:3000/form/vue/level3-pickers/v4) | [v5·A](http://localhost:3000/form/vue/level3-pickers/v5) | [v6·B](http://localhost:3000/form/vue/level3-pickers/v6) | [v7·A](http://localhost:3000/form/vue/level3-pickers/v7) | [v8·B](http://localhost:3000/form/vue/level3-pickers/v8) | [v9·A](http://localhost:3000/form/vue/level3-pickers/v9) | [v10·B](http://localhost:3000/form/vue/level3-pickers/v10) |
+| **level3a-date-format-variations** | L3 | [v1·A](http://localhost:3000/form/vue/level3a-date-format-variations/v1) | [v2·B](http://localhost:3000/form/vue/level3a-date-format-variations/v2) | [v3·A](http://localhost:3000/form/vue/level3a-date-format-variations/v3) | [v4·B](http://localhost:3000/form/vue/level3a-date-format-variations/v4) | [v5·A](http://localhost:3000/form/vue/level3a-date-format-variations/v5) | [v6·B](http://localhost:3000/form/vue/level3a-date-format-variations/v6) | [v7·A](http://localhost:3000/form/vue/level3a-date-format-variations/v7) | [v8·B](http://localhost:3000/form/vue/level3a-date-format-variations/v8) | [v9·A](http://localhost:3000/form/vue/level3a-date-format-variations/v9) | [v10·B](http://localhost:3000/form/vue/level3a-date-format-variations/v10) |
+| **level3b-date-picker-variations** | L3 | [v1·A](http://localhost:3000/form/vue/level3b-date-picker-variations/v1) | [v2·B](http://localhost:3000/form/vue/level3b-date-picker-variations/v2) | [v3·A](http://localhost:3000/form/vue/level3b-date-picker-variations/v3) | [v4·B](http://localhost:3000/form/vue/level3b-date-picker-variations/v4) | [v5·A](http://localhost:3000/form/vue/level3b-date-picker-variations/v5) | [v6·B](http://localhost:3000/form/vue/level3b-date-picker-variations/v6) | [v7·A](http://localhost:3000/form/vue/level3b-date-picker-variations/v7) | [v8·B](http://localhost:3000/form/vue/level3b-date-picker-variations/v8) | [v9·A](http://localhost:3000/form/vue/level3b-date-picker-variations/v9) | [v10·B](http://localhost:3000/form/vue/level3b-date-picker-variations/v10) |
+| **level3c-upload-variations** | L3 | [v1·A](http://localhost:3000/form/vue/level3c-upload-variations/v1) | [v2·B](http://localhost:3000/form/vue/level3c-upload-variations/v2) | [v3·A](http://localhost:3000/form/vue/level3c-upload-variations/v3) | [v4·B](http://localhost:3000/form/vue/level3c-upload-variations/v4) | [v5·A](http://localhost:3000/form/vue/level3c-upload-variations/v5) | [v6·B](http://localhost:3000/form/vue/level3c-upload-variations/v6) | [v7·A](http://localhost:3000/form/vue/level3c-upload-variations/v7) | [v8·B](http://localhost:3000/form/vue/level3c-upload-variations/v8) | [v9·A](http://localhost:3000/form/vue/level3c-upload-variations/v9) | [v10·B](http://localhost:3000/form/vue/level3c-upload-variations/v10) |
+| **level3d-combined-input-variations** | L3 | [v1·A](http://localhost:3000/form/vue/level3d-combined-input-variations/v1) | [v2·B](http://localhost:3000/form/vue/level3d-combined-input-variations/v2) | [v3·A](http://localhost:3000/form/vue/level3d-combined-input-variations/v3) | [v4·B](http://localhost:3000/form/vue/level3d-combined-input-variations/v4) | [v5·A](http://localhost:3000/form/vue/level3d-combined-input-variations/v5) | [v6·B](http://localhost:3000/form/vue/level3d-combined-input-variations/v6) | [v7·A](http://localhost:3000/form/vue/level3d-combined-input-variations/v7) | [v8·B](http://localhost:3000/form/vue/level3d-combined-input-variations/v8) | [v9·A](http://localhost:3000/form/vue/level3d-combined-input-variations/v9) | [v10·B](http://localhost:3000/form/vue/level3d-combined-input-variations/v10) |
 | **level4-dynamic** | L4 | [v1·A](http://localhost:3000/form/vue/level4-dynamic/v1) | [v2·B](http://localhost:3000/form/vue/level4-dynamic/v2) | [v3·A](http://localhost:3000/form/vue/level4-dynamic/v3) | [v4·B](http://localhost:3000/form/vue/level4-dynamic/v4) | [v5·A](http://localhost:3000/form/vue/level4-dynamic/v5) | [v6·B](http://localhost:3000/form/vue/level4-dynamic/v6) | [v7·A](http://localhost:3000/form/vue/level4-dynamic/v7) | [v8·B](http://localhost:3000/form/vue/level4-dynamic/v8) | [v9·A](http://localhost:3000/form/vue/level4-dynamic/v9) | [v10·B](http://localhost:3000/form/vue/level4-dynamic/v10) |
 | **level5-complex** | L5 | [v1·A](http://localhost:3000/form/vue/level5-complex/v1) | [v2·B](http://localhost:3000/form/vue/level5-complex/v2) | [v3·A](http://localhost:3000/form/vue/level5-complex/v3) | [v4·B](http://localhost:3000/form/vue/level5-complex/v4) | [v5·A](http://localhost:3000/form/vue/level5-complex/v5) | [v6·B](http://localhost:3000/form/vue/level5-complex/v6) | [v7·A](http://localhost:3000/form/vue/level5-complex/v7) | [v8·B](http://localhost:3000/form/vue/level5-complex/v8) | [v9·A](http://localhost:3000/form/vue/level5-complex/v9) | [v10·B](http://localhost:3000/form/vue/level5-complex/v10) |
 | **level6-frameworks** | L6 | [v1·A](http://localhost:3000/form/vue/level6-frameworks/v1) | [v2·B](http://localhost:3000/form/vue/level6-frameworks/v2) | [v3·A](http://localhost:3000/form/vue/level6-frameworks/v3) | [v4·B](http://localhost:3000/form/vue/level6-frameworks/v4) | [v5·A](http://localhost:3000/form/vue/level6-frameworks/v5) | [v6·B](http://localhost:3000/form/vue/level6-frameworks/v6) | [v7·A](http://localhost:3000/form/vue/level6-frameworks/v7) | [v8·B](http://localhost:3000/form/vue/level6-frameworks/v8) | [v9·A](http://localhost:3000/form/vue/level6-frameworks/v9) | [v10·B](http://localhost:3000/form/vue/level6-frameworks/v10) |
@@ -136,7 +164,14 @@ Each stack's `index.html` serves the full canonical KYC form in that stack's vis
 | **baseline** | L0 | [v1·A](http://localhost:3000/form/php/baseline/v1) | [v2·B](http://localhost:3000/form/php/baseline/v2) | [v3·A](http://localhost:3000/form/php/baseline/v3) | [v4·B](http://localhost:3000/form/php/baseline/v4) | [v5·A](http://localhost:3000/form/php/baseline/v5) | [v6·B](http://localhost:3000/form/php/baseline/v6) | [v7·A](http://localhost:3000/form/php/baseline/v7) | [v8·B](http://localhost:3000/form/php/baseline/v8) | [v9·A](http://localhost:3000/form/php/baseline/v9) | [v10·B](http://localhost:3000/form/php/baseline/v10) |
 | **level1-basic** | L1 | [v1·A](http://localhost:3000/form/php/level1-basic/v1) | [v2·B](http://localhost:3000/form/php/level1-basic/v2) | [v3·A](http://localhost:3000/form/php/level1-basic/v3) | [v4·B](http://localhost:3000/form/php/level1-basic/v4) | [v5·A](http://localhost:3000/form/php/level1-basic/v5) | [v6·B](http://localhost:3000/form/php/level1-basic/v6) | [v7·A](http://localhost:3000/form/php/level1-basic/v7) | [v8·B](http://localhost:3000/form/php/level1-basic/v8) | [v9·A](http://localhost:3000/form/php/level1-basic/v9) | [v10·B](http://localhost:3000/form/php/level1-basic/v10) |
 | **level2-selection** | L2 | [v1·A](http://localhost:3000/form/php/level2-selection/v1) | [v2·B](http://localhost:3000/form/php/level2-selection/v2) | [v3·A](http://localhost:3000/form/php/level2-selection/v3) | [v4·B](http://localhost:3000/form/php/level2-selection/v4) | [v5·A](http://localhost:3000/form/php/level2-selection/v5) | [v6·B](http://localhost:3000/form/php/level2-selection/v6) | [v7·A](http://localhost:3000/form/php/level2-selection/v7) | [v8·B](http://localhost:3000/form/php/level2-selection/v8) | [v9·A](http://localhost:3000/form/php/level2-selection/v9) | [v10·B](http://localhost:3000/form/php/level2-selection/v10) |
+| **level2a-dropdown-variations** | L2 | [v1·A](http://localhost:3000/form/php/level2a-dropdown-variations/v1) | [v2·B](http://localhost:3000/form/php/level2a-dropdown-variations/v2) | [v3·A](http://localhost:3000/form/php/level2a-dropdown-variations/v3) | [v4·B](http://localhost:3000/form/php/level2a-dropdown-variations/v4) | [v5·A](http://localhost:3000/form/php/level2a-dropdown-variations/v5) | [v6·B](http://localhost:3000/form/php/level2a-dropdown-variations/v6) | [v7·A](http://localhost:3000/form/php/level2a-dropdown-variations/v7) | [v8·B](http://localhost:3000/form/php/level2a-dropdown-variations/v8) | [v9·A](http://localhost:3000/form/php/level2a-dropdown-variations/v9) | [v10·B](http://localhost:3000/form/php/level2a-dropdown-variations/v10) |
+| **level2b-radio-variations** | L2 | [v1·A](http://localhost:3000/form/php/level2b-radio-variations/v1) | [v2·B](http://localhost:3000/form/php/level2b-radio-variations/v2) | [v3·A](http://localhost:3000/form/php/level2b-radio-variations/v3) | [v4·B](http://localhost:3000/form/php/level2b-radio-variations/v4) | [v5·A](http://localhost:3000/form/php/level2b-radio-variations/v5) | [v6·B](http://localhost:3000/form/php/level2b-radio-variations/v6) | [v7·A](http://localhost:3000/form/php/level2b-radio-variations/v7) | [v8·B](http://localhost:3000/form/php/level2b-radio-variations/v8) | [v9·A](http://localhost:3000/form/php/level2b-radio-variations/v9) | [v10·B](http://localhost:3000/form/php/level2b-radio-variations/v10) |
+| **level2c-checkbox-variations** | L2 | [v1·A](http://localhost:3000/form/php/level2c-checkbox-variations/v1) | [v2·B](http://localhost:3000/form/php/level2c-checkbox-variations/v2) | [v3·A](http://localhost:3000/form/php/level2c-checkbox-variations/v3) | [v4·B](http://localhost:3000/form/php/level2c-checkbox-variations/v4) | [v5·A](http://localhost:3000/form/php/level2c-checkbox-variations/v5) | [v6·B](http://localhost:3000/form/php/level2c-checkbox-variations/v6) | [v7·A](http://localhost:3000/form/php/level2c-checkbox-variations/v7) | [v8·B](http://localhost:3000/form/php/level2c-checkbox-variations/v8) | [v9·A](http://localhost:3000/form/php/level2c-checkbox-variations/v9) | [v10·B](http://localhost:3000/form/php/level2c-checkbox-variations/v10) |
 | **level3-pickers** | L3 | [v1·A](http://localhost:3000/form/php/level3-pickers/v1) | [v2·B](http://localhost:3000/form/php/level3-pickers/v2) | [v3·A](http://localhost:3000/form/php/level3-pickers/v3) | [v4·B](http://localhost:3000/form/php/level3-pickers/v4) | [v5·A](http://localhost:3000/form/php/level3-pickers/v5) | [v6·B](http://localhost:3000/form/php/level3-pickers/v6) | [v7·A](http://localhost:3000/form/php/level3-pickers/v7) | [v8·B](http://localhost:3000/form/php/level3-pickers/v8) | [v9·A](http://localhost:3000/form/php/level3-pickers/v9) | [v10·B](http://localhost:3000/form/php/level3-pickers/v10) |
+| **level3a-date-format-variations** | L3 | [v1·A](http://localhost:3000/form/php/level3a-date-format-variations/v1) | [v2·B](http://localhost:3000/form/php/level3a-date-format-variations/v2) | [v3·A](http://localhost:3000/form/php/level3a-date-format-variations/v3) | [v4·B](http://localhost:3000/form/php/level3a-date-format-variations/v4) | [v5·A](http://localhost:3000/form/php/level3a-date-format-variations/v5) | [v6·B](http://localhost:3000/form/php/level3a-date-format-variations/v6) | [v7·A](http://localhost:3000/form/php/level3a-date-format-variations/v7) | [v8·B](http://localhost:3000/form/php/level3a-date-format-variations/v8) | [v9·A](http://localhost:3000/form/php/level3a-date-format-variations/v9) | [v10·B](http://localhost:3000/form/php/level3a-date-format-variations/v10) |
+| **level3b-date-picker-variations** | L3 | [v1·A](http://localhost:3000/form/php/level3b-date-picker-variations/v1) | [v2·B](http://localhost:3000/form/php/level3b-date-picker-variations/v2) | [v3·A](http://localhost:3000/form/php/level3b-date-picker-variations/v3) | [v4·B](http://localhost:3000/form/php/level3b-date-picker-variations/v4) | [v5·A](http://localhost:3000/form/php/level3b-date-picker-variations/v5) | [v6·B](http://localhost:3000/form/php/level3b-date-picker-variations/v6) | [v7·A](http://localhost:3000/form/php/level3b-date-picker-variations/v7) | [v8·B](http://localhost:3000/form/php/level3b-date-picker-variations/v8) | [v9·A](http://localhost:3000/form/php/level3b-date-picker-variations/v9) | [v10·B](http://localhost:3000/form/php/level3b-date-picker-variations/v10) |
+| **level3c-upload-variations** | L3 | [v1·A](http://localhost:3000/form/php/level3c-upload-variations/v1) | [v2·B](http://localhost:3000/form/php/level3c-upload-variations/v2) | [v3·A](http://localhost:3000/form/php/level3c-upload-variations/v3) | [v4·B](http://localhost:3000/form/php/level3c-upload-variations/v4) | [v5·A](http://localhost:3000/form/php/level3c-upload-variations/v5) | [v6·B](http://localhost:3000/form/php/level3c-upload-variations/v6) | [v7·A](http://localhost:3000/form/php/level3c-upload-variations/v7) | [v8·B](http://localhost:3000/form/php/level3c-upload-variations/v8) | [v9·A](http://localhost:3000/form/php/level3c-upload-variations/v9) | [v10·B](http://localhost:3000/form/php/level3c-upload-variations/v10) |
+| **level3d-combined-input-variations** | L3 | [v1·A](http://localhost:3000/form/php/level3d-combined-input-variations/v1) | [v2·B](http://localhost:3000/form/php/level3d-combined-input-variations/v2) | [v3·A](http://localhost:3000/form/php/level3d-combined-input-variations/v3) | [v4·B](http://localhost:3000/form/php/level3d-combined-input-variations/v4) | [v5·A](http://localhost:3000/form/php/level3d-combined-input-variations/v5) | [v6·B](http://localhost:3000/form/php/level3d-combined-input-variations/v6) | [v7·A](http://localhost:3000/form/php/level3d-combined-input-variations/v7) | [v8·B](http://localhost:3000/form/php/level3d-combined-input-variations/v8) | [v9·A](http://localhost:3000/form/php/level3d-combined-input-variations/v9) | [v10·B](http://localhost:3000/form/php/level3d-combined-input-variations/v10) |
 | **level4-dynamic** | L4 | [v1·A](http://localhost:3000/form/php/level4-dynamic/v1) | [v2·B](http://localhost:3000/form/php/level4-dynamic/v2) | [v3·A](http://localhost:3000/form/php/level4-dynamic/v3) | [v4·B](http://localhost:3000/form/php/level4-dynamic/v4) | [v5·A](http://localhost:3000/form/php/level4-dynamic/v5) | [v6·B](http://localhost:3000/form/php/level4-dynamic/v6) | [v7·A](http://localhost:3000/form/php/level4-dynamic/v7) | [v8·B](http://localhost:3000/form/php/level4-dynamic/v8) | [v9·A](http://localhost:3000/form/php/level4-dynamic/v9) | [v10·B](http://localhost:3000/form/php/level4-dynamic/v10) |
 | **level5-complex** | L5 | [v1·A](http://localhost:3000/form/php/level5-complex/v1) | [v2·B](http://localhost:3000/form/php/level5-complex/v2) | [v3·A](http://localhost:3000/form/php/level5-complex/v3) | [v4·B](http://localhost:3000/form/php/level5-complex/v4) | [v5·A](http://localhost:3000/form/php/level5-complex/v5) | [v6·B](http://localhost:3000/form/php/level5-complex/v6) | [v7·A](http://localhost:3000/form/php/level5-complex/v7) | [v8·B](http://localhost:3000/form/php/level5-complex/v8) | [v9·A](http://localhost:3000/form/php/level5-complex/v9) | [v10·B](http://localhost:3000/form/php/level5-complex/v10) |
 | **level6-frameworks** | L6 | [v1·A](http://localhost:3000/form/php/level6-frameworks/v1) | [v2·B](http://localhost:3000/form/php/level6-frameworks/v2) | [v3·A](http://localhost:3000/form/php/level6-frameworks/v3) | [v4·B](http://localhost:3000/form/php/level6-frameworks/v4) | [v5·A](http://localhost:3000/form/php/level6-frameworks/v5) | [v6·B](http://localhost:3000/form/php/level6-frameworks/v6) | [v7·A](http://localhost:3000/form/php/level6-frameworks/v7) | [v8·B](http://localhost:3000/form/php/level6-frameworks/v8) | [v9·A](http://localhost:3000/form/php/level6-frameworks/v9) | [v10·B](http://localhost:3000/form/php/level6-frameworks/v10) |
@@ -158,7 +193,14 @@ Each stack's `index.html` serves the full canonical KYC form in that stack's vis
 | **baseline** | L0 | [v1·A](http://localhost:3000/form/flask/baseline/v1) | [v2·B](http://localhost:3000/form/flask/baseline/v2) | [v3·A](http://localhost:3000/form/flask/baseline/v3) | [v4·B](http://localhost:3000/form/flask/baseline/v4) | [v5·A](http://localhost:3000/form/flask/baseline/v5) | [v6·B](http://localhost:3000/form/flask/baseline/v6) | [v7·A](http://localhost:3000/form/flask/baseline/v7) | [v8·B](http://localhost:3000/form/flask/baseline/v8) | [v9·A](http://localhost:3000/form/flask/baseline/v9) | [v10·B](http://localhost:3000/form/flask/baseline/v10) |
 | **level1-basic** | L1 | [v1·A](http://localhost:3000/form/flask/level1-basic/v1) | [v2·B](http://localhost:3000/form/flask/level1-basic/v2) | [v3·A](http://localhost:3000/form/flask/level1-basic/v3) | [v4·B](http://localhost:3000/form/flask/level1-basic/v4) | [v5·A](http://localhost:3000/form/flask/level1-basic/v5) | [v6·B](http://localhost:3000/form/flask/level1-basic/v6) | [v7·A](http://localhost:3000/form/flask/level1-basic/v7) | [v8·B](http://localhost:3000/form/flask/level1-basic/v8) | [v9·A](http://localhost:3000/form/flask/level1-basic/v9) | [v10·B](http://localhost:3000/form/flask/level1-basic/v10) |
 | **level2-selection** | L2 | [v1·A](http://localhost:3000/form/flask/level2-selection/v1) | [v2·B](http://localhost:3000/form/flask/level2-selection/v2) | [v3·A](http://localhost:3000/form/flask/level2-selection/v3) | [v4·B](http://localhost:3000/form/flask/level2-selection/v4) | [v5·A](http://localhost:3000/form/flask/level2-selection/v5) | [v6·B](http://localhost:3000/form/flask/level2-selection/v6) | [v7·A](http://localhost:3000/form/flask/level2-selection/v7) | [v8·B](http://localhost:3000/form/flask/level2-selection/v8) | [v9·A](http://localhost:3000/form/flask/level2-selection/v9) | [v10·B](http://localhost:3000/form/flask/level2-selection/v10) |
+| **level2a-dropdown-variations** | L2 | [v1·A](http://localhost:3000/form/flask/level2a-dropdown-variations/v1) | [v2·B](http://localhost:3000/form/flask/level2a-dropdown-variations/v2) | [v3·A](http://localhost:3000/form/flask/level2a-dropdown-variations/v3) | [v4·B](http://localhost:3000/form/flask/level2a-dropdown-variations/v4) | [v5·A](http://localhost:3000/form/flask/level2a-dropdown-variations/v5) | [v6·B](http://localhost:3000/form/flask/level2a-dropdown-variations/v6) | [v7·A](http://localhost:3000/form/flask/level2a-dropdown-variations/v7) | [v8·B](http://localhost:3000/form/flask/level2a-dropdown-variations/v8) | [v9·A](http://localhost:3000/form/flask/level2a-dropdown-variations/v9) | [v10·B](http://localhost:3000/form/flask/level2a-dropdown-variations/v10) |
+| **level2b-radio-variations** | L2 | [v1·A](http://localhost:3000/form/flask/level2b-radio-variations/v1) | [v2·B](http://localhost:3000/form/flask/level2b-radio-variations/v2) | [v3·A](http://localhost:3000/form/flask/level2b-radio-variations/v3) | [v4·B](http://localhost:3000/form/flask/level2b-radio-variations/v4) | [v5·A](http://localhost:3000/form/flask/level2b-radio-variations/v5) | [v6·B](http://localhost:3000/form/flask/level2b-radio-variations/v6) | [v7·A](http://localhost:3000/form/flask/level2b-radio-variations/v7) | [v8·B](http://localhost:3000/form/flask/level2b-radio-variations/v8) | [v9·A](http://localhost:3000/form/flask/level2b-radio-variations/v9) | [v10·B](http://localhost:3000/form/flask/level2b-radio-variations/v10) |
+| **level2c-checkbox-variations** | L2 | [v1·A](http://localhost:3000/form/flask/level2c-checkbox-variations/v1) | [v2·B](http://localhost:3000/form/flask/level2c-checkbox-variations/v2) | [v3·A](http://localhost:3000/form/flask/level2c-checkbox-variations/v3) | [v4·B](http://localhost:3000/form/flask/level2c-checkbox-variations/v4) | [v5·A](http://localhost:3000/form/flask/level2c-checkbox-variations/v5) | [v6·B](http://localhost:3000/form/flask/level2c-checkbox-variations/v6) | [v7·A](http://localhost:3000/form/flask/level2c-checkbox-variations/v7) | [v8·B](http://localhost:3000/form/flask/level2c-checkbox-variations/v8) | [v9·A](http://localhost:3000/form/flask/level2c-checkbox-variations/v9) | [v10·B](http://localhost:3000/form/flask/level2c-checkbox-variations/v10) |
 | **level3-pickers** | L3 | [v1·A](http://localhost:3000/form/flask/level3-pickers/v1) | [v2·B](http://localhost:3000/form/flask/level3-pickers/v2) | [v3·A](http://localhost:3000/form/flask/level3-pickers/v3) | [v4·B](http://localhost:3000/form/flask/level3-pickers/v4) | [v5·A](http://localhost:3000/form/flask/level3-pickers/v5) | [v6·B](http://localhost:3000/form/flask/level3-pickers/v6) | [v7·A](http://localhost:3000/form/flask/level3-pickers/v7) | [v8·B](http://localhost:3000/form/flask/level3-pickers/v8) | [v9·A](http://localhost:3000/form/flask/level3-pickers/v9) | [v10·B](http://localhost:3000/form/flask/level3-pickers/v10) |
+| **level3a-date-format-variations** | L3 | [v1·A](http://localhost:3000/form/flask/level3a-date-format-variations/v1) | [v2·B](http://localhost:3000/form/flask/level3a-date-format-variations/v2) | [v3·A](http://localhost:3000/form/flask/level3a-date-format-variations/v3) | [v4·B](http://localhost:3000/form/flask/level3a-date-format-variations/v4) | [v5·A](http://localhost:3000/form/flask/level3a-date-format-variations/v5) | [v6·B](http://localhost:3000/form/flask/level3a-date-format-variations/v6) | [v7·A](http://localhost:3000/form/flask/level3a-date-format-variations/v7) | [v8·B](http://localhost:3000/form/flask/level3a-date-format-variations/v8) | [v9·A](http://localhost:3000/form/flask/level3a-date-format-variations/v9) | [v10·B](http://localhost:3000/form/flask/level3a-date-format-variations/v10) |
+| **level3b-date-picker-variations** | L3 | [v1·A](http://localhost:3000/form/flask/level3b-date-picker-variations/v1) | [v2·B](http://localhost:3000/form/flask/level3b-date-picker-variations/v2) | [v3·A](http://localhost:3000/form/flask/level3b-date-picker-variations/v3) | [v4·B](http://localhost:3000/form/flask/level3b-date-picker-variations/v4) | [v5·A](http://localhost:3000/form/flask/level3b-date-picker-variations/v5) | [v6·B](http://localhost:3000/form/flask/level3b-date-picker-variations/v6) | [v7·A](http://localhost:3000/form/flask/level3b-date-picker-variations/v7) | [v8·B](http://localhost:3000/form/flask/level3b-date-picker-variations/v8) | [v9·A](http://localhost:3000/form/flask/level3b-date-picker-variations/v9) | [v10·B](http://localhost:3000/form/flask/level3b-date-picker-variations/v10) |
+| **level3c-upload-variations** | L3 | [v1·A](http://localhost:3000/form/flask/level3c-upload-variations/v1) | [v2·B](http://localhost:3000/form/flask/level3c-upload-variations/v2) | [v3·A](http://localhost:3000/form/flask/level3c-upload-variations/v3) | [v4·B](http://localhost:3000/form/flask/level3c-upload-variations/v4) | [v5·A](http://localhost:3000/form/flask/level3c-upload-variations/v5) | [v6·B](http://localhost:3000/form/flask/level3c-upload-variations/v6) | [v7·A](http://localhost:3000/form/flask/level3c-upload-variations/v7) | [v8·B](http://localhost:3000/form/flask/level3c-upload-variations/v8) | [v9·A](http://localhost:3000/form/flask/level3c-upload-variations/v9) | [v10·B](http://localhost:3000/form/flask/level3c-upload-variations/v10) |
+| **level3d-combined-input-variations** | L3 | [v1·A](http://localhost:3000/form/flask/level3d-combined-input-variations/v1) | [v2·B](http://localhost:3000/form/flask/level3d-combined-input-variations/v2) | [v3·A](http://localhost:3000/form/flask/level3d-combined-input-variations/v3) | [v4·B](http://localhost:3000/form/flask/level3d-combined-input-variations/v4) | [v5·A](http://localhost:3000/form/flask/level3d-combined-input-variations/v5) | [v6·B](http://localhost:3000/form/flask/level3d-combined-input-variations/v6) | [v7·A](http://localhost:3000/form/flask/level3d-combined-input-variations/v7) | [v8·B](http://localhost:3000/form/flask/level3d-combined-input-variations/v8) | [v9·A](http://localhost:3000/form/flask/level3d-combined-input-variations/v9) | [v10·B](http://localhost:3000/form/flask/level3d-combined-input-variations/v10) |
 | **level4-dynamic** | L4 | [v1·A](http://localhost:3000/form/flask/level4-dynamic/v1) | [v2·B](http://localhost:3000/form/flask/level4-dynamic/v2) | [v3·A](http://localhost:3000/form/flask/level4-dynamic/v3) | [v4·B](http://localhost:3000/form/flask/level4-dynamic/v4) | [v5·A](http://localhost:3000/form/flask/level4-dynamic/v5) | [v6·B](http://localhost:3000/form/flask/level4-dynamic/v6) | [v7·A](http://localhost:3000/form/flask/level4-dynamic/v7) | [v8·B](http://localhost:3000/form/flask/level4-dynamic/v8) | [v9·A](http://localhost:3000/form/flask/level4-dynamic/v9) | [v10·B](http://localhost:3000/form/flask/level4-dynamic/v10) |
 | **level5-complex** | L5 | [v1·A](http://localhost:3000/form/flask/level5-complex/v1) | [v2·B](http://localhost:3000/form/flask/level5-complex/v2) | [v3·A](http://localhost:3000/form/flask/level5-complex/v3) | [v4·B](http://localhost:3000/form/flask/level5-complex/v4) | [v5·A](http://localhost:3000/form/flask/level5-complex/v5) | [v6·B](http://localhost:3000/form/flask/level5-complex/v6) | [v7·A](http://localhost:3000/form/flask/level5-complex/v7) | [v8·B](http://localhost:3000/form/flask/level5-complex/v8) | [v9·A](http://localhost:3000/form/flask/level5-complex/v9) | [v10·B](http://localhost:3000/form/flask/level5-complex/v10) |
 | **level6-frameworks** | L6 | [v1·A](http://localhost:3000/form/flask/level6-frameworks/v1) | [v2·B](http://localhost:3000/form/flask/level6-frameworks/v2) | [v3·A](http://localhost:3000/form/flask/level6-frameworks/v3) | [v4·B](http://localhost:3000/form/flask/level6-frameworks/v4) | [v5·A](http://localhost:3000/form/flask/level6-frameworks/v5) | [v6·B](http://localhost:3000/form/flask/level6-frameworks/v6) | [v7·A](http://localhost:3000/form/flask/level6-frameworks/v7) | [v8·B](http://localhost:3000/form/flask/level6-frameworks/v8) | [v9·A](http://localhost:3000/form/flask/level6-frameworks/v9) | [v10·B](http://localhost:3000/form/flask/level6-frameworks/v10) |
@@ -175,7 +217,7 @@ Each stack's `index.html` serves the full canonical KYC form in that stack's vis
 
 ## Flat URL List (All Central URLs)
 
-All `900` central URLs in order (stack → scenario → variant):
+All `1320` central URLs in order (stack → scenario → variant):
 
 - `http://localhost:3000/form/html/baseline/v1` · Profile A
 - `http://localhost:3000/form/html/baseline/v2` · Profile B
@@ -207,6 +249,36 @@ All `900` central URLs in order (stack → scenario → variant):
 - `http://localhost:3000/form/html/level2-selection/v8` · Profile B
 - `http://localhost:3000/form/html/level2-selection/v9` · Profile A
 - `http://localhost:3000/form/html/level2-selection/v10` · Profile B
+- `http://localhost:3000/form/html/level2a-dropdown-variations/v1` · Profile A
+- `http://localhost:3000/form/html/level2a-dropdown-variations/v2` · Profile B
+- `http://localhost:3000/form/html/level2a-dropdown-variations/v3` · Profile A
+- `http://localhost:3000/form/html/level2a-dropdown-variations/v4` · Profile B
+- `http://localhost:3000/form/html/level2a-dropdown-variations/v5` · Profile A
+- `http://localhost:3000/form/html/level2a-dropdown-variations/v6` · Profile B
+- `http://localhost:3000/form/html/level2a-dropdown-variations/v7` · Profile A
+- `http://localhost:3000/form/html/level2a-dropdown-variations/v8` · Profile B
+- `http://localhost:3000/form/html/level2a-dropdown-variations/v9` · Profile A
+- `http://localhost:3000/form/html/level2a-dropdown-variations/v10` · Profile B
+- `http://localhost:3000/form/html/level2b-radio-variations/v1` · Profile A
+- `http://localhost:3000/form/html/level2b-radio-variations/v2` · Profile B
+- `http://localhost:3000/form/html/level2b-radio-variations/v3` · Profile A
+- `http://localhost:3000/form/html/level2b-radio-variations/v4` · Profile B
+- `http://localhost:3000/form/html/level2b-radio-variations/v5` · Profile A
+- `http://localhost:3000/form/html/level2b-radio-variations/v6` · Profile B
+- `http://localhost:3000/form/html/level2b-radio-variations/v7` · Profile A
+- `http://localhost:3000/form/html/level2b-radio-variations/v8` · Profile B
+- `http://localhost:3000/form/html/level2b-radio-variations/v9` · Profile A
+- `http://localhost:3000/form/html/level2b-radio-variations/v10` · Profile B
+- `http://localhost:3000/form/html/level2c-checkbox-variations/v1` · Profile A
+- `http://localhost:3000/form/html/level2c-checkbox-variations/v2` · Profile B
+- `http://localhost:3000/form/html/level2c-checkbox-variations/v3` · Profile A
+- `http://localhost:3000/form/html/level2c-checkbox-variations/v4` · Profile B
+- `http://localhost:3000/form/html/level2c-checkbox-variations/v5` · Profile A
+- `http://localhost:3000/form/html/level2c-checkbox-variations/v6` · Profile B
+- `http://localhost:3000/form/html/level2c-checkbox-variations/v7` · Profile A
+- `http://localhost:3000/form/html/level2c-checkbox-variations/v8` · Profile B
+- `http://localhost:3000/form/html/level2c-checkbox-variations/v9` · Profile A
+- `http://localhost:3000/form/html/level2c-checkbox-variations/v10` · Profile B
 - `http://localhost:3000/form/html/level3-pickers/v1` · Profile A
 - `http://localhost:3000/form/html/level3-pickers/v2` · Profile B
 - `http://localhost:3000/form/html/level3-pickers/v3` · Profile A
@@ -217,6 +289,46 @@ All `900` central URLs in order (stack → scenario → variant):
 - `http://localhost:3000/form/html/level3-pickers/v8` · Profile B
 - `http://localhost:3000/form/html/level3-pickers/v9` · Profile A
 - `http://localhost:3000/form/html/level3-pickers/v10` · Profile B
+- `http://localhost:3000/form/html/level3a-date-format-variations/v1` · Profile A
+- `http://localhost:3000/form/html/level3a-date-format-variations/v2` · Profile B
+- `http://localhost:3000/form/html/level3a-date-format-variations/v3` · Profile A
+- `http://localhost:3000/form/html/level3a-date-format-variations/v4` · Profile B
+- `http://localhost:3000/form/html/level3a-date-format-variations/v5` · Profile A
+- `http://localhost:3000/form/html/level3a-date-format-variations/v6` · Profile B
+- `http://localhost:3000/form/html/level3a-date-format-variations/v7` · Profile A
+- `http://localhost:3000/form/html/level3a-date-format-variations/v8` · Profile B
+- `http://localhost:3000/form/html/level3a-date-format-variations/v9` · Profile A
+- `http://localhost:3000/form/html/level3a-date-format-variations/v10` · Profile B
+- `http://localhost:3000/form/html/level3b-date-picker-variations/v1` · Profile A
+- `http://localhost:3000/form/html/level3b-date-picker-variations/v2` · Profile B
+- `http://localhost:3000/form/html/level3b-date-picker-variations/v3` · Profile A
+- `http://localhost:3000/form/html/level3b-date-picker-variations/v4` · Profile B
+- `http://localhost:3000/form/html/level3b-date-picker-variations/v5` · Profile A
+- `http://localhost:3000/form/html/level3b-date-picker-variations/v6` · Profile B
+- `http://localhost:3000/form/html/level3b-date-picker-variations/v7` · Profile A
+- `http://localhost:3000/form/html/level3b-date-picker-variations/v8` · Profile B
+- `http://localhost:3000/form/html/level3b-date-picker-variations/v9` · Profile A
+- `http://localhost:3000/form/html/level3b-date-picker-variations/v10` · Profile B
+- `http://localhost:3000/form/html/level3c-upload-variations/v1` · Profile A
+- `http://localhost:3000/form/html/level3c-upload-variations/v2` · Profile B
+- `http://localhost:3000/form/html/level3c-upload-variations/v3` · Profile A
+- `http://localhost:3000/form/html/level3c-upload-variations/v4` · Profile B
+- `http://localhost:3000/form/html/level3c-upload-variations/v5` · Profile A
+- `http://localhost:3000/form/html/level3c-upload-variations/v6` · Profile B
+- `http://localhost:3000/form/html/level3c-upload-variations/v7` · Profile A
+- `http://localhost:3000/form/html/level3c-upload-variations/v8` · Profile B
+- `http://localhost:3000/form/html/level3c-upload-variations/v9` · Profile A
+- `http://localhost:3000/form/html/level3c-upload-variations/v10` · Profile B
+- `http://localhost:3000/form/html/level3d-combined-input-variations/v1` · Profile A
+- `http://localhost:3000/form/html/level3d-combined-input-variations/v2` · Profile B
+- `http://localhost:3000/form/html/level3d-combined-input-variations/v3` · Profile A
+- `http://localhost:3000/form/html/level3d-combined-input-variations/v4` · Profile B
+- `http://localhost:3000/form/html/level3d-combined-input-variations/v5` · Profile A
+- `http://localhost:3000/form/html/level3d-combined-input-variations/v6` · Profile B
+- `http://localhost:3000/form/html/level3d-combined-input-variations/v7` · Profile A
+- `http://localhost:3000/form/html/level3d-combined-input-variations/v8` · Profile B
+- `http://localhost:3000/form/html/level3d-combined-input-variations/v9` · Profile A
+- `http://localhost:3000/form/html/level3d-combined-input-variations/v10` · Profile B
 - `http://localhost:3000/form/html/level4-dynamic/v1` · Profile A
 - `http://localhost:3000/form/html/level4-dynamic/v2` · Profile B
 - `http://localhost:3000/form/html/level4-dynamic/v3` · Profile A
@@ -357,6 +469,36 @@ All `900` central URLs in order (stack → scenario → variant):
 - `http://localhost:3000/form/react/level2-selection/v8` · Profile B
 - `http://localhost:3000/form/react/level2-selection/v9` · Profile A
 - `http://localhost:3000/form/react/level2-selection/v10` · Profile B
+- `http://localhost:3000/form/react/level2a-dropdown-variations/v1` · Profile A
+- `http://localhost:3000/form/react/level2a-dropdown-variations/v2` · Profile B
+- `http://localhost:3000/form/react/level2a-dropdown-variations/v3` · Profile A
+- `http://localhost:3000/form/react/level2a-dropdown-variations/v4` · Profile B
+- `http://localhost:3000/form/react/level2a-dropdown-variations/v5` · Profile A
+- `http://localhost:3000/form/react/level2a-dropdown-variations/v6` · Profile B
+- `http://localhost:3000/form/react/level2a-dropdown-variations/v7` · Profile A
+- `http://localhost:3000/form/react/level2a-dropdown-variations/v8` · Profile B
+- `http://localhost:3000/form/react/level2a-dropdown-variations/v9` · Profile A
+- `http://localhost:3000/form/react/level2a-dropdown-variations/v10` · Profile B
+- `http://localhost:3000/form/react/level2b-radio-variations/v1` · Profile A
+- `http://localhost:3000/form/react/level2b-radio-variations/v2` · Profile B
+- `http://localhost:3000/form/react/level2b-radio-variations/v3` · Profile A
+- `http://localhost:3000/form/react/level2b-radio-variations/v4` · Profile B
+- `http://localhost:3000/form/react/level2b-radio-variations/v5` · Profile A
+- `http://localhost:3000/form/react/level2b-radio-variations/v6` · Profile B
+- `http://localhost:3000/form/react/level2b-radio-variations/v7` · Profile A
+- `http://localhost:3000/form/react/level2b-radio-variations/v8` · Profile B
+- `http://localhost:3000/form/react/level2b-radio-variations/v9` · Profile A
+- `http://localhost:3000/form/react/level2b-radio-variations/v10` · Profile B
+- `http://localhost:3000/form/react/level2c-checkbox-variations/v1` · Profile A
+- `http://localhost:3000/form/react/level2c-checkbox-variations/v2` · Profile B
+- `http://localhost:3000/form/react/level2c-checkbox-variations/v3` · Profile A
+- `http://localhost:3000/form/react/level2c-checkbox-variations/v4` · Profile B
+- `http://localhost:3000/form/react/level2c-checkbox-variations/v5` · Profile A
+- `http://localhost:3000/form/react/level2c-checkbox-variations/v6` · Profile B
+- `http://localhost:3000/form/react/level2c-checkbox-variations/v7` · Profile A
+- `http://localhost:3000/form/react/level2c-checkbox-variations/v8` · Profile B
+- `http://localhost:3000/form/react/level2c-checkbox-variations/v9` · Profile A
+- `http://localhost:3000/form/react/level2c-checkbox-variations/v10` · Profile B
 - `http://localhost:3000/form/react/level3-pickers/v1` · Profile A
 - `http://localhost:3000/form/react/level3-pickers/v2` · Profile B
 - `http://localhost:3000/form/react/level3-pickers/v3` · Profile A
@@ -367,6 +509,46 @@ All `900` central URLs in order (stack → scenario → variant):
 - `http://localhost:3000/form/react/level3-pickers/v8` · Profile B
 - `http://localhost:3000/form/react/level3-pickers/v9` · Profile A
 - `http://localhost:3000/form/react/level3-pickers/v10` · Profile B
+- `http://localhost:3000/form/react/level3a-date-format-variations/v1` · Profile A
+- `http://localhost:3000/form/react/level3a-date-format-variations/v2` · Profile B
+- `http://localhost:3000/form/react/level3a-date-format-variations/v3` · Profile A
+- `http://localhost:3000/form/react/level3a-date-format-variations/v4` · Profile B
+- `http://localhost:3000/form/react/level3a-date-format-variations/v5` · Profile A
+- `http://localhost:3000/form/react/level3a-date-format-variations/v6` · Profile B
+- `http://localhost:3000/form/react/level3a-date-format-variations/v7` · Profile A
+- `http://localhost:3000/form/react/level3a-date-format-variations/v8` · Profile B
+- `http://localhost:3000/form/react/level3a-date-format-variations/v9` · Profile A
+- `http://localhost:3000/form/react/level3a-date-format-variations/v10` · Profile B
+- `http://localhost:3000/form/react/level3b-date-picker-variations/v1` · Profile A
+- `http://localhost:3000/form/react/level3b-date-picker-variations/v2` · Profile B
+- `http://localhost:3000/form/react/level3b-date-picker-variations/v3` · Profile A
+- `http://localhost:3000/form/react/level3b-date-picker-variations/v4` · Profile B
+- `http://localhost:3000/form/react/level3b-date-picker-variations/v5` · Profile A
+- `http://localhost:3000/form/react/level3b-date-picker-variations/v6` · Profile B
+- `http://localhost:3000/form/react/level3b-date-picker-variations/v7` · Profile A
+- `http://localhost:3000/form/react/level3b-date-picker-variations/v8` · Profile B
+- `http://localhost:3000/form/react/level3b-date-picker-variations/v9` · Profile A
+- `http://localhost:3000/form/react/level3b-date-picker-variations/v10` · Profile B
+- `http://localhost:3000/form/react/level3c-upload-variations/v1` · Profile A
+- `http://localhost:3000/form/react/level3c-upload-variations/v2` · Profile B
+- `http://localhost:3000/form/react/level3c-upload-variations/v3` · Profile A
+- `http://localhost:3000/form/react/level3c-upload-variations/v4` · Profile B
+- `http://localhost:3000/form/react/level3c-upload-variations/v5` · Profile A
+- `http://localhost:3000/form/react/level3c-upload-variations/v6` · Profile B
+- `http://localhost:3000/form/react/level3c-upload-variations/v7` · Profile A
+- `http://localhost:3000/form/react/level3c-upload-variations/v8` · Profile B
+- `http://localhost:3000/form/react/level3c-upload-variations/v9` · Profile A
+- `http://localhost:3000/form/react/level3c-upload-variations/v10` · Profile B
+- `http://localhost:3000/form/react/level3d-combined-input-variations/v1` · Profile A
+- `http://localhost:3000/form/react/level3d-combined-input-variations/v2` · Profile B
+- `http://localhost:3000/form/react/level3d-combined-input-variations/v3` · Profile A
+- `http://localhost:3000/form/react/level3d-combined-input-variations/v4` · Profile B
+- `http://localhost:3000/form/react/level3d-combined-input-variations/v5` · Profile A
+- `http://localhost:3000/form/react/level3d-combined-input-variations/v6` · Profile B
+- `http://localhost:3000/form/react/level3d-combined-input-variations/v7` · Profile A
+- `http://localhost:3000/form/react/level3d-combined-input-variations/v8` · Profile B
+- `http://localhost:3000/form/react/level3d-combined-input-variations/v9` · Profile A
+- `http://localhost:3000/form/react/level3d-combined-input-variations/v10` · Profile B
 - `http://localhost:3000/form/react/level4-dynamic/v1` · Profile A
 - `http://localhost:3000/form/react/level4-dynamic/v2` · Profile B
 - `http://localhost:3000/form/react/level4-dynamic/v3` · Profile A
@@ -507,6 +689,36 @@ All `900` central URLs in order (stack → scenario → variant):
 - `http://localhost:3000/form/angular/level2-selection/v8` · Profile B
 - `http://localhost:3000/form/angular/level2-selection/v9` · Profile A
 - `http://localhost:3000/form/angular/level2-selection/v10` · Profile B
+- `http://localhost:3000/form/angular/level2a-dropdown-variations/v1` · Profile A
+- `http://localhost:3000/form/angular/level2a-dropdown-variations/v2` · Profile B
+- `http://localhost:3000/form/angular/level2a-dropdown-variations/v3` · Profile A
+- `http://localhost:3000/form/angular/level2a-dropdown-variations/v4` · Profile B
+- `http://localhost:3000/form/angular/level2a-dropdown-variations/v5` · Profile A
+- `http://localhost:3000/form/angular/level2a-dropdown-variations/v6` · Profile B
+- `http://localhost:3000/form/angular/level2a-dropdown-variations/v7` · Profile A
+- `http://localhost:3000/form/angular/level2a-dropdown-variations/v8` · Profile B
+- `http://localhost:3000/form/angular/level2a-dropdown-variations/v9` · Profile A
+- `http://localhost:3000/form/angular/level2a-dropdown-variations/v10` · Profile B
+- `http://localhost:3000/form/angular/level2b-radio-variations/v1` · Profile A
+- `http://localhost:3000/form/angular/level2b-radio-variations/v2` · Profile B
+- `http://localhost:3000/form/angular/level2b-radio-variations/v3` · Profile A
+- `http://localhost:3000/form/angular/level2b-radio-variations/v4` · Profile B
+- `http://localhost:3000/form/angular/level2b-radio-variations/v5` · Profile A
+- `http://localhost:3000/form/angular/level2b-radio-variations/v6` · Profile B
+- `http://localhost:3000/form/angular/level2b-radio-variations/v7` · Profile A
+- `http://localhost:3000/form/angular/level2b-radio-variations/v8` · Profile B
+- `http://localhost:3000/form/angular/level2b-radio-variations/v9` · Profile A
+- `http://localhost:3000/form/angular/level2b-radio-variations/v10` · Profile B
+- `http://localhost:3000/form/angular/level2c-checkbox-variations/v1` · Profile A
+- `http://localhost:3000/form/angular/level2c-checkbox-variations/v2` · Profile B
+- `http://localhost:3000/form/angular/level2c-checkbox-variations/v3` · Profile A
+- `http://localhost:3000/form/angular/level2c-checkbox-variations/v4` · Profile B
+- `http://localhost:3000/form/angular/level2c-checkbox-variations/v5` · Profile A
+- `http://localhost:3000/form/angular/level2c-checkbox-variations/v6` · Profile B
+- `http://localhost:3000/form/angular/level2c-checkbox-variations/v7` · Profile A
+- `http://localhost:3000/form/angular/level2c-checkbox-variations/v8` · Profile B
+- `http://localhost:3000/form/angular/level2c-checkbox-variations/v9` · Profile A
+- `http://localhost:3000/form/angular/level2c-checkbox-variations/v10` · Profile B
 - `http://localhost:3000/form/angular/level3-pickers/v1` · Profile A
 - `http://localhost:3000/form/angular/level3-pickers/v2` · Profile B
 - `http://localhost:3000/form/angular/level3-pickers/v3` · Profile A
@@ -517,6 +729,46 @@ All `900` central URLs in order (stack → scenario → variant):
 - `http://localhost:3000/form/angular/level3-pickers/v8` · Profile B
 - `http://localhost:3000/form/angular/level3-pickers/v9` · Profile A
 - `http://localhost:3000/form/angular/level3-pickers/v10` · Profile B
+- `http://localhost:3000/form/angular/level3a-date-format-variations/v1` · Profile A
+- `http://localhost:3000/form/angular/level3a-date-format-variations/v2` · Profile B
+- `http://localhost:3000/form/angular/level3a-date-format-variations/v3` · Profile A
+- `http://localhost:3000/form/angular/level3a-date-format-variations/v4` · Profile B
+- `http://localhost:3000/form/angular/level3a-date-format-variations/v5` · Profile A
+- `http://localhost:3000/form/angular/level3a-date-format-variations/v6` · Profile B
+- `http://localhost:3000/form/angular/level3a-date-format-variations/v7` · Profile A
+- `http://localhost:3000/form/angular/level3a-date-format-variations/v8` · Profile B
+- `http://localhost:3000/form/angular/level3a-date-format-variations/v9` · Profile A
+- `http://localhost:3000/form/angular/level3a-date-format-variations/v10` · Profile B
+- `http://localhost:3000/form/angular/level3b-date-picker-variations/v1` · Profile A
+- `http://localhost:3000/form/angular/level3b-date-picker-variations/v2` · Profile B
+- `http://localhost:3000/form/angular/level3b-date-picker-variations/v3` · Profile A
+- `http://localhost:3000/form/angular/level3b-date-picker-variations/v4` · Profile B
+- `http://localhost:3000/form/angular/level3b-date-picker-variations/v5` · Profile A
+- `http://localhost:3000/form/angular/level3b-date-picker-variations/v6` · Profile B
+- `http://localhost:3000/form/angular/level3b-date-picker-variations/v7` · Profile A
+- `http://localhost:3000/form/angular/level3b-date-picker-variations/v8` · Profile B
+- `http://localhost:3000/form/angular/level3b-date-picker-variations/v9` · Profile A
+- `http://localhost:3000/form/angular/level3b-date-picker-variations/v10` · Profile B
+- `http://localhost:3000/form/angular/level3c-upload-variations/v1` · Profile A
+- `http://localhost:3000/form/angular/level3c-upload-variations/v2` · Profile B
+- `http://localhost:3000/form/angular/level3c-upload-variations/v3` · Profile A
+- `http://localhost:3000/form/angular/level3c-upload-variations/v4` · Profile B
+- `http://localhost:3000/form/angular/level3c-upload-variations/v5` · Profile A
+- `http://localhost:3000/form/angular/level3c-upload-variations/v6` · Profile B
+- `http://localhost:3000/form/angular/level3c-upload-variations/v7` · Profile A
+- `http://localhost:3000/form/angular/level3c-upload-variations/v8` · Profile B
+- `http://localhost:3000/form/angular/level3c-upload-variations/v9` · Profile A
+- `http://localhost:3000/form/angular/level3c-upload-variations/v10` · Profile B
+- `http://localhost:3000/form/angular/level3d-combined-input-variations/v1` · Profile A
+- `http://localhost:3000/form/angular/level3d-combined-input-variations/v2` · Profile B
+- `http://localhost:3000/form/angular/level3d-combined-input-variations/v3` · Profile A
+- `http://localhost:3000/form/angular/level3d-combined-input-variations/v4` · Profile B
+- `http://localhost:3000/form/angular/level3d-combined-input-variations/v5` · Profile A
+- `http://localhost:3000/form/angular/level3d-combined-input-variations/v6` · Profile B
+- `http://localhost:3000/form/angular/level3d-combined-input-variations/v7` · Profile A
+- `http://localhost:3000/form/angular/level3d-combined-input-variations/v8` · Profile B
+- `http://localhost:3000/form/angular/level3d-combined-input-variations/v9` · Profile A
+- `http://localhost:3000/form/angular/level3d-combined-input-variations/v10` · Profile B
 - `http://localhost:3000/form/angular/level4-dynamic/v1` · Profile A
 - `http://localhost:3000/form/angular/level4-dynamic/v2` · Profile B
 - `http://localhost:3000/form/angular/level4-dynamic/v3` · Profile A
@@ -657,6 +909,36 @@ All `900` central URLs in order (stack → scenario → variant):
 - `http://localhost:3000/form/vue/level2-selection/v8` · Profile B
 - `http://localhost:3000/form/vue/level2-selection/v9` · Profile A
 - `http://localhost:3000/form/vue/level2-selection/v10` · Profile B
+- `http://localhost:3000/form/vue/level2a-dropdown-variations/v1` · Profile A
+- `http://localhost:3000/form/vue/level2a-dropdown-variations/v2` · Profile B
+- `http://localhost:3000/form/vue/level2a-dropdown-variations/v3` · Profile A
+- `http://localhost:3000/form/vue/level2a-dropdown-variations/v4` · Profile B
+- `http://localhost:3000/form/vue/level2a-dropdown-variations/v5` · Profile A
+- `http://localhost:3000/form/vue/level2a-dropdown-variations/v6` · Profile B
+- `http://localhost:3000/form/vue/level2a-dropdown-variations/v7` · Profile A
+- `http://localhost:3000/form/vue/level2a-dropdown-variations/v8` · Profile B
+- `http://localhost:3000/form/vue/level2a-dropdown-variations/v9` · Profile A
+- `http://localhost:3000/form/vue/level2a-dropdown-variations/v10` · Profile B
+- `http://localhost:3000/form/vue/level2b-radio-variations/v1` · Profile A
+- `http://localhost:3000/form/vue/level2b-radio-variations/v2` · Profile B
+- `http://localhost:3000/form/vue/level2b-radio-variations/v3` · Profile A
+- `http://localhost:3000/form/vue/level2b-radio-variations/v4` · Profile B
+- `http://localhost:3000/form/vue/level2b-radio-variations/v5` · Profile A
+- `http://localhost:3000/form/vue/level2b-radio-variations/v6` · Profile B
+- `http://localhost:3000/form/vue/level2b-radio-variations/v7` · Profile A
+- `http://localhost:3000/form/vue/level2b-radio-variations/v8` · Profile B
+- `http://localhost:3000/form/vue/level2b-radio-variations/v9` · Profile A
+- `http://localhost:3000/form/vue/level2b-radio-variations/v10` · Profile B
+- `http://localhost:3000/form/vue/level2c-checkbox-variations/v1` · Profile A
+- `http://localhost:3000/form/vue/level2c-checkbox-variations/v2` · Profile B
+- `http://localhost:3000/form/vue/level2c-checkbox-variations/v3` · Profile A
+- `http://localhost:3000/form/vue/level2c-checkbox-variations/v4` · Profile B
+- `http://localhost:3000/form/vue/level2c-checkbox-variations/v5` · Profile A
+- `http://localhost:3000/form/vue/level2c-checkbox-variations/v6` · Profile B
+- `http://localhost:3000/form/vue/level2c-checkbox-variations/v7` · Profile A
+- `http://localhost:3000/form/vue/level2c-checkbox-variations/v8` · Profile B
+- `http://localhost:3000/form/vue/level2c-checkbox-variations/v9` · Profile A
+- `http://localhost:3000/form/vue/level2c-checkbox-variations/v10` · Profile B
 - `http://localhost:3000/form/vue/level3-pickers/v1` · Profile A
 - `http://localhost:3000/form/vue/level3-pickers/v2` · Profile B
 - `http://localhost:3000/form/vue/level3-pickers/v3` · Profile A
@@ -667,6 +949,46 @@ All `900` central URLs in order (stack → scenario → variant):
 - `http://localhost:3000/form/vue/level3-pickers/v8` · Profile B
 - `http://localhost:3000/form/vue/level3-pickers/v9` · Profile A
 - `http://localhost:3000/form/vue/level3-pickers/v10` · Profile B
+- `http://localhost:3000/form/vue/level3a-date-format-variations/v1` · Profile A
+- `http://localhost:3000/form/vue/level3a-date-format-variations/v2` · Profile B
+- `http://localhost:3000/form/vue/level3a-date-format-variations/v3` · Profile A
+- `http://localhost:3000/form/vue/level3a-date-format-variations/v4` · Profile B
+- `http://localhost:3000/form/vue/level3a-date-format-variations/v5` · Profile A
+- `http://localhost:3000/form/vue/level3a-date-format-variations/v6` · Profile B
+- `http://localhost:3000/form/vue/level3a-date-format-variations/v7` · Profile A
+- `http://localhost:3000/form/vue/level3a-date-format-variations/v8` · Profile B
+- `http://localhost:3000/form/vue/level3a-date-format-variations/v9` · Profile A
+- `http://localhost:3000/form/vue/level3a-date-format-variations/v10` · Profile B
+- `http://localhost:3000/form/vue/level3b-date-picker-variations/v1` · Profile A
+- `http://localhost:3000/form/vue/level3b-date-picker-variations/v2` · Profile B
+- `http://localhost:3000/form/vue/level3b-date-picker-variations/v3` · Profile A
+- `http://localhost:3000/form/vue/level3b-date-picker-variations/v4` · Profile B
+- `http://localhost:3000/form/vue/level3b-date-picker-variations/v5` · Profile A
+- `http://localhost:3000/form/vue/level3b-date-picker-variations/v6` · Profile B
+- `http://localhost:3000/form/vue/level3b-date-picker-variations/v7` · Profile A
+- `http://localhost:3000/form/vue/level3b-date-picker-variations/v8` · Profile B
+- `http://localhost:3000/form/vue/level3b-date-picker-variations/v9` · Profile A
+- `http://localhost:3000/form/vue/level3b-date-picker-variations/v10` · Profile B
+- `http://localhost:3000/form/vue/level3c-upload-variations/v1` · Profile A
+- `http://localhost:3000/form/vue/level3c-upload-variations/v2` · Profile B
+- `http://localhost:3000/form/vue/level3c-upload-variations/v3` · Profile A
+- `http://localhost:3000/form/vue/level3c-upload-variations/v4` · Profile B
+- `http://localhost:3000/form/vue/level3c-upload-variations/v5` · Profile A
+- `http://localhost:3000/form/vue/level3c-upload-variations/v6` · Profile B
+- `http://localhost:3000/form/vue/level3c-upload-variations/v7` · Profile A
+- `http://localhost:3000/form/vue/level3c-upload-variations/v8` · Profile B
+- `http://localhost:3000/form/vue/level3c-upload-variations/v9` · Profile A
+- `http://localhost:3000/form/vue/level3c-upload-variations/v10` · Profile B
+- `http://localhost:3000/form/vue/level3d-combined-input-variations/v1` · Profile A
+- `http://localhost:3000/form/vue/level3d-combined-input-variations/v2` · Profile B
+- `http://localhost:3000/form/vue/level3d-combined-input-variations/v3` · Profile A
+- `http://localhost:3000/form/vue/level3d-combined-input-variations/v4` · Profile B
+- `http://localhost:3000/form/vue/level3d-combined-input-variations/v5` · Profile A
+- `http://localhost:3000/form/vue/level3d-combined-input-variations/v6` · Profile B
+- `http://localhost:3000/form/vue/level3d-combined-input-variations/v7` · Profile A
+- `http://localhost:3000/form/vue/level3d-combined-input-variations/v8` · Profile B
+- `http://localhost:3000/form/vue/level3d-combined-input-variations/v9` · Profile A
+- `http://localhost:3000/form/vue/level3d-combined-input-variations/v10` · Profile B
 - `http://localhost:3000/form/vue/level4-dynamic/v1` · Profile A
 - `http://localhost:3000/form/vue/level4-dynamic/v2` · Profile B
 - `http://localhost:3000/form/vue/level4-dynamic/v3` · Profile A
@@ -807,6 +1129,36 @@ All `900` central URLs in order (stack → scenario → variant):
 - `http://localhost:3000/form/php/level2-selection/v8` · Profile B
 - `http://localhost:3000/form/php/level2-selection/v9` · Profile A
 - `http://localhost:3000/form/php/level2-selection/v10` · Profile B
+- `http://localhost:3000/form/php/level2a-dropdown-variations/v1` · Profile A
+- `http://localhost:3000/form/php/level2a-dropdown-variations/v2` · Profile B
+- `http://localhost:3000/form/php/level2a-dropdown-variations/v3` · Profile A
+- `http://localhost:3000/form/php/level2a-dropdown-variations/v4` · Profile B
+- `http://localhost:3000/form/php/level2a-dropdown-variations/v5` · Profile A
+- `http://localhost:3000/form/php/level2a-dropdown-variations/v6` · Profile B
+- `http://localhost:3000/form/php/level2a-dropdown-variations/v7` · Profile A
+- `http://localhost:3000/form/php/level2a-dropdown-variations/v8` · Profile B
+- `http://localhost:3000/form/php/level2a-dropdown-variations/v9` · Profile A
+- `http://localhost:3000/form/php/level2a-dropdown-variations/v10` · Profile B
+- `http://localhost:3000/form/php/level2b-radio-variations/v1` · Profile A
+- `http://localhost:3000/form/php/level2b-radio-variations/v2` · Profile B
+- `http://localhost:3000/form/php/level2b-radio-variations/v3` · Profile A
+- `http://localhost:3000/form/php/level2b-radio-variations/v4` · Profile B
+- `http://localhost:3000/form/php/level2b-radio-variations/v5` · Profile A
+- `http://localhost:3000/form/php/level2b-radio-variations/v6` · Profile B
+- `http://localhost:3000/form/php/level2b-radio-variations/v7` · Profile A
+- `http://localhost:3000/form/php/level2b-radio-variations/v8` · Profile B
+- `http://localhost:3000/form/php/level2b-radio-variations/v9` · Profile A
+- `http://localhost:3000/form/php/level2b-radio-variations/v10` · Profile B
+- `http://localhost:3000/form/php/level2c-checkbox-variations/v1` · Profile A
+- `http://localhost:3000/form/php/level2c-checkbox-variations/v2` · Profile B
+- `http://localhost:3000/form/php/level2c-checkbox-variations/v3` · Profile A
+- `http://localhost:3000/form/php/level2c-checkbox-variations/v4` · Profile B
+- `http://localhost:3000/form/php/level2c-checkbox-variations/v5` · Profile A
+- `http://localhost:3000/form/php/level2c-checkbox-variations/v6` · Profile B
+- `http://localhost:3000/form/php/level2c-checkbox-variations/v7` · Profile A
+- `http://localhost:3000/form/php/level2c-checkbox-variations/v8` · Profile B
+- `http://localhost:3000/form/php/level2c-checkbox-variations/v9` · Profile A
+- `http://localhost:3000/form/php/level2c-checkbox-variations/v10` · Profile B
 - `http://localhost:3000/form/php/level3-pickers/v1` · Profile A
 - `http://localhost:3000/form/php/level3-pickers/v2` · Profile B
 - `http://localhost:3000/form/php/level3-pickers/v3` · Profile A
@@ -817,6 +1169,46 @@ All `900` central URLs in order (stack → scenario → variant):
 - `http://localhost:3000/form/php/level3-pickers/v8` · Profile B
 - `http://localhost:3000/form/php/level3-pickers/v9` · Profile A
 - `http://localhost:3000/form/php/level3-pickers/v10` · Profile B
+- `http://localhost:3000/form/php/level3a-date-format-variations/v1` · Profile A
+- `http://localhost:3000/form/php/level3a-date-format-variations/v2` · Profile B
+- `http://localhost:3000/form/php/level3a-date-format-variations/v3` · Profile A
+- `http://localhost:3000/form/php/level3a-date-format-variations/v4` · Profile B
+- `http://localhost:3000/form/php/level3a-date-format-variations/v5` · Profile A
+- `http://localhost:3000/form/php/level3a-date-format-variations/v6` · Profile B
+- `http://localhost:3000/form/php/level3a-date-format-variations/v7` · Profile A
+- `http://localhost:3000/form/php/level3a-date-format-variations/v8` · Profile B
+- `http://localhost:3000/form/php/level3a-date-format-variations/v9` · Profile A
+- `http://localhost:3000/form/php/level3a-date-format-variations/v10` · Profile B
+- `http://localhost:3000/form/php/level3b-date-picker-variations/v1` · Profile A
+- `http://localhost:3000/form/php/level3b-date-picker-variations/v2` · Profile B
+- `http://localhost:3000/form/php/level3b-date-picker-variations/v3` · Profile A
+- `http://localhost:3000/form/php/level3b-date-picker-variations/v4` · Profile B
+- `http://localhost:3000/form/php/level3b-date-picker-variations/v5` · Profile A
+- `http://localhost:3000/form/php/level3b-date-picker-variations/v6` · Profile B
+- `http://localhost:3000/form/php/level3b-date-picker-variations/v7` · Profile A
+- `http://localhost:3000/form/php/level3b-date-picker-variations/v8` · Profile B
+- `http://localhost:3000/form/php/level3b-date-picker-variations/v9` · Profile A
+- `http://localhost:3000/form/php/level3b-date-picker-variations/v10` · Profile B
+- `http://localhost:3000/form/php/level3c-upload-variations/v1` · Profile A
+- `http://localhost:3000/form/php/level3c-upload-variations/v2` · Profile B
+- `http://localhost:3000/form/php/level3c-upload-variations/v3` · Profile A
+- `http://localhost:3000/form/php/level3c-upload-variations/v4` · Profile B
+- `http://localhost:3000/form/php/level3c-upload-variations/v5` · Profile A
+- `http://localhost:3000/form/php/level3c-upload-variations/v6` · Profile B
+- `http://localhost:3000/form/php/level3c-upload-variations/v7` · Profile A
+- `http://localhost:3000/form/php/level3c-upload-variations/v8` · Profile B
+- `http://localhost:3000/form/php/level3c-upload-variations/v9` · Profile A
+- `http://localhost:3000/form/php/level3c-upload-variations/v10` · Profile B
+- `http://localhost:3000/form/php/level3d-combined-input-variations/v1` · Profile A
+- `http://localhost:3000/form/php/level3d-combined-input-variations/v2` · Profile B
+- `http://localhost:3000/form/php/level3d-combined-input-variations/v3` · Profile A
+- `http://localhost:3000/form/php/level3d-combined-input-variations/v4` · Profile B
+- `http://localhost:3000/form/php/level3d-combined-input-variations/v5` · Profile A
+- `http://localhost:3000/form/php/level3d-combined-input-variations/v6` · Profile B
+- `http://localhost:3000/form/php/level3d-combined-input-variations/v7` · Profile A
+- `http://localhost:3000/form/php/level3d-combined-input-variations/v8` · Profile B
+- `http://localhost:3000/form/php/level3d-combined-input-variations/v9` · Profile A
+- `http://localhost:3000/form/php/level3d-combined-input-variations/v10` · Profile B
 - `http://localhost:3000/form/php/level4-dynamic/v1` · Profile A
 - `http://localhost:3000/form/php/level4-dynamic/v2` · Profile B
 - `http://localhost:3000/form/php/level4-dynamic/v3` · Profile A
@@ -957,6 +1349,36 @@ All `900` central URLs in order (stack → scenario → variant):
 - `http://localhost:3000/form/flask/level2-selection/v8` · Profile B
 - `http://localhost:3000/form/flask/level2-selection/v9` · Profile A
 - `http://localhost:3000/form/flask/level2-selection/v10` · Profile B
+- `http://localhost:3000/form/flask/level2a-dropdown-variations/v1` · Profile A
+- `http://localhost:3000/form/flask/level2a-dropdown-variations/v2` · Profile B
+- `http://localhost:3000/form/flask/level2a-dropdown-variations/v3` · Profile A
+- `http://localhost:3000/form/flask/level2a-dropdown-variations/v4` · Profile B
+- `http://localhost:3000/form/flask/level2a-dropdown-variations/v5` · Profile A
+- `http://localhost:3000/form/flask/level2a-dropdown-variations/v6` · Profile B
+- `http://localhost:3000/form/flask/level2a-dropdown-variations/v7` · Profile A
+- `http://localhost:3000/form/flask/level2a-dropdown-variations/v8` · Profile B
+- `http://localhost:3000/form/flask/level2a-dropdown-variations/v9` · Profile A
+- `http://localhost:3000/form/flask/level2a-dropdown-variations/v10` · Profile B
+- `http://localhost:3000/form/flask/level2b-radio-variations/v1` · Profile A
+- `http://localhost:3000/form/flask/level2b-radio-variations/v2` · Profile B
+- `http://localhost:3000/form/flask/level2b-radio-variations/v3` · Profile A
+- `http://localhost:3000/form/flask/level2b-radio-variations/v4` · Profile B
+- `http://localhost:3000/form/flask/level2b-radio-variations/v5` · Profile A
+- `http://localhost:3000/form/flask/level2b-radio-variations/v6` · Profile B
+- `http://localhost:3000/form/flask/level2b-radio-variations/v7` · Profile A
+- `http://localhost:3000/form/flask/level2b-radio-variations/v8` · Profile B
+- `http://localhost:3000/form/flask/level2b-radio-variations/v9` · Profile A
+- `http://localhost:3000/form/flask/level2b-radio-variations/v10` · Profile B
+- `http://localhost:3000/form/flask/level2c-checkbox-variations/v1` · Profile A
+- `http://localhost:3000/form/flask/level2c-checkbox-variations/v2` · Profile B
+- `http://localhost:3000/form/flask/level2c-checkbox-variations/v3` · Profile A
+- `http://localhost:3000/form/flask/level2c-checkbox-variations/v4` · Profile B
+- `http://localhost:3000/form/flask/level2c-checkbox-variations/v5` · Profile A
+- `http://localhost:3000/form/flask/level2c-checkbox-variations/v6` · Profile B
+- `http://localhost:3000/form/flask/level2c-checkbox-variations/v7` · Profile A
+- `http://localhost:3000/form/flask/level2c-checkbox-variations/v8` · Profile B
+- `http://localhost:3000/form/flask/level2c-checkbox-variations/v9` · Profile A
+- `http://localhost:3000/form/flask/level2c-checkbox-variations/v10` · Profile B
 - `http://localhost:3000/form/flask/level3-pickers/v1` · Profile A
 - `http://localhost:3000/form/flask/level3-pickers/v2` · Profile B
 - `http://localhost:3000/form/flask/level3-pickers/v3` · Profile A
@@ -967,6 +1389,46 @@ All `900` central URLs in order (stack → scenario → variant):
 - `http://localhost:3000/form/flask/level3-pickers/v8` · Profile B
 - `http://localhost:3000/form/flask/level3-pickers/v9` · Profile A
 - `http://localhost:3000/form/flask/level3-pickers/v10` · Profile B
+- `http://localhost:3000/form/flask/level3a-date-format-variations/v1` · Profile A
+- `http://localhost:3000/form/flask/level3a-date-format-variations/v2` · Profile B
+- `http://localhost:3000/form/flask/level3a-date-format-variations/v3` · Profile A
+- `http://localhost:3000/form/flask/level3a-date-format-variations/v4` · Profile B
+- `http://localhost:3000/form/flask/level3a-date-format-variations/v5` · Profile A
+- `http://localhost:3000/form/flask/level3a-date-format-variations/v6` · Profile B
+- `http://localhost:3000/form/flask/level3a-date-format-variations/v7` · Profile A
+- `http://localhost:3000/form/flask/level3a-date-format-variations/v8` · Profile B
+- `http://localhost:3000/form/flask/level3a-date-format-variations/v9` · Profile A
+- `http://localhost:3000/form/flask/level3a-date-format-variations/v10` · Profile B
+- `http://localhost:3000/form/flask/level3b-date-picker-variations/v1` · Profile A
+- `http://localhost:3000/form/flask/level3b-date-picker-variations/v2` · Profile B
+- `http://localhost:3000/form/flask/level3b-date-picker-variations/v3` · Profile A
+- `http://localhost:3000/form/flask/level3b-date-picker-variations/v4` · Profile B
+- `http://localhost:3000/form/flask/level3b-date-picker-variations/v5` · Profile A
+- `http://localhost:3000/form/flask/level3b-date-picker-variations/v6` · Profile B
+- `http://localhost:3000/form/flask/level3b-date-picker-variations/v7` · Profile A
+- `http://localhost:3000/form/flask/level3b-date-picker-variations/v8` · Profile B
+- `http://localhost:3000/form/flask/level3b-date-picker-variations/v9` · Profile A
+- `http://localhost:3000/form/flask/level3b-date-picker-variations/v10` · Profile B
+- `http://localhost:3000/form/flask/level3c-upload-variations/v1` · Profile A
+- `http://localhost:3000/form/flask/level3c-upload-variations/v2` · Profile B
+- `http://localhost:3000/form/flask/level3c-upload-variations/v3` · Profile A
+- `http://localhost:3000/form/flask/level3c-upload-variations/v4` · Profile B
+- `http://localhost:3000/form/flask/level3c-upload-variations/v5` · Profile A
+- `http://localhost:3000/form/flask/level3c-upload-variations/v6` · Profile B
+- `http://localhost:3000/form/flask/level3c-upload-variations/v7` · Profile A
+- `http://localhost:3000/form/flask/level3c-upload-variations/v8` · Profile B
+- `http://localhost:3000/form/flask/level3c-upload-variations/v9` · Profile A
+- `http://localhost:3000/form/flask/level3c-upload-variations/v10` · Profile B
+- `http://localhost:3000/form/flask/level3d-combined-input-variations/v1` · Profile A
+- `http://localhost:3000/form/flask/level3d-combined-input-variations/v2` · Profile B
+- `http://localhost:3000/form/flask/level3d-combined-input-variations/v3` · Profile A
+- `http://localhost:3000/form/flask/level3d-combined-input-variations/v4` · Profile B
+- `http://localhost:3000/form/flask/level3d-combined-input-variations/v5` · Profile A
+- `http://localhost:3000/form/flask/level3d-combined-input-variations/v6` · Profile B
+- `http://localhost:3000/form/flask/level3d-combined-input-variations/v7` · Profile A
+- `http://localhost:3000/form/flask/level3d-combined-input-variations/v8` · Profile B
+- `http://localhost:3000/form/flask/level3d-combined-input-variations/v9` · Profile A
+- `http://localhost:3000/form/flask/level3d-combined-input-variations/v10` · Profile B
 - `http://localhost:3000/form/flask/level4-dynamic/v1` · Profile A
 - `http://localhost:3000/form/flask/level4-dynamic/v2` · Profile B
 - `http://localhost:3000/form/flask/level4-dynamic/v3` · Profile A

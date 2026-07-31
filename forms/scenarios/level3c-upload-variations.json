@@ -1,0 +1,27 @@
+{
+  "id": "level3c-upload-variations",
+  "level": 3,
+  "name": "Level 3c — Document Upload Variations",
+  "description": "Tests native file inputs, drag-and-drop zones, multiple-file inputs, and camera-capture upload buttons.",
+  "stressFlags": {},
+  "fields": [
+    { "id": "full_name", "label": "Full Name", "type": "text", "required": true },
+    { "id": "upload_pan", "label": "PAN Card Document", "type": "file", "required": false, "accept": ".jpg,.png,.pdf" },
+    { "id": "upload_pan_dropzone", "label": "PAN Card Document (Dropzone)", "type": "file_dropzone", "required": false, "accept": ".jpg,.png,.pdf" },
+    { "id": "upload_aadhaar_front", "label": "Aadhaar Front", "type": "file", "required": false, "accept": ".jpg,.png,.pdf" },
+    { "id": "upload_aadhaar_multiple", "label": "Aadhaar Documents (Multiple)", "type": "file_multiple", "required": false, "accept": ".jpg,.png,.pdf" },
+    { "id": "upload_photo", "label": "Applicant Photo", "type": "file", "required": false, "accept": ".jpg,.png" },
+    { "id": "upload_photo_camera", "label": "Applicant Photo (Camera)", "type": "file_camera", "required": false, "accept": ".jpg,.png" },
+    { "id": "upload_signature", "label": "Applicant Specimen Signature", "type": "file", "required": false, "accept": ".jpg,.png" }
+  ],
+  "groundTruth": {
+    "full_name": "Rajesh Kumar Sharma",
+    "upload_pan": null,
+    "upload_pan_dropzone": null,
+    "upload_aadhaar_front": null,
+    "upload_aadhaar_multiple": null,
+    "upload_photo": null,
+    "upload_photo_camera": null,
+    "upload_signature": null
+  }
+}

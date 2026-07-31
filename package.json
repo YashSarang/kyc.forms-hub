@@ -1,7 +1,7 @@
 {
   "name": "kyc-form-hub",
-  "version": "1.1.0",
-  "description": "Benchmark platform for evaluating AI form-filling agents across 50+ canonical KYC fields, 6 web tech stacks, 7 difficulty levels, and adversarial issue variants.",
+  "version": "1.2.0",
+  "description": "Benchmark platform for evaluating AI form-filling agents across 89 canonical KYC fields (68 core + 21 widget variations), 6 web tech stacks, 7 difficulty levels, and adversarial issue variants.",
   "main": "server/index.js",
   "scripts": {
     "start": "node server/index.js",

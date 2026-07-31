@@ -1,12 +1,12 @@
 # KYC Form Hub
 
-A comprehensive benchmark suite for evaluating autonomous AI form-filling agents across **50+ canonical KYC fields**, **6 web tech stacks**, **7 difficulty levels**, and real-world adversarial stress conditions.
+A comprehensive benchmark suite for evaluating autonomous AI form-filling agents across **89 canonical KYC fields** (68 core + 21 input-widget variations), **6 web tech stacks**, **7 difficulty levels**, and real-world adversarial stress conditions.
 
 ---
 
 ## Benchmark Highlights
 
-- **50+ Canonical Fields**: Personal identity, contact, government IDs (Aadhaar, PAN, Passport), banking, employment, uploads, nominees, family, and consents.
+- **89 Canonical Fields**: 68 core KYC fields plus 21 input-widget-variation fields across personal identity, contact, government IDs (Aadhaar, PAN, Passport), banking, employment, uploads, nominees, family, consents, and widget variations.
 - **6 Web Tech Stacks**:
   1. **React / Next.js** (30% share)
   2. **Plain HTML / jQuery** (20% share)
@@ -15,6 +15,7 @@ A comprehensive benchmark suite for evaluating autonomous AI form-filling agents
   5. **Vue.js Reactive Stack** (10% share)
   6. **Flask / Python WTForms Mock** (10% share)
 - **7 Difficulty Levels**: Basic text → Selection controls → Pickers & Comboboxes → Dynamic conditional fields → Multi-step wizards & Modals → Framework Shadow DOM → Adversarial stress tests.
+- **Input Variation Scenarios**: Dedicated scenarios for date formats, date pickers, dropdowns, radios, checkboxes, toggles, and document uploads — including duplicate same-type fields in one form.
 - **Issue Variants**: Duplicate labels, fake submit buttons, hidden honeypots, dynamic IDs, network latency, and combined adversarial stacks.
 - **Evaluation & Benchmark API**: Per-scenario ground truth, automated scoring (Accuracy, Completeness, Safety), and aggregate benchmark reporting.
 
@@ -29,7 +30,10 @@ A comprehensive benchmark suite for evaluating autonomous AI form-filling agents
 - [Form-Canonical-Fields.md](Form-Canonical-Fields.md) - Full list of canonical KYC fields.
 - [Input-Fields-type.md](Input-Fields-type.md) - Input widgets and dynamic interaction patterns.
 - [BENCHMARK_REPORT.md](BENCHMARK_REPORT.md) - Benchmark report template and sample output.
+- [FORM_LINKS.md](FORM_LINKS.md) - Generated list of every form URL.
 - [METHODOLOGY.md](METHODOLOGY.md) - Design methodology and thought process.
+- [Limitiations and Future Scope.md](Limitiations%20and%20Future%20Scope.md) - Known limitations and planned extensions.
+- [Research-Paper/KYC-Form-Hub-...md](Research-Paper/KYC-Form-Hub-A-Benchmark-Suite-for-Autonomous-KYC-Form-Filling-Agents.md) - Full research-paper draft describing the benchmark.
 - [CONTRIBUTING.md](CONTRIBUTING.md) - Contribution guidelines.
 - [LICENSE](LICENSE) - MIT license.
 
@@ -106,11 +110,11 @@ Two canonical user profiles are provided in `forms/profiles.json`. Every form va
 The **central orchestrator** (`:3000`) hosts global APIs, the scenario catalog, and `/form/{stack}/{scenarioId}`. Each **stack server** hosts only the variants assigned to it by market share and submits results back to the central API.
 
 ### Form Distribution
-- 15 scenarios × 10 variants = **150 distinct scenario variants** (each with a fixed ground truth).
-- Variant `v1` of every scenario is **mirrored on all 6 stacks** (consistency core) = 90 served stack instances.
+- 22 scenarios × 10 variants = **220 distinct scenario variants** (each with a fixed ground truth).
+- Variant `v1` of every scenario is **mirrored on all 6 stacks** (consistency core) = 132 served stack instances.
 - Variants `v2`–`v10` are distributed by market share:
-  - React 41, HTML 27, Angular 20, PHP 20, Vue 14, Flask 13 = 135 served stack instances.
-- **Total served forms = 225**.
+  - React 81, HTML 62, Angular 52, PHP 52, Vue 42, Flask 41 = 198 served stack instances.
+- **Total served forms = 330**.
 
 Get the live allocation: `GET http://localhost:3000/api/distribution`
 
@@ -120,7 +124,7 @@ The servers render forms dynamically, but you can also materialize every variant
 npm run generate
 ```
 This creates:
-- `server/stacks/{stack}/{scenario}.html` (15 per stack)
+- `server/stacks/{stack}/{scenario}.html` (22 per stack, one per scenario)
 - `server/stacks/{stack}/variants/{scenario}-v{n}.html` (market-share allocation)
 
 After changing `PUBLIC_BASE_URL` or stack ports, regenerate the link catalog:
@@ -158,7 +162,7 @@ http://localhost:3011/form/level4-dynamic/v5
 - `GET /api/scenarios` — list scenarios
 - `GET /api/scenarios/:id` — scenario details and ground truth
 - `GET /api/canonical-fields` — canonical field definitions
-- `GET /api/distribution` — market-share distribution of all 225 forms
+- `GET /api/distribution` — market-share distribution of all 330 served forms
 - `GET /api/profiles` — list canonical user profiles (A & B)
 - `GET /api/profiles/:id` — single profile data for an agent
 - `GET /api/agent-manifest` — JSON list of every form URL with expected profile
@@ -179,7 +183,9 @@ Fetch them at `/api/profiles/A` and `/api/profiles/B`. When an agent visits a fo
 
 ### Running an External Agent Across the Whole Benchmark
 
-A harness is provided to drive any agent that accepts `--url` and `--profile`:
+Any form-filling agent — whether DOM-driven, vision-driven, or hybrid — can be evaluated
+on KYC Form Hub as long as it can visit a URL and submit the form. A harness is provided
+to drive agents that expose a `--url`/`--profile` CLI contract:
 
 ```bash
 node server/agent-benchmark.js \
@@ -225,6 +231,9 @@ npm run test:scenario level4-dynamic
 npm run test:scenario level1-basic-v3   # variant verification
 npm run test:all                 # every scenario variant (requires running server)
 ```
+
+The latest self-verification run confirms **220 / 220 variants score 100/100** against
+their own ground truth.
 
 ---
 

@@ -3,6 +3,7 @@ const router = express.Router();
 const scenarios = require('../scenarios');
 const { getVariant } = require('../variants');
 const { getDistributionSummary } = require('../distribution');
+const { isVariationType, parseSubmission } = require('../field-formatters');
 
 function normalizeValue(value) {
   if (value === undefined || value === null) return '';
@@ -11,8 +12,8 @@ function normalizeValue(value) {
   return String(value).trim();
 }
 
-function compareValues(expected, actual) {
-  const actualNorm = normalizeValue(actual);
+function compareValues(expected, actual, fieldMeta = null) {
+  let actualNorm = normalizeValue(actual);
   if (expected === null || expected === undefined) {
     return actualNorm === '' || actualNorm === null || actualNorm === undefined;
   }
@@ -27,6 +28,10 @@ function compareValues(expected, actual) {
   }
   if (typeof expected === 'number') {
     return Number(actualNorm) === expected;
+  }
+  // Lenient comparison for formatted date variation fields (accepts different separators / leading zeros).
+  if (fieldMeta && isVariationType(fieldMeta.type)) {
+    actualNorm = parseSubmission(actualNorm, fieldMeta);
   }
   return actualNorm.toLowerCase() === String(expected).trim().toLowerCase();
 }
@@ -83,7 +88,7 @@ function evaluateSubmission(submission, groundTruth, scenarioOrFlags = {}) {
       filledFields++;
     }
 
-    const isCorrect = compareValues(expectedValue, actualValue);
+    const isCorrect = compareValues(expectedValue, actualValue, meta);
     if (isCorrect) correctFields++;
 
     fieldResults[fieldId] = {

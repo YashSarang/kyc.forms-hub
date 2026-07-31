@@ -1,0 +1,25 @@
+{
+  "id": "level2b-radio-variations",
+  "level": 2,
+  "name": "Level 2b — Radio Button Variations",
+  "description": "Tests inline radio groups, card-style radio selections, segmented controls, and duplicate radio groups.",
+  "stressFlags": {},
+  "fields": [
+    { "id": "full_name", "label": "Full Name", "type": "text", "required": true },
+    { "id": "gender", "label": "Gender", "type": "radio", "required": true, "options": ["Male", "Female", "Other", "Prefer not to say"] },
+    { "id": "gender_radio_inline", "label": "Gender (Inline Radio)", "type": "radio_inline", "required": true, "options": ["Male", "Female", "Other", "Prefer not to say"] },
+    { "id": "gender_radio_cards", "label": "Gender (Card Selection)", "type": "radio_cards", "required": true, "options": ["Male", "Female", "Other", "Prefer not to say"] },
+    { "id": "account_type", "label": "Account Type", "type": "radio", "required": true, "options": ["Savings", "Current", "Salary"] },
+    { "id": "account_type_segmented", "label": "Account Type (Segmented)", "type": "segmented", "required": true, "options": ["Savings", "Current", "Salary"] },
+    { "id": "account_type_cards", "label": "Account Type (Cards)", "type": "radio_cards", "required": true, "options": ["Savings", "Current", "Salary"] }
+  ],
+  "groundTruth": {
+    "full_name": "Rajesh Kumar Sharma",
+    "gender": "Male",
+    "gender_radio_inline": "Male",
+    "gender_radio_cards": "Male",
+    "account_type": "Savings",
+    "account_type_segmented": "Savings",
+    "account_type_cards": "Savings"
+  }
+}

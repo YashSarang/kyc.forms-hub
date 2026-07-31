@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const scenarios = require('./scenarios');
+const { formatValue } = require('./field-formatters');
 
 const VARIANTS_PER_SCENARIO = 10;
 
@@ -27,11 +28,17 @@ function getAllProfiles() {
   return Object.values(profiles);
 }
 
-function getProfileValue(profile, fieldId) {
+function getProfileValue(profile, fieldId, field = null) {
   if (!profile) return undefined;
-  if (profile.data[fieldId] !== undefined) return profile.data[fieldId];
-  const alias = FIELD_ALIASES[fieldId];
-  if (alias && profile.data[alias] !== undefined) return profile.data[alias];
+
+  // Explicit profileKey overrides id/alias mapping (used by input-variation fields).
+  const profileKey = field && field.profileKey
+    ? field.profileKey
+    : (FIELD_ALIASES[fieldId] || fieldId);
+
+  if (profile.data[profileKey] !== undefined) {
+    return formatValue(profile.data[profileKey], field || { type: 'text' });
+  }
   return undefined;
 }
 
@@ -63,7 +70,7 @@ function resolveScenarioGroundTruth(scenario, profileId) {
     }
 
     // Use the active profile value when available (this is the source of truth).
-    const profileValue = getProfileValue(profile, fieldId);
+    const profileValue = getProfileValue(profile, fieldId, field);
     if (profileValue !== undefined) {
       gt[fieldId] = profileValue;
       return;
@@ -76,9 +83,10 @@ function resolveScenarioGroundTruth(scenario, profileId) {
   // Preserve any extra scenario ground-truth keys (e.g. legacy honeypots not in fields).
   Object.keys(baseGt).forEach(fieldId => {
     if (!(fieldId in gt)) {
+      const field = scenario.fields.find(f => f.id === fieldId) || null;
       gt[fieldId] = isHoneypotField(fieldId, scenario)
         ? baseGt[fieldId]
-        : (getProfileValue(profile, fieldId) !== undefined ? getProfileValue(profile, fieldId) : baseGt[fieldId]);
+        : (getProfileValue(profile, fieldId, field) !== undefined ? getProfileValue(profile, fieldId, field) : baseGt[fieldId]);
     }
   });
 

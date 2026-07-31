@@ -57,17 +57,17 @@ To evaluate agent robustness across real-world web environments, target forms ar
 
 ### Market-Share Distribution
 
-Each of the 15 scenarios has 10 deterministic variants. Variant `v1` is mirrored to every stack (consistency core). Variants `v2`–`v10` are allocated by share:
+Each of the 22 scenarios has 10 deterministic variants. Variant `v1` is mirrored to every stack (consistency core). Variants `v2`–`v10` are allocated by share:
 
 | Stack | Share | v2-v10 Allocated | Total Forms |
 | :--- | :---: | :---: | :---: |
-| React | 30% | 41 | 56 |
-| HTML / jQuery | 20% | 27 | 42 |
-| Angular | 15% | 20 | 35 |
-| PHP | 15% | 20 | 35 |
-| Vue | 10% | 14 | 29 |
-| Flask | 10% | 13 | 28 |
-| **Total** | **100%** | **135** | **225** |
+| React | 30% | 59 | 81 |
+| HTML / jQuery | 20% | 40 | 62 |
+| Angular | 15% | 30 | 52 |
+| PHP | 15% | 30 | 52 |
+| Vue | 10% | 20 | 42 |
+| Flask | 10% | 19 | 41 |
+| **Total** | **100%** | **198** | **330** |
 
 Allocation is computed by `server/distribution.js` and exposed via `GET /api/distribution`.
 
@@ -76,8 +76,8 @@ Allocation is computed by `server/distribution.js` and exposed via `GET /api/dis
 ## 4. Difficulty Matrix (Levels 1–7)
 
 1. **Level 1 (Basic Text)**: Standard single-line text, email, phone number fields.
-2. **Level 2 (Selection Controls)**: Native dropdowns, radio buttons, checkboxes, toggle switches.
-3. **Level 3 (Complex Inputs)**: Datepickers, autocomplete/typeahead inputs, searchable comboboxes.
+2. **Level 2 (Selection Controls)**: Native dropdowns, radio buttons, checkboxes, toggle switches, segmented controls, custom dropdowns, and card-style selections.
+3. **Level 3 (Complex Inputs)**: Native date pickers, multiple date formats (DD/MM/YYYY, MM/DD/YYYY, YYYY-MM-DD), manual day/month/year selectors, calendar popups, month/year inputs, searchable comboboxes, drag-and-drop uploads, multiple-file inputs, and camera-capture uploads.
 4. **Level 4 (Dynamic Rules)**: Conditional fields (e.g., spouse name on marital status), cascading dropdowns (Country -> State -> City), live validation (PAN/Aadhaar regex).
 5. **Level 5 (Modals & Multi-step)**: Wizards with step validation, side-drawers, popups, embedded iframes.
 6. **Level 6 (Advanced Framework Features)**: Custom Web Components, Shadow DOM encapsulations, virtualized lists.
@@ -89,8 +89,9 @@ Allocation is computed by `server/distribution.js` and exposed via `GET /api/dis
 
 The benchmark is driven by JSON scenario definitions in `forms/scenarios/`:
 
-- **Level 0** (`baseline`): full canonical 50+ field KYC form for repeatable cross-stack comparison.
+- **Level 0** (`baseline`): full canonical 89-field KYC form (68 core + 21 widget variations) for repeatable cross-stack comparison.
 - **Levels 1–7**: progressively harder interaction patterns.
+- **Input-variation scenarios**: focused scenarios for date formats, date pickers, dropdowns, radios, checkboxes, uploads, and combined widget mixes (levels 2a–2c and 3a–3d).
 - **Issue variants**: focused adversarial stress tests (duplicate labels, fake buttons, hidden honeypots, dynamic IDs, network delay, shadow DOM, combined).
 
 Each scenario declares:

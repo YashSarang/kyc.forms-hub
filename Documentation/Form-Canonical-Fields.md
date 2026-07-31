@@ -103,3 +103,38 @@ This document lists the complete canonical KYC field set used by the benchmark. 
 - Branch Code
 - Agent ID
 - Referral Code
+
+## Input Widget Variations
+
+The following additional canonical fields exercise different widget implementations for the same logical data. Each maps back to an existing profile key (e.g., `dob_dmy_text` maps to the profile `dob` value, formatted as `DD/MM/YYYY`).
+
+### Date variations
+- Date of Birth (DD/MM/YYYY text)
+- Date of Birth (MM/DD/YYYY text)
+- Date of Birth (YYYY-MM-DD text)
+- Date of Birth (Day / Month / Year selects)
+- Date of Birth (Calendar picker)
+- Nominee Date of Birth (DD/MM/YYYY text)
+- Month / Year
+
+### Selector variations
+- Nationality (Custom dropdown)
+- Bank Name (Custom dropdown)
+- Income Range (Searchable dropdown)
+- Marital Status (Segmented control)
+
+### Radio variations
+- Gender (Inline radio)
+- Gender (Card selection)
+- Account Type (Segmented control)
+- Account Type (Cards)
+
+### Checkbox / toggle variations
+- eSign Consent (Toggle switch)
+- Terms & Conditions (Card checkbox)
+- Same-as-current-address (Toggle switch)
+
+### Upload variations
+- PAN Card Document (Drag-and-drop zone)
+- Aadhaar Documents (Multiple-file input)
+- Applicant Photo (Camera capture)

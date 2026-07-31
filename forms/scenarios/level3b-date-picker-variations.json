@@ -1,0 +1,23 @@
+{
+  "id": "level3b-date-picker-variations",
+  "level": 3,
+  "name": "Level 3b — Date Picker Widget Variations",
+  "description": "Tests native date pickers, manual day/month/year selectors, month/year inputs, and calendar-popup pickers.",
+  "stressFlags": {},
+  "fields": [
+    { "id": "full_name", "label": "Full Name", "type": "text", "required": true },
+    { "id": "dob", "label": "Date of Birth (Native Date Picker)", "type": "date", "required": true },
+    { "id": "dob_dmy_selects", "label": "Date of Birth (Day / Month / Year)", "type": "date_dmy_selects", "required": true },
+    { "id": "dob_calendar", "label": "Date of Birth (Calendar Picker)", "type": "date_calendar", "required": true },
+    { "id": "nominee_dob", "label": "Nominee Date of Birth (Native Date Picker)", "type": "date", "required": true },
+    { "id": "nominee_dob_dmy_text", "label": "Nominee Date of Birth (DD/MM/YYYY)", "type": "date_dmy_text", "required": true, "placeholder": "12/04/1987" }
+  ],
+  "groundTruth": {
+    "full_name": "Rajesh Kumar Sharma",
+    "dob": "1985-07-18",
+    "dob_dmy_selects": "18/07/1985",
+    "dob_calendar": "18/07/1985",
+    "nominee_dob": "1987-04-12",
+    "nominee_dob_dmy_text": "12/04/1987"
+  }
+}

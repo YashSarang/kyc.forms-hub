@@ -61,7 +61,7 @@ Scenarios are JSON files in `forms/scenarios/`. Each scenario declares:
 - `stressFlags`: adversarial toggles
 - `groundTruth`: overrides for the canonical data
 
-The scenario loader (`server/scenarios.js`) resolves `"canonical"` against `forms/canonical-fields.json` and merges per-field overrides. This avoids duplicating the full 50+ field list in every scenario file.
+The scenario loader (`server/scenarios.js`) resolves `"canonical"` against `forms/canonical-fields.json` and merges per-field overrides. This avoids duplicating the full 89-field list in every scenario file.
 
 ### 4.2 Variant Resolution
 `server/variants.js` builds variants by combining a scenario with a profile. Honeypots are always forced to an empty expected value, regardless of profile. Other fields fall back through profile value → scenario ground truth → `null`.
@@ -120,10 +120,23 @@ We recommend starting with the JSON file and migrating to SQLite or webhooks onc
 
 ## 7. Future Directions
 
-- Implement true multi-step wizards, modal fields, and iframe embedding in renderers.
+Implemented since this section was first written:
+
+- ✅ Systematic input widget variations (date formats, date pickers, dropdowns, radios,
+  checkboxes, toggles, uploads) across dedicated scenarios.
+- ✅ Shared, framework-agnostic custom web components used in all 6 stacks.
+- ✅ Exhaustive self-verification (`npm run test:all`) confirming 220/220 variants pass.
+
+Still open:
+
+- Implement richer multi-step wizards, modal fields, and iframe embedding in renderers.
 - Add CAPTCHA detection placeholder and rate-limiting middleware.
-- Add more geographic profiles (US, EU) by swapping `forms/ground-truth.json` and option maps.
+- Add more geographic profiles (US, EU) by introducing new profile records and option maps.
 - Add regression and per-field analytics on top of benchmark storage.
+- Publish cross-model agent evaluation results using the benchmark surface.
+
+See [`Limitiations and Future Scope.md`](Limitiations%20and%20Future%20Scope.md) for a
+full, up-to-date treatment.
 
 ## 8. Summary
 

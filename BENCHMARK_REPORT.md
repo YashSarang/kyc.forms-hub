@@ -27,14 +27,21 @@ Fetch the full profile JSON from `/api/profiles/A` and `/api/profiles/B`. The ag
 
 ## 3. Scenarios Covered
 
-The suite currently exposes 15 scenarios across 6 stacks:
+The suite currently exposes **22 scenarios** across 6 stacks:
 
 | Level | Scenario | Stacks |
 |-------|----------|--------|
 | 0 | `baseline` | html, react, angular, vue, php, flask |
 | 1 | `level1-basic` | html, react, angular, vue, php, flask |
 | 2 | `level2-selection` | html, react, angular, vue, php, flask |
+| 2 | `level2a-dropdown-variations` | html, react, angular, vue, php, flask |
+| 2 | `level2b-radio-variations` | html, react, angular, vue, php, flask |
+| 2 | `level2c-checkbox-variations` | html, react, angular, vue, php, flask |
 | 3 | `level3-pickers` | html, react, angular, vue, php, flask |
+| 3 | `level3a-date-format-variations` | html, react, angular, vue, php, flask |
+| 3 | `level3b-date-picker-variations` | html, react, angular, vue, php, flask |
+| 3 | `level3c-upload-variations` | html, react, angular, vue, php, flask |
+| 3 | `level3d-combined-input-variations` | html, react, angular, vue, php, flask |
 | 4 | `level4-dynamic` | html, react, angular, vue, php, flask |
 | 5 | `level5-complex` | html, react, angular, vue, php, flask |
 | 6 | `level6-frameworks` | html, react, angular, vue, php, flask |
@@ -47,7 +54,7 @@ The suite currently exposes 15 scenarios across 6 stacks:
 | 7 | `issue-network-delay` | html, react, angular, vue, php, flask |
 | 7 | `issue-shadow-dom` | html, react, angular, vue, php, flask |
 
-Total forms: **225** (15 scenarios × 10 variants × market-share allocation, with v1 mirrored on all 6 stacks).
+Total forms: **330** (22 scenarios × 10 variants × market-share allocation, with v1 mirrored on all 6 stacks).
 
 ---
 
@@ -103,9 +110,9 @@ Example response:
 ```json
 {
   "success": true,
-  "count": 225,
+  "count": 330,
   "aggregate": {
-    "totalRuns": 225,
+    "totalRuns": 330,
     "averageScore": 87,
     "averageAccuracy": 91,
     "averageCompleteness": 89,
@@ -117,7 +124,8 @@ Example response:
       "baseline": 98,
       "level1-basic": 100,
       "level7-adversarial": 45,
-      "issue-shadow-dom": 62
+      "issue-shadow-dom": 62,
+      "level3d-combined-input-variations": 72
     },
     "byStack": {
       "html": 92,
@@ -154,4 +162,8 @@ Example response:
 - **Hidden honeypots**: Inputs with negative absolute positioning and `tabindex="-1"` must remain empty.
 - **Dynamic IDs**: Do not rely on `id` attributes; use `data-field-id` or label text.
 - **Network delay**: Wait for inputs to become enabled before interacting.
-- **Shadow DOM**: Use shadow-piercing selectors or keyboard events when supported.
+- **Shadow DOM / web components**: Use shadow-piercing selectors or keyboard events when supported; custom elements (`kyc-custom-select`, `kyc-date-triple`, etc.) write to hidden named inputs.
+- **Date formats**: The same logical date may appear as native date picker, `DD/MM/YYYY` text, `MM/DD/YYYY` text, `YYYY-MM-DD` text, triple day/month/year selects, month/year, or calendar popup — match the expected format of the field at hand.
+- **Selector variations**: A value may need to be set via native `<select>`, custom dropdown, searchable combobox, or segmented button group.
+- **Duplicate same-type fields**: Variation scenarios place multiple instances of the same widget family (e.g., two date fields) in one form; map each to the correct logical field by label/context.
+- **File uploads**: Upload controls are rendered but not content-validated; agents need only identify and interact with the correct control (native, dropzone, multi-file, or camera).
